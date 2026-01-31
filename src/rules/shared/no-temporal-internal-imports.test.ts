@@ -23,9 +23,10 @@ describe('no-temporal-internal-imports', () => {
       `import { helper } from './lib/helpers';`,
     ],
     invalid: [
-      // Internal workflow imports
+      // Internal workflow imports with autofix
       {
         code: `import { something } from '@temporalio/workflow/lib/internal';`,
+        output: `import { something } from '@temporalio/workflow';`,
         errors: [
           {
             messageId: 'noInternalImport',
@@ -37,9 +38,10 @@ describe('no-temporal-internal-imports', () => {
         ],
       },
 
-      // Internal activity imports
+      // Internal activity imports with autofix
       {
         code: `import { internalFn } from '@temporalio/activity/lib/utils';`,
+        output: `import { internalFn } from '@temporalio/activity';`,
         errors: [
           {
             messageId: 'noInternalImport',
@@ -51,9 +53,10 @@ describe('no-temporal-internal-imports', () => {
         ],
       },
 
-      // Internal worker imports
+      // Internal worker imports with autofix
       {
         code: `import { WorkerInternal } from '@temporalio/worker/src/worker';`,
+        output: `import { WorkerInternal } from '@temporalio/worker';`,
         errors: [
           {
             messageId: 'noInternalImport',
@@ -65,9 +68,10 @@ describe('no-temporal-internal-imports', () => {
         ],
       },
 
-      // Internal client imports
+      // Internal client imports with autofix
       {
         code: `import { ClientImpl } from '@temporalio/client/lib/client-impl';`,
+        output: `import { ClientImpl } from '@temporalio/client';`,
         errors: [
           {
             messageId: 'noInternalImport',
@@ -79,9 +83,24 @@ describe('no-temporal-internal-imports', () => {
         ],
       },
 
-      // Deep internal path
+      // Deep internal path with autofix
       {
         code: `import { x } from '@temporalio/common/lib/internal/encoding';`,
+        output: `import { x } from '@temporalio/common';`,
+        errors: [{ messageId: 'noInternalImport' }],
+      },
+
+      // Preserves double quotes
+      {
+        code: `import { something } from "@temporalio/workflow/lib/internal";`,
+        output: `import { something } from "@temporalio/workflow";`,
+        errors: [{ messageId: 'noInternalImport' }],
+      },
+
+      // Type imports with autofix
+      {
+        code: `import type { InternalType } from '@temporalio/workflow/lib/types';`,
+        output: `import type { InternalType } from '@temporalio/workflow';`,
         errors: [{ messageId: 'noInternalImport' }],
       },
     ],

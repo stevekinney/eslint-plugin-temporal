@@ -111,7 +111,7 @@ export default [
 | Rule                           | Description                                                          | Fixable |
 | ------------------------------ | -------------------------------------------------------------------- | :-----: |
 | `task-queue-constant`          | Suggest using a constant for task queue names to ensure consistency. |         |
-| `no-temporal-internal-imports` | Disallow importing from internal Temporal SDK paths.                 |         |
+| `no-temporal-internal-imports` | Disallow importing from internal Temporal SDK paths.                 |   Yes   |
 
 ## License
 

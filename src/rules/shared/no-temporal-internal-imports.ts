@@ -15,6 +15,7 @@ export const noTemporalInternalImports = createRule<[], MessageIds>({
       noInternalImport:
         "Do not import from internal Temporal SDK paths ('{{ path }}'). Internal modules may change without notice between versions. Use the public API from '{{ publicPath }}' instead.",
     },
+    fixable: 'code',
     schema: [],
   },
   defaultOptions: [],
@@ -37,6 +38,12 @@ export const noTemporalInternalImports = createRule<[], MessageIds>({
           data: {
             path: importPath,
             publicPath,
+          },
+          fix(fixer) {
+            // Preserve the original quote style (single or double)
+            const raw = node.source.raw;
+            const quote = raw?.startsWith('"') ? '"' : "'";
+            return fixer.replaceText(node.source, `${quote}${publicPath}${quote}`);
           },
         });
       },

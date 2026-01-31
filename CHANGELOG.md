@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- Autofix for `no-temporal-internal-imports` rule - automatically replaces internal SDK paths with public API paths
+
 ## [0.1.0] - 2026-01-30
 
 Initial release of eslint-plugin-temporal.
