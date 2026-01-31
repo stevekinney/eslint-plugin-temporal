@@ -1,114 +1,118 @@
-# Project Name
+# eslint-plugin-temporal
 
-## Prerequisites
+[![npm version](https://img.shields.io/npm/v/eslint-plugin-temporal.svg)](https://www.npmjs.com/package/eslint-plugin-temporal)
+[![CI](https://github.com/stevekinney/eslint-plugin-temporal/actions/workflows/ci.yml/badge.svg)](https://github.com/stevekinney/eslint-plugin-temporal/actions/workflows/ci.yml)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-- [Bun](https://bun.sh) installed on your machine.
+ESLint plugin for the [Temporal](https://temporal.io) TypeScript SDK. Provides rules to enforce best practices and prevent common mistakes across workflows, activities, workers, and clients.
 
 ## Installation
 
-Create a new project based on this template:
-
 ```bash
-# Basic installation
-bun create github.com/stevekinney/bun-template $PROJECT_DIRECTORY
-
-# Skip installing dependencies (useful for CI or offline work)
-bun create github.com/stevekinney/bun-template $PROJECT_DIRECTORY --no-install
+npm install --save-dev eslint-plugin-temporal
+# or
+bun add --dev eslint-plugin-temporal
 ```
 
-The `--no-install` flag is helpful when:
+**Requirements:**
 
-- Working in offline environments
-- Using CI pipelines with cached dependencies
-- You plan to modify dependencies before installation
+- ESLint 9.0.0 or higher (flat config)
+- TypeScript 5.0.0 or higher
 
-## Core Tools
+## Quick Start
 
-- Bun: runtime, bundler, test runner, and package manager
-- TypeScript: strict type checking
-- ESLint + Prettier: linting and formatting (flat config)
-- Husky + lint-staged: fast pre-commit checks
+Add the plugin to your `eslint.config.js`:
 
-## Development
+```js
+import temporal from 'eslint-plugin-temporal';
 
-Start the development server:
+export default [
+  // Apply recommended rules to all files
+  temporal.configs.recommended,
 
-```bash
-bun run dev
+  // Apply workflow rules to workflow files
+  {
+    files: ['src/workflows/**/*.ts'],
+    ...temporal.configs.workflow,
+  },
+
+  // Apply activity rules to activity files
+  {
+    files: ['src/activities/**/*.ts'],
+    ...temporal.configs.activity,
+  },
+
+  // Apply worker rules to worker files
+  {
+    files: ['src/worker/**/*.ts'],
+    ...temporal.configs.worker,
+  },
+
+  // Apply client rules to client files
+  {
+    files: ['src/client/**/*.ts'],
+    ...temporal.configs.client,
+  },
+];
 ```
 
-### Git Hooks (Husky)
+## Configurations
 
-Husky is set up via the `prepare` script on install. Hooks are implemented as Bun TypeScript files in `scripts/husky/` and invoked by wrappers in `.husky/`.
+| Configuration | Description                                                             |
+| ------------- | ----------------------------------------------------------------------- |
+| `recommended` | Rules safe to use everywhere. Start here for general Temporal projects. |
+| `workflow`    | Strict determinism rules for workflow files.                            |
+| `activity`    | Retry safety and best practice rules for activity files.                |
+| `worker`      | Clean bootstrap rules for worker files.                                 |
+| `client`      | Rules for client code that starts and signals workflows.                |
+| `strict`      | All rules enabled as errors. For maximum enforcement.                   |
 
-- `pre-commit`: runs lint-staged; ensures `bun.lock` is staged when it has changes alongside `package.json`.
-- `post-checkout`: on branch checkouts, installs deps when `package.json` + `bun.lock` changed; surfaces config changes.
-- `post-merge`: installs deps and cleans caches when config changed; prints merge stats and conflict checks.
+## Rules
 
-Use `--no-verify` to bypass hooks (not recommended).
+### Workflow Rules
 
-### Running Tests
+| Rule                                      | Description                                                                                   | Fixable |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------- | :-----: |
+| `workflow-no-activity-definitions-import` | Disallow importing activity implementations in workflow files. Use proxyActivities() instead. |         |
+| `workflow-no-node-or-dom-imports`         | Disallow Node.js built-in modules and DOM APIs in workflow files.                             |         |
+| `workflow-no-unsafe-package-imports`      | Disallow importing packages that are unsafe for workflow determinism.                         |         |
+| `workflow-require-activity-timeouts`      | Require timeout configuration when calling proxyActivities().                                 |         |
+| `workflow-no-console`                     | Disallow console.\* in workflow files. Use log from @temporalio/workflow instead.             |   Yes   |
+| `workflow-prefer-workflow-uuid`           | Prefer uuid4() from @temporalio/workflow over other UUID libraries.                           |   Yes   |
+| `workflow-no-floating-promises`           | Disallow floating (unhandled) promises in workflows.                                          |         |
+| `workflow-no-throw-raw-error`             | Prefer throwing ApplicationFailure over raw Error in workflows.                               |         |
+| `workflow-patch-id-literal`               | Require patch IDs to be string literals for traceability and determinism.                     |         |
 
-This template comes with Bun's built-in test runner. To run tests:
+### Activity Rules
 
-```bash
-bun test
-```
+| Rule                                 | Description                                                                          | Fixable |
+| ------------------------------------ | ------------------------------------------------------------------------------------ | :-----: |
+| `activity-prefer-activity-log`       | Prefer log from @temporalio/activity over console.\* for structured logging.         |   Yes   |
+| `activity-prefer-applicationfailure` | Prefer throwing ApplicationFailure over raw Error in activities.                     |         |
+| `activity-heartbeat-in-long-loops`   | Suggest calling heartbeat() in loops that contain await expressions.                 |         |
+| `activity-use-cancellation-signal`   | Suggest passing cancellation signal to HTTP clients in activities.                   |         |
+| `activity-context-not-stored`        | Disallow storing Activity Context in variables that persist across async boundaries. |         |
 
-For watching mode:
+### Worker Rules
 
-```bash
-bun test --watch
-```
+| Rule                                         | Description                                                                   | Fixable |
+| -------------------------------------------- | ----------------------------------------------------------------------------- | :-----: |
+| `worker-no-workflow-or-activity-definitions` | Disallow importing workflow or activity definitions directly in worker files. |         |
+| `worker-ignoremodules-requires-comment`      | Require a comment explaining why modules are being ignored in bundlerOptions. |         |
 
-For test coverage:
+### Client Rules
 
-```bash
-bun test --coverage
-```
+| Rule                         | Description                                                                | Fixable |
+| ---------------------------- | -------------------------------------------------------------------------- | :-----: |
+| `client-require-workflow-id` | Require explicit workflowId when starting workflows to ensure idempotency. |         |
 
-### Continuous Integration
+### Shared Rules
 
-No CI workflows are included by default. Add your own under `.github/workflows/` as needed.
+| Rule                           | Description                                                          | Fixable |
+| ------------------------------ | -------------------------------------------------------------------- | :-----: |
+| `task-queue-constant`          | Suggest using a constant for task queue names to ensure consistency. |         |
+| `no-temporal-internal-imports` | Disallow importing from internal Temporal SDK paths.                 |         |
 
-### Understanding `bun run` vs `bunx`
+## License
 
-`bun run` and `bunx` are two different commands that often confuse beginners:
-
-- **bun run**: Executes scripts defined in your project's package.json (like `bun run dev` runs the "dev" script). Also runs local TypeScript/JavaScript files directly (like `bun run src/index.ts`).
-
-- **bunx**: Executes binaries from npm packages without installing them globally (similar to `npx`). Use it for one-off commands or tools you don't need permanently installed (like `bunx prettier --write .` or `bunx shadcn@canary add button`).
-
-## Project Structure
-
-- `src/` - Source code for your application
-- `.husky/` - Git hook wrappers (shell) calling Bun scripts in `scripts/husky/`
-- `scripts/husky/` - Hook implementations (TypeScript + Bun)
-
-## Customization
-
-### TypeScript Configuration
-
-The template includes TypeScript configuration with path aliases:
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
-}
-```
-
-## Template Setup (bun-create)
-
-When using `bun create` with this template, a postinstall sequence runs once to bootstrap the project:
-
-- Sets `package.json:name` from the folder name
-- Copies `.env.example` to `.env` (or appends missing keys)
-- Writes `OPEN_AI_API_KEY`, `ANTHROPIC_AI_API_KEY`, and `GEMINI_AI_API_KEY` from your shell into `.env` if present
-- Runs `bun run prepare` to install Husky
-- Cleans up setup scripts and removes the `bun-create` entry from `package.json`
-
-These steps self-delete after running; you can adjust them by editing files in `scripts/setup/` before the first install.
+ISC

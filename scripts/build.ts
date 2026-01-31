@@ -10,7 +10,7 @@ await Bun.build({
   target: 'node',
   format: 'esm',
   naming: '[dir]/[name].js',
-  sourcemap: 'external',
+  sourcemap: 'none',
   minify: true,
 });
 

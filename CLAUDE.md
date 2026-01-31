@@ -17,7 +17,7 @@ bun ./dist/index.js       # After build, run with Bun
 
 ```bash
 bun test                  # Run all tests
-bun test src/utils        # Run tests in specific directory
+bun test src/utilities    # Run tests in specific directory
 bun test logger          # Run tests matching pattern
 bun test --watch         # Watch mode
 bun test --coverage      # Generate coverage report
@@ -65,6 +65,34 @@ They use `chalk` for color, `change-case` for headings, and Bun’s `$` and `Bun
 ### Types
 
 There is no shared `src/types.ts` in this template. Add shared or domain-specific types near their modules as needed.
+
+## Naming Conventions
+
+Prefer full, descriptive words over abbreviations for files, folders, functions, and variables:
+
+| Prefer           | Avoid        |
+| ---------------- | ------------ |
+| `utilities`      | `utils`      |
+| `configurations` | `configs`    |
+| `test-utilities` | `test-utils` |
+| `configuration`  | `config`     |
+| `parameters`     | `params`     |
+| `application`    | `app`        |
+| `environment`    | `env`        |
+| `documentation`  | `docs`       |
+| `properties`     | `props`      |
+| `response`       | `res`        |
+| `request`        | `req`        |
+| `message`        | `msg`        |
+| `options`        | `opts`       |
+| `arguments`      | `args`       |
+| `temporary`      | `temp`/`tmp` |
+
+This makes code more readable and self-documenting. The current codebase structure reflects this:
+
+- `src/utilities/` - Shared utility functions
+- `src/configurations/` - ESLint configuration presets
+- `src/test-utilities/` - Testing helpers
 
 ## Development Patterns
 

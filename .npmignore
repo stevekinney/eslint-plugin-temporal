@@ -1,0 +1,39 @@
+# Source files (dist/ is published via files field)
+src/
+
+# Scripts and tooling
+scripts/
+.github/
+.husky/
+.vscode/
+.cursor/
+.claude/
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/
+coverage/
+
+# Config files
+tsconfig*.json
+eslint.config.*
+.prettierrc*
+.editorconfig
+bunfig.toml
+
+# Documentation (internal)
+CLAUDE.md
+BEST_PRACTICES.md
+PLAN.md
+
+# Environment files
+.env
+.env.*
+
+# Sourcemaps (too large for npm package)
+*.map
+
+# Misc
+.gitignore
+bun.lock
