@@ -9,36 +9,95 @@ import { useCancellationSignal } from './activity/use-cancellation-signal.ts';
 // Client rules
 import { requireWorkflowId } from './client/require-workflow-id.ts';
 import { noTemporalInternalImports } from './shared/no-temporal-internal-imports.ts';
+import { noWorkflowAndActivityInSameFile } from './shared/no-workflow-and-activity-in-same-file.ts';
 // Shared rules
 import { taskQueueConstant } from './shared/task-queue-constant.ts';
 import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-comment.ts';
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
 // Workflow rules
+import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
+import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
+import { noAsyncQueryHandler } from './workflow/no-async-query-handler.ts';
+import { noBusyWait } from './workflow/no-busy-wait.ts';
+import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
+import { noContinueAsNewInUpdateHandler } from './workflow/no-continueAsNew-in-update-handler.ts';
+import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
+import { noDuplicatePatchIds } from './workflow/no-duplicate-patch-ids.ts';
+import { noDynamicImport } from './workflow/no-dynamic-import.ts';
+import { noDynamicRequire } from './workflow/no-dynamic-require.ts';
+import { noFinalizationRegistry } from './workflow/no-finalization-registry.ts';
 import { noFloatingPromises } from './workflow/no-floating-promises.ts';
+import { noLargeLiteralPayloads } from './workflow/no-large-literal-payloads.ts';
 import { noNodeOrDomImports } from './workflow/no-node-or-dom-imports.ts';
+import { noProcessEnv } from './workflow/no-process-env.ts';
+import { noQueryMutation } from './workflow/no-query-mutation.ts';
+import { noSetInterval } from './workflow/no-setinterval.ts';
 import { noThrowRawError } from './workflow/no-throw-raw-error.ts';
+import { noUnsafeGlobalMutation } from './workflow/no-unsafe-global-mutation.ts';
 import { noUnsafePackageImports } from './workflow/no-unsafe-package-imports.ts';
+import { noWeakRef } from './workflow/no-weakref.ts';
+import { noWorkerImport } from './workflow/no-worker-import.ts';
+import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
+import { preferConditionOverPolling } from './workflow/prefer-condition-over-polling.ts';
+import { preferSleep } from './workflow/prefer-sleep.ts';
 import { preferWorkflowUuid } from './workflow/prefer-workflow-uuid.ts';
+import { requireActivityRetryPolicy } from './workflow/require-activity-retry-policy.ts';
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
+import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
+import { requireSetHandlerEarly } from './workflow/require-setHandler-early.ts';
+import { requireTypeOnlyActivityImports } from './workflow/require-type-only-activity-imports.ts';
+import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void.ts';
+import { sinkNoAwait } from './workflow/sink-no-await.ts';
+import { sinkNoReturnValue } from './workflow/sink-no-return-value.ts';
+import { updateHandlerReturnType } from './workflow/update-handler-return-type.ts';
 
 /**
  * All rules exported by the plugin
  */
 export const rules = {
   // Workflow rules
+  'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
+  'workflow-message-name-literal': messageNameLiteral,
   'workflow-no-activity-definitions-import': noActivityDefinitionsImport,
-  'workflow-no-node-or-dom-imports': noNodeOrDomImports,
-  'workflow-no-unsafe-package-imports': noUnsafePackageImports,
-  'workflow-require-activity-timeouts': requireActivityTimeouts,
+  'workflow-no-async-query-handler': noAsyncQueryHandler,
+  'workflow-no-busy-wait': noBusyWait,
+  'workflow-no-client-import': noClientImport,
   'workflow-no-console': noConsole,
-  'workflow-prefer-workflow-uuid': preferWorkflowUuid,
+  'workflow-no-continueAsNew-in-update-handler': noContinueAsNewInUpdateHandler,
+  'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
+  'workflow-no-duplicate-patch-ids': noDuplicatePatchIds,
+  'workflow-no-dynamic-import': noDynamicImport,
+  'workflow-no-dynamic-require': noDynamicRequire,
+  'workflow-no-finalization-registry': noFinalizationRegistry,
   'workflow-no-floating-promises': noFloatingPromises,
+  'workflow-no-large-literal-payloads': noLargeLiteralPayloads,
+  'workflow-no-node-or-dom-imports': noNodeOrDomImports,
+  'workflow-no-process-env': noProcessEnv,
+  'workflow-no-query-mutation': noQueryMutation,
+  'workflow-no-setinterval': noSetInterval,
   'workflow-no-throw-raw-error': noThrowRawError,
+  'workflow-no-unsafe-global-mutation': noUnsafeGlobalMutation,
+  'workflow-no-unsafe-package-imports': noUnsafePackageImports,
+  'workflow-no-weakref': noWeakRef,
+  'workflow-no-worker-import': noWorkerImport,
+  'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
   'workflow-patch-id-literal': patchIdLiteral,
+  'workflow-prefer-condition-over-polling': preferConditionOverPolling,
+  'workflow-prefer-sleep': preferSleep,
+  'workflow-prefer-workflow-uuid': preferWorkflowUuid,
+  'workflow-require-activity-retry-policy': requireActivityRetryPolicy,
+  'workflow-require-activity-timeouts': requireActivityTimeouts,
+  'workflow-require-all-handlers-finished': requireAllHandlersFinished,
+  'workflow-require-setHandler-early': requireSetHandlerEarly,
+  'workflow-require-type-only-activity-imports': requireTypeOnlyActivityImports,
+  'workflow-signal-handler-returns-void': signalHandlerReturnsVoid,
+  'workflow-sink-no-await': sinkNoAwait,
+  'workflow-sink-no-return-value': sinkNoReturnValue,
+  'workflow-update-handler-return-type': updateHandlerReturnType,
 
   // Activity rules
   'activity-prefer-activity-log': preferActivityLog,
@@ -57,6 +116,7 @@ export const rules = {
   // Shared rules
   'task-queue-constant': taskQueueConstant,
   'no-temporal-internal-imports': noTemporalInternalImports,
+  'no-workflow-and-activity-in-same-file': noWorkflowAndActivityInSameFile,
 } satisfies Record<string, TSESLint.RuleModule<string, unknown[]>>;
 
 export type RuleKey = keyof typeof rules;
