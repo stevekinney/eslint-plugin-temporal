@@ -15,6 +15,13 @@ export {
   isThrowStatement,
   loopContainsAwait,
 } from './ast-helpers.ts';
+export {
+  createActivityRule,
+  createClientRule,
+  createContextRule,
+  createWorkerRule,
+  createWorkflowRule,
+} from './create-context-rule.ts';
 export { createRule } from './create-rule.ts';
 export {
   detectTemporalFileType,
@@ -30,6 +37,14 @@ export {
   hasSpecifier,
 } from './import-fixer.ts';
 export { createImportTrackerVisitor, ImportTracker } from './import-tracker.ts';
+export {
+  detectContext,
+  detectContextFromImports,
+  getTemporalContextFromRule,
+  isContextMatch,
+  isTestFile,
+  type TemporalContextResult,
+} from './temporal-context.ts';
 export {
   DEFAULT_SAFE_PACKAGES,
   DEFAULT_UNSAFE_PACKAGES,

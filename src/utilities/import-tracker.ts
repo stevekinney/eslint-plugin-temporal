@@ -145,6 +145,11 @@ export class ImportTracker {
    * Detect the Temporal file type based on imports
    */
   detectTemporalFileType(): TemporalFileType {
+    // If importing from @temporalio/testing, it's a test file
+    if (this.hasValueImportFrom(TEMPORAL_PACKAGES.testing)) {
+      return 'test';
+    }
+
     // If importing from @temporalio/workflow, it's likely a workflow
     if (this.hasValueImportFrom(TEMPORAL_PACKAGES.workflow)) {
       return 'workflow';
@@ -166,6 +171,19 @@ export class ImportTracker {
     // If importing Client from @temporalio/client, it's likely a client
     if (this.hasValueImportFrom(TEMPORAL_PACKAGES.client)) {
       return 'client';
+    }
+
+    // If only importing from @temporalio/common, it's shared code
+    if (this.hasImportFrom(TEMPORAL_PACKAGES.common)) {
+      const hasOtherTemporalImports =
+        this.hasImportFrom(TEMPORAL_PACKAGES.workflow) ||
+        this.hasImportFrom(TEMPORAL_PACKAGES.activity) ||
+        this.hasImportFrom(TEMPORAL_PACKAGES.worker) ||
+        this.hasImportFrom(TEMPORAL_PACKAGES.client);
+
+      if (!hasOtherTemporalImports) {
+        return 'shared';
+      }
     }
 
     return 'unknown';

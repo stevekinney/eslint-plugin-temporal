@@ -48,7 +48,12 @@ export function detectTemporalFileType(
   const normalizedPath = filePath.replaceAll('\\', '/');
 
   // Check each type in priority order
-  // Workflow and activity are more specific, check them first
+  // Test files are checked first since they may be in workflow/activity directories
+  if (matchesPatterns(normalizedPath, patterns.test)) {
+    return 'test';
+  }
+
+  // Workflow and activity are more specific, check them before worker/client
   if (matchesPatterns(normalizedPath, patterns.workflow)) {
     return 'workflow';
   }

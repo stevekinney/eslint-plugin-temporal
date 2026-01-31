@@ -3,7 +3,14 @@ import type { TSESTree } from '@typescript-eslint/utils';
 /**
  * The type of Temporal context a file operates in
  */
-export type TemporalFileType = 'workflow' | 'activity' | 'worker' | 'client' | 'unknown';
+export type TemporalFileType =
+  | 'workflow'
+  | 'activity'
+  | 'worker'
+  | 'client'
+  | 'test'
+  | 'shared'
+  | 'unknown';
 
 /**
  * Import information tracked for a source
@@ -64,6 +71,7 @@ export interface FilePatterns {
   activity?: string[];
   worker?: string[];
   client?: string[];
+  test?: string[];
 }
 
 /**
@@ -96,4 +104,5 @@ export const DEFAULT_FILE_PATTERNS: Required<FilePatterns> = {
   activity: ['**/activities/**', '**/*.activity.ts', '**/*.activities.ts'],
   worker: ['**/worker/**', '**/*.worker.ts', '**/workers/**'],
   client: ['**/client/**', '**/*.client.ts', '**/clients/**'],
+  test: ['**/*.test.ts', '**/*.spec.ts', '**/test/**', '**/__tests__/**'],
 };
