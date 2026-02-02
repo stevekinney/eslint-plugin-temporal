@@ -1,13 +1,13 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import { ensureImport } from '../../utilities/import-fixer.ts';
 import { TEMPORAL_PACKAGES } from '../../utilities/temporal-packages.ts';
 
 type MessageIds = 'noCryptoRandomUuid';
 
-export const noCryptoRandomUuid = createRule<[], MessageIds>({
-  name: 'no-crypto-random-uuid',
+export const noCryptoRandomUuid = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-crypto-random-uuid',
   meta: {
     type: 'problem',
     docs: {

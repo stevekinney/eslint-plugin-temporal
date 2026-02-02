@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   isAsyncFunction,
@@ -116,8 +116,8 @@ function containsAllHandlersFinishedReference(node: TSESTree.Node): boolean {
   return false;
 }
 
-export const requireAllHandlersFinished = createRule<[], MessageIds>({
-  name: 'require-all-handlers-finished',
+export const requireAllHandlersFinished = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-require-all-handlers-finished',
   meta: {
     type: 'suggestion',
     docs: {

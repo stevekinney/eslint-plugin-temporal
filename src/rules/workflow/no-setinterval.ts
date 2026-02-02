@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noSetInterval';
 
-export const noSetInterval = createRule<[], MessageIds>({
-  name: 'no-setinterval',
+export const noSetInterval = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-setinterval',
   meta: {
     type: 'problem',
     docs: {

@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { updateHandlerReturnType } from './update-handler-return-type.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('update-handler-return-type', () => {
   ruleTester.run('update-handler-return-type', updateHandlerReturnType, {

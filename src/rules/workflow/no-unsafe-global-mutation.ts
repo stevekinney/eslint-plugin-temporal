@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noGlobalMutation' | 'noPrototypeMutation';
 
@@ -35,8 +35,8 @@ const PROTECTED_PROTOTYPES = new Set([
   'Proxy',
 ]);
 
-export const noUnsafeGlobalMutation = createRule<[], MessageIds>({
-  name: 'no-unsafe-global-mutation',
+export const noUnsafeGlobalMutation = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-unsafe-global-mutation',
   meta: {
     type: 'problem',
     docs: {

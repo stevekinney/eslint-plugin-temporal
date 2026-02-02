@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noFloatingPromises } from './no-floating-promises.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-floating-promises', () => {
   ruleTester.run('no-floating-promises', noFloatingPromises, {

@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { requireActivityTimeouts } from './require-activity-timeouts.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('require-activity-timeouts', () => {
   ruleTester.run('require-activity-timeouts', requireActivityTimeouts, {

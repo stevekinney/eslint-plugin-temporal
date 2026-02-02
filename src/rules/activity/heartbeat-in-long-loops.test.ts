@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createActivityRuleTester } from '../../test-utilities/rule-tester.ts';
 import { heartbeatInLongLoops } from './heartbeat-in-long-loops.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createActivityRuleTester();
 
 describe('heartbeat-in-long-loops', () => {
   ruleTester.run('heartbeat-in-long-loops', heartbeatInLongLoops, {

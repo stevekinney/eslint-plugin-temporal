@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noNodeOrDomImports } from './no-node-or-dom-imports.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-node-or-dom-imports', () => {
   ruleTester.run('no-node-or-dom-imports', noNodeOrDomImports, {

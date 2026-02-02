@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noBusyWait } from './no-busy-wait.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-busy-wait', () => {
   ruleTester.run('no-busy-wait', noBusyWait, {

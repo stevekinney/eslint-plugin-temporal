@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noFinalizationRegistry';
 
-export const noFinalizationRegistry = createRule<[], MessageIds>({
-  name: 'no-finalization-registry',
+export const noFinalizationRegistry = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-finalization-registry',
   meta: {
     type: 'problem',
     docs: {

@@ -2,7 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { hasProperty } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'missingTimeout' | 'missingStartToCloseTimeout';
 
@@ -12,8 +12,8 @@ const TIMEOUT_PROPERTIES = [
   'scheduleToStartTimeout',
 ];
 
-export const requireActivityTimeouts = createRule<[], MessageIds>({
-  name: 'require-activity-timeouts',
+export const requireActivityTimeouts = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-require-activity-timeouts',
   meta: {
     type: 'problem',
     docs: {

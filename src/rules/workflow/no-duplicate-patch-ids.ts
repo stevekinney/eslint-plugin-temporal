@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'duplicatePatchId';
 
-export const noDuplicatePatchIds = createRule<[], MessageIds>({
-  name: 'no-duplicate-patch-ids',
+export const noDuplicatePatchIds = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-duplicate-patch-ids',
   meta: {
     type: 'problem',
     docs: {

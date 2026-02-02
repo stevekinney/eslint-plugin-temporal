@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'preferSleep';
 
-export const preferSleep = createRule<[], MessageIds>({
-  name: 'prefer-sleep',
+export const preferSleep = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-prefer-sleep',
   meta: {
     type: 'suggestion',
     docs: {

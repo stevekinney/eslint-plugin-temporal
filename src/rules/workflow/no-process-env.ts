@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noProcessEnv';
 
-export const noProcessEnv = createRule<[], MessageIds>({
-  name: 'no-process-env',
+export const noProcessEnv = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-process-env',
   meta: {
     type: 'problem',
     docs: {

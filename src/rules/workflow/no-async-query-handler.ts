@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   getHandlerType,
@@ -12,8 +12,8 @@ import {
 
 type MessageIds = 'noAsyncQueryHandler';
 
-export const noAsyncQueryHandler = createRule<[], MessageIds>({
-  name: 'no-async-query-handler',
+export const noAsyncQueryHandler = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-async-query-handler',
   meta: {
     type: 'problem',
     docs: {

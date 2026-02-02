@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { preferConditionOverPolling } from './prefer-condition-over-polling.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('prefer-condition-over-polling', () => {
   ruleTester.run('prefer-condition-over-polling', preferConditionOverPolling, {

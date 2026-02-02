@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noUnsafePackageImports } from './no-unsafe-package-imports.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-unsafe-package-imports', () => {
   ruleTester.run('no-unsafe-package-imports', noUnsafePackageImports, {

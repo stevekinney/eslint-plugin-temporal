@@ -1,12 +1,12 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { getProperty } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkerRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'requiresComment';
 
-export const ignoremodulesRequiresComment = createRule<[], MessageIds>({
-  name: 'ignoremodules-requires-comment',
+export const ignoremodulesRequiresComment = createWorkerRule<[], MessageIds>({
+  name: 'worker-ignoremodules-requires-comment',
   meta: {
     type: 'suggestion',
     docs: {

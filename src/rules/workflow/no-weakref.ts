@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noWeakRef';
 
-export const noWeakRef = createRule<[], MessageIds>({
-  name: 'no-weakref',
+export const noWeakRef = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-weakref',
   meta: {
     type: 'problem',
     docs: {

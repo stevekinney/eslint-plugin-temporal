@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   getHandlerType,
@@ -11,8 +11,8 @@ import {
 
 type MessageIds = 'missingReturnType';
 
-export const updateHandlerReturnType = createRule<[], MessageIds>({
-  name: 'update-handler-return-type',
+export const updateHandlerReturnType = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-update-handler-return-type',
   meta: {
     type: 'suggestion',
     docs: {

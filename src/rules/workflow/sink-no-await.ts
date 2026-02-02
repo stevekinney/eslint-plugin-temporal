@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'sinkNoAwait';
 
-export const sinkNoAwait = createRule<[], MessageIds>({
-  name: 'sink-no-await',
+export const sinkNoAwait = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-sink-no-await',
   meta: {
     type: 'problem',
     docs: {

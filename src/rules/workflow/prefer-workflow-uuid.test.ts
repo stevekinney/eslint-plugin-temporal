@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { preferWorkflowUuid } from './prefer-workflow-uuid.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('prefer-workflow-uuid', () => {
   ruleTester.run('prefer-workflow-uuid', preferWorkflowUuid, {

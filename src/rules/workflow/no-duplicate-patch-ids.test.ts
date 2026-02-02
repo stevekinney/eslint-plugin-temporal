@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noDuplicatePatchIds } from './no-duplicate-patch-ids.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-duplicate-patch-ids', () => {
   ruleTester.run('no-duplicate-patch-ids', noDuplicatePatchIds, {

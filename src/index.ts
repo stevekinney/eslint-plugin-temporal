@@ -1,5 +1,6 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 
+import packageJson from '../package.json' assert { type: 'json' };
 import {
   activityRules,
   clientRules,
@@ -11,7 +12,7 @@ import {
 import { rules } from './rules/index.ts';
 
 // Read version from package.json at build time
-const version = '0.1.0';
+const version = packageJson.version;
 
 /**
  * ESLint plugin for the Temporal TypeScript SDK.
@@ -24,6 +25,7 @@ const plugin = {
   meta: {
     name: 'eslint-plugin-temporal',
     version,
+    namespace: 'temporal',
   },
   rules,
   configs: {} as Record<string, TSESLint.FlatConfig.Config>,

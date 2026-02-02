@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noLargeLiteralPayloads } from './no-large-literal-payloads.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-large-literal-payloads', () => {
   ruleTester.run('no-large-literal-payloads', noLargeLiteralPayloads, {

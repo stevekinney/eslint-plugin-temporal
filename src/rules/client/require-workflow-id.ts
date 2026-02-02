@@ -2,12 +2,12 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { hasProperty } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createClientRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'missingWorkflowId';
 
-export const requireWorkflowId = createRule<[], MessageIds>({
-  name: 'require-workflow-id',
+export const requireWorkflowId = createClientRule<[], MessageIds>({
+  name: 'client-require-workflow-id',
   meta: {
     type: 'problem',
     docs: {

@@ -1,12 +1,12 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { isNewError } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noThrowRawError';
 
-export const noThrowRawError = createRule<[], MessageIds>({
-  name: 'no-throw-raw-error',
+export const noThrowRawError = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-throw-raw-error',
   meta: {
     type: 'suggestion',
     docs: {

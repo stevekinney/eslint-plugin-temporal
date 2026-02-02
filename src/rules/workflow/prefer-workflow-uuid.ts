@@ -1,13 +1,13 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import { ensureImport } from '../../utilities/import-fixer.ts';
 import { TEMPORAL_PACKAGES } from '../../utilities/temporal-packages.ts';
 
 type MessageIds = 'preferWorkflowUuid';
 
-export const preferWorkflowUuid = createRule<[], MessageIds>({
-  name: 'prefer-workflow-uuid',
+export const preferWorkflowUuid = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-prefer-workflow-uuid',
   meta: {
     type: 'problem',
     docs: {

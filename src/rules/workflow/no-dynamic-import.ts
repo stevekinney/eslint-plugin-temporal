@@ -1,9 +1,9 @@
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noDynamicImport';
 
-export const noDynamicImport = createRule<[], MessageIds>({
-  name: 'no-dynamic-import',
+export const noDynamicImport = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-dynamic-import',
   meta: {
     type: 'problem',
     docs: {

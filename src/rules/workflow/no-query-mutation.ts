@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   containsMutation,
   getHandlerCallback,
@@ -12,8 +12,8 @@ import {
 
 type MessageIds = 'noQueryMutation';
 
-export const noQueryMutation = createRule<[], MessageIds>({
-  name: 'no-query-mutation',
+export const noQueryMutation = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-query-mutation',
   meta: {
     type: 'problem',
     docs: {

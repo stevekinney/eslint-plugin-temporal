@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'messageNameLiteral';
 
@@ -10,8 +10,8 @@ const MESSAGE_DEFINITION_FUNCTIONS = new Set([
   'defineUpdate',
 ]);
 
-export const messageNameLiteral = createRule<[], MessageIds>({
-  name: 'message-name-literal',
+export const messageNameLiteral = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-message-name-literal',
   meta: {
     type: 'problem',
     docs: {

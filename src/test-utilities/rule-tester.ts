@@ -32,12 +32,15 @@ export function createRuleTester(
  * Create a basic rule tester without type information
  * (faster, but can't use type-aware rules)
  */
-export function createBasicRuleTester(): RuleTester {
+export function createBasicRuleTester(
+  options?: Partial<ConstructorParameters<typeof RuleTester>[0]>,
+): RuleTester {
   return new RuleTester({
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
     },
+    ...options,
   });
 }
 
@@ -67,4 +70,28 @@ export function workerFile(filename: string = 'worker.ts'): string {
  */
 export function clientFile(filename: string = 'client.ts'): string {
   return `/project/src/client/${filename}`;
+}
+
+export function createWorkflowRuleTester(): RuleTester {
+  return createBasicRuleTester({
+    defaultFilenames: { ts: workflowFile(), tsx: workflowFile('workflow.tsx') },
+  });
+}
+
+export function createActivityRuleTester(): RuleTester {
+  return createBasicRuleTester({
+    defaultFilenames: { ts: activityFile(), tsx: activityFile('activity.tsx') },
+  });
+}
+
+export function createWorkerRuleTester(): RuleTester {
+  return createBasicRuleTester({
+    defaultFilenames: { ts: workerFile(), tsx: workerFile('worker.tsx') },
+  });
+}
+
+export function createClientRuleTester(): RuleTester {
+  return createBasicRuleTester({
+    defaultFilenames: { ts: clientFile(), tsx: clientFile('client.tsx') },
+  });
 }

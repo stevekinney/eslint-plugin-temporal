@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { requireAllHandlersFinished } from './require-all-handlers-finished.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('require-all-handlers-finished', () => {
   ruleTester.run('require-all-handlers-finished', requireAllHandlersFinished, {

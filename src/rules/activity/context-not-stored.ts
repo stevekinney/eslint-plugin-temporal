@@ -1,12 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createActivityRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'contextNotStored';
 
-export const contextNotStored = createRule<[], MessageIds>({
-  name: 'context-not-stored',
+export const contextNotStored = createActivityRule<[], MessageIds>({
+  name: 'activity-context-not-stored',
   meta: {
     type: 'problem',
     docs: {

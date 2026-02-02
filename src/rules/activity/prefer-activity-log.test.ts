@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createActivityRuleTester } from '../../test-utilities/rule-tester.ts';
 import { preferActivityLog } from './prefer-activity-log.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createActivityRuleTester();
 
 describe('prefer-activity-log', () => {
   ruleTester.run('prefer-activity-log', preferActivityLog, {

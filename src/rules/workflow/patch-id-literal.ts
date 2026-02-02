@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'patchIdMustBeLiteral';
 
-export const patchIdLiteral = createRule<[], MessageIds>({
-  name: 'patch-id-literal',
+export const patchIdLiteral = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-patch-id-literal',
   meta: {
     type: 'suggestion',
     docs: {

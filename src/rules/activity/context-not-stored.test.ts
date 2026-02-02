@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createActivityRuleTester } from '../../test-utilities/rule-tester.ts';
 import { contextNotStored } from './context-not-stored.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createActivityRuleTester();
 
 describe('context-not-stored', () => {
   ruleTester.run('context-not-stored', contextNotStored, {

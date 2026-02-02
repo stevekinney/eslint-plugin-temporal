@@ -2,12 +2,12 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { loopContainsAwait } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createActivityRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'missingHeartbeat';
 
-export const heartbeatInLongLoops = createRule<[], MessageIds>({
-  name: 'heartbeat-in-long-loops',
+export const heartbeatInLongLoops = createActivityRule<[], MessageIds>({
+  name: 'activity-heartbeat-in-long-loops',
   meta: {
     type: 'suggestion',
     docs: {

@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   getHandlerType,
@@ -36,8 +36,8 @@ const FORBIDDEN_WORKFLOW_APIS = new Set([
   'makeContinueAsNewFunc',
 ]);
 
-export const noWorkflowApisInQuery = createRule<[], MessageIds>({
-  name: 'no-workflow-apis-in-query',
+export const noWorkflowApisInQuery = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-workflow-apis-in-query',
   meta: {
     type: 'problem',
     docs: {

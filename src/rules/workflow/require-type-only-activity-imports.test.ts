@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { requireTypeOnlyActivityImports } from './require-type-only-activity-imports.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('require-type-only-activity-imports', () => {
   ruleTester.run('require-type-only-activity-imports', requireTypeOnlyActivityImports, {

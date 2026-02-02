@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type Options = [
   {
@@ -16,8 +16,8 @@ const DEFAULT_MAX_ARRAY_ELEMENTS = 100;
 const DEFAULT_MAX_OBJECT_PROPERTIES = 50;
 const DEFAULT_MAX_STRING_LENGTH = 10000;
 
-export const noLargeLiteralPayloads = createRule<Options, MessageIds>({
-  name: 'no-large-literal-payloads',
+export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
+  name: 'workflow-no-large-literal-payloads',
   meta: {
     type: 'suggestion',
     docs: {

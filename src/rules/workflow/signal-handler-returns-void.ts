@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   getHandlerType,
@@ -12,8 +12,8 @@ import {
 
 type MessageIds = 'signalMustReturnVoid';
 
-export const signalHandlerReturnsVoid = createRule<[], MessageIds>({
-  name: 'signal-handler-returns-void',
+export const signalHandlerReturnsVoid = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-signal-handler-returns-void',
   meta: {
     type: 'problem',
     docs: {

@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noDynamicRequire';
 
-export const noDynamicRequire = createRule<[], MessageIds>({
-  name: 'no-dynamic-require',
+export const noDynamicRequire = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-dynamic-require',
   meta: {
     type: 'problem',
     docs: {

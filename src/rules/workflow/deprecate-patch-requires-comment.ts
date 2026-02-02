@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'requiresComment';
 
-export const deprecatePatchRequiresComment = createRule<[], MessageIds>({
-  name: 'deprecate-patch-requires-comment',
+export const deprecatePatchRequiresComment = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-deprecate-patch-requires-comment',
   meta: {
     type: 'suggestion',
     docs: {

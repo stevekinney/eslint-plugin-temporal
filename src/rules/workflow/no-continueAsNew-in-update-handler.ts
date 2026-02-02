@@ -1,6 +1,6 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   getHandlerCallback,
   getHandlerType,
@@ -11,8 +11,8 @@ import {
 
 type MessageIds = 'noContinueAsNewInUpdateHandler';
 
-export const noContinueAsNewInUpdateHandler = createRule<[], MessageIds>({
-  name: 'no-continueAsNew-in-update-handler',
+export const noContinueAsNewInUpdateHandler = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-continueAsNew-in-update-handler',
   meta: {
     type: 'problem',
     docs: {

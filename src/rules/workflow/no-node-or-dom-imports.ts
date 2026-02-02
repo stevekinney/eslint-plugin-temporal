@@ -1,13 +1,13 @@
 import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import { isNodeBuiltin } from '../../utilities/temporal-packages.ts';
 
 type MessageIds = 'noNodeImport' | 'noDomApi';
 
-export const noNodeOrDomImports = createRule<[], MessageIds>({
-  name: 'no-node-or-dom-imports',
+export const noNodeOrDomImports = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-node-or-dom-imports',
   meta: {
     type: 'problem',
     docs: {

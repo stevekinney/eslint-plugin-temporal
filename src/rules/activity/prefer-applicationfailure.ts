@@ -1,12 +1,12 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { isNewError } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createActivityRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'preferApplicationFailure';
 
-export const preferApplicationFailure = createRule<[], MessageIds>({
-  name: 'prefer-applicationfailure',
+export const preferApplicationFailure = createActivityRule<[], MessageIds>({
+  name: 'activity-prefer-applicationfailure',
   meta: {
     type: 'suggestion',
     docs: {

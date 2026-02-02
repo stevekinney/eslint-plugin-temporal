@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'setHandlerAfterAwait';
 
-export const requireSetHandlerEarly = createRule<[], MessageIds>({
-  name: 'require-setHandler-early',
+export const requireSetHandlerEarly = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-require-setHandler-early',
   meta: {
     type: 'suggestion',
     docs: {

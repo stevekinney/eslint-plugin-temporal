@@ -1,12 +1,13 @@
-import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
-import { ESLintUtils } from '@typescript-eslint/utils';
+import type { TSESLint } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 
 import type { TemporalFileType, TemporalPluginSettings } from '../types.ts';
+import { detectTemporalFileType } from './file-detection.ts';
 import { ImportTracker } from './import-tracker.ts';
 import { detectContext, isContextMatch } from './temporal-context.ts';
 
 const DOCS_BASE_URL =
-  'https://github.com/temporalio/eslint-plugin-temporal/blob/main/docs/rules';
+  'https://github.com/stevekinney/eslint-plugin-temporal/blob/main/docs/rules';
 
 /**
  * Options for context-aware rules
@@ -53,50 +54,49 @@ export function createContextRule<
       const originalCreate = ruleDefinition.create;
       const treatTestAsWorkflow = options?.treatTestAsWorkflow ?? true;
 
-      // Get the original listeners
       const originalListeners = originalCreate(context, ruleOptions);
 
-      // Track if we've determined the context
       let contextDetermined = false;
       let shouldRun = false;
+      let importsSeeded = false;
 
-      // Check context and update shouldRun flag
+      function seedImportsFromProgram(): void {
+        if (importsSeeded) return;
+        importsSeeded = true;
+
+        const program = context.sourceCode.ast;
+        for (const statement of program.body) {
+          if (statement.type === AST_NODE_TYPES.ImportDeclaration) {
+            tracker.addImport(statement);
+          }
+        }
+      }
+
       function checkContext(): void {
         if (contextDetermined) return;
+
+        seedImportsFromProgram();
 
         const filename = context.filename;
         const settings = context.settings?.['temporal'] as
           | TemporalPluginSettings
           | undefined;
         const result = detectContext(tracker, filename, settings);
-
         shouldRun = isContextMatch(result.context, expectedContext, {
           treatTestAsWorkflow,
         });
+        if (!shouldRun) {
+          const fileContext = detectTemporalFileType(filename, settings?.filePatterns);
+          shouldRun = isContextMatch(fileContext, expectedContext, {
+            treatTestAsWorkflow,
+          });
+        }
         contextDetermined = true;
       }
 
-      // Wrap each listener to check context before executing
       const wrappedListeners: RuleListener = {};
 
-      // Always track imports
-      const originalImportDeclaration = originalListeners.ImportDeclaration;
-      wrappedListeners.ImportDeclaration = function (node: TSESTree.ImportDeclaration) {
-        tracker.addImport(node);
-        // Call original if it exists
-        if (typeof originalImportDeclaration === 'function') {
-          // Check context after tracking this import
-          checkContext();
-          if (shouldRun) {
-            originalImportDeclaration(node);
-          }
-        }
-      };
-
-      // Wrap all other listeners
       for (const [selector, listener] of Object.entries(originalListeners)) {
-        if (selector === 'ImportDeclaration') continue;
-
         if (typeof listener === 'function') {
           wrappedListeners[selector] = function (...args: unknown[]) {
             checkContext();

@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'missingRetryPolicy';
 
-export const requireActivityRetryPolicy = createRule<[], MessageIds>({
-  name: 'require-activity-retry-policy',
+export const requireActivityRetryPolicy = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-require-activity-retry-policy',
   meta: {
     type: 'suggestion',
     docs: {

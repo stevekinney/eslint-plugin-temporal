@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { deprecatePatchRequiresComment } from './deprecate-patch-requires-comment.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('deprecate-patch-requires-comment', () => {
   ruleTester.run('deprecate-patch-requires-comment', deprecatePatchRequiresComment, {

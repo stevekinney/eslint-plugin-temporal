@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'requireTypeOnlyImport';
 
-export const requireTypeOnlyActivityImports = createRule<[], MessageIds>({
-  name: 'require-type-only-activity-imports',
+export const requireTypeOnlyActivityImports = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-require-type-only-activity-imports',
   meta: {
     type: 'problem',
     docs: {

@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noBusyWait';
 
@@ -66,8 +66,8 @@ function isEmptyOrTrivialBody(body: TSESTree.Statement): boolean {
   return false;
 }
 
-export const noBusyWait = createRule<[], MessageIds>({
-  name: 'no-busy-wait',
+export const noBusyWait = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-busy-wait',
   meta: {
     type: 'problem',
     docs: {

@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'floatingPromise';
 
@@ -25,8 +25,8 @@ const ASYNC_WORKFLOW_METHODS = new Set([
   'continueAsNew',
 ]);
 
-export const noFloatingPromises = createRule<[], MessageIds>({
-  name: 'no-floating-promises',
+export const noFloatingPromises = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-floating-promises',
   meta: {
     type: 'problem',
     docs: {

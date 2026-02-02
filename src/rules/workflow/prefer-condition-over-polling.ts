@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'preferCondition';
 
-export const preferConditionOverPolling = createRule<[], MessageIds>({
-  name: 'prefer-condition-over-polling',
+export const preferConditionOverPolling = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-prefer-condition-over-polling',
   meta: {
     type: 'suggestion',
     docs: {

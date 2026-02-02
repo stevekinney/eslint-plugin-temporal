@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createClientRuleTester } from '../../test-utilities/rule-tester.ts';
 import { requireWorkflowId } from './require-workflow-id.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createClientRuleTester();
 
 describe('require-workflow-id', () => {
   ruleTester.run('require-workflow-id', requireWorkflowId, {

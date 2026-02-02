@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createActivityRuleTester } from '../../test-utilities/rule-tester.ts';
 import { preferApplicationFailure } from './prefer-applicationfailure.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createActivityRuleTester();
 
 describe('prefer-applicationfailure', () => {
   ruleTester.run('prefer-applicationfailure', preferApplicationFailure, {

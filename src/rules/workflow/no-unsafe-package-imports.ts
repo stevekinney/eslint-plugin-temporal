@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 import {
   DEFAULT_SAFE_PACKAGES,
   getBasePackageName,
@@ -18,8 +18,8 @@ type Options = [
 
 type MessageIds = 'unsafePackageImport';
 
-export const noUnsafePackageImports = createRule<Options, MessageIds>({
-  name: 'no-unsafe-package-imports',
+export const noUnsafePackageImports = createWorkflowRule<Options, MessageIds>({
+  name: 'workflow-no-unsafe-package-imports',
   meta: {
     type: 'problem',
     docs: {

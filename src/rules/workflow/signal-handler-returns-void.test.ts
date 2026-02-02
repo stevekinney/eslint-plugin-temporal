@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { signalHandlerReturnsVoid } from './signal-handler-returns-void.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('signal-handler-returns-void', () => {
   ruleTester.run('signal-handler-returns-void', signalHandlerReturnsVoid, {

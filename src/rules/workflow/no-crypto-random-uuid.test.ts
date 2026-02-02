@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noCryptoRandomUuid } from './no-crypto-random-uuid.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-crypto-random-uuid', () => {
   ruleTester.run('no-crypto-random-uuid', noCryptoRandomUuid, {

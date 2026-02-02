@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noActivityDefinitionsImport } from './no-activity-definitions-import.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-activity-definitions-import', () => {
   ruleTester.run('no-activity-definitions-import', noActivityDefinitionsImport, {

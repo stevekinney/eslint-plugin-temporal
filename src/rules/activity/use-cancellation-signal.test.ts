@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createActivityRuleTester } from '../../test-utilities/rule-tester.ts';
 import { useCancellationSignal } from './use-cancellation-signal.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createActivityRuleTester();
 
 describe('use-cancellation-signal', () => {
   ruleTester.run('use-cancellation-signal', useCancellationSignal, {

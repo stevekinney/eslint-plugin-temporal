@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'noActivityDefinitionsImport';
 
-export const noActivityDefinitionsImport = createRule<[], MessageIds>({
-  name: 'no-activity-definitions-import',
+export const noActivityDefinitionsImport = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-no-activity-definitions-import',
   meta: {
     type: 'problem',
     docs: {

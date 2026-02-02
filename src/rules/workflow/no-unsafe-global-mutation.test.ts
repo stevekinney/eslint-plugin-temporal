@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
 import { noUnsafeGlobalMutation } from './no-unsafe-global-mutation.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkflowRuleTester();
 
 describe('no-unsafe-global-mutation', () => {
   ruleTester.run('no-unsafe-global-mutation', noUnsafeGlobalMutation, {

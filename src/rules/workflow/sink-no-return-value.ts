@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
-import { createRule } from '../../utilities/create-rule.ts';
+import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'sinkNoReturnValue';
 
-export const sinkNoReturnValue = createRule<[], MessageIds>({
-  name: 'sink-no-return-value',
+export const sinkNoReturnValue = createWorkflowRule<[], MessageIds>({
+  name: 'workflow-sink-no-return-value',
   meta: {
     type: 'problem',
     docs: {

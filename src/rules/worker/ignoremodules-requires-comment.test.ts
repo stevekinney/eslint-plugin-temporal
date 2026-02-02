@@ -1,9 +1,9 @@
 import { describe } from 'bun:test';
 
-import { createBasicRuleTester } from '../../test-utilities/rule-tester.ts';
+import { createWorkerRuleTester } from '../../test-utilities/rule-tester.ts';
 import { ignoremodulesRequiresComment } from './ignoremodules-requires-comment.ts';
 
-const ruleTester = createBasicRuleTester();
+const ruleTester = createWorkerRuleTester();
 
 describe('ignoremodules-requires-comment', () => {
   ruleTester.run('ignoremodules-requires-comment', ignoremodulesRequiresComment, {

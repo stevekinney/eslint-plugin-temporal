@@ -2,7 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { hasProperty } from '../../utilities/ast-helpers.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createActivityRule } from '../../utilities/create-context-rule.ts';
 
 type Options = [
   {
@@ -14,8 +14,8 @@ type MessageIds = 'missingSignal';
 
 const DEFAULT_HTTP_CLIENTS = ['fetch', 'axios', 'got', 'ky'];
 
-export const useCancellationSignal = createRule<Options, MessageIds>({
-  name: 'use-cancellation-signal',
+export const useCancellationSignal = createActivityRule<Options, MessageIds>({
+  name: 'activity-use-cancellation-signal',
   meta: {
     type: 'suggestion',
     docs: {

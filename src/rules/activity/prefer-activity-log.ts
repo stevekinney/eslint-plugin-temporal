@@ -1,14 +1,14 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { CONSOLE_TO_LOG_MAP } from '../../types.ts';
-import { createRule } from '../../utilities/create-rule.ts';
+import { createActivityRule } from '../../utilities/create-context-rule.ts';
 import { ensureImport } from '../../utilities/import-fixer.ts';
 import { TEMPORAL_PACKAGES } from '../../utilities/temporal-packages.ts';
 
 type MessageIds = 'preferActivityLog';
 
-export const preferActivityLog = createRule<[], MessageIds>({
-  name: 'prefer-activity-log',
+export const preferActivityLog = createActivityRule<[], MessageIds>({
+  name: 'activity-prefer-activity-log',
   meta: {
     type: 'suggestion',
     docs: {
