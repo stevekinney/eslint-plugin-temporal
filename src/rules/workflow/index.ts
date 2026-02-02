@@ -17,6 +17,7 @@ export { noDynamicRequire } from './no-dynamic-require.ts';
 export { noErrorAsPayload } from './no-error-as-payload.ts';
 export { noFinalizationRegistry } from './no-finalization-registry.ts';
 export { noFloatingPromises } from './no-floating-promises.ts';
+export { noFrequentSearchAttributeUpserts } from './no-frequent-search-attribute-upserts.ts';
 export { noLargeInlineConstants } from './no-large-inline-constants.ts';
 export { noLargeLiteralPayloads } from './no-large-literal-payloads.ts';
 export { noNodeOrDomImports } from './no-node-or-dom-imports.ts';
@@ -43,7 +44,9 @@ export { requireDeprecatePatchAfterBranchRemoval } from './require-deprecatePatc
 export { requireExplicitPayloadTypes } from './require-explicit-payload-types.ts';
 export { requireSetHandlerEarly } from './require-setHandler-early.ts';
 export { requireTypeOnlyActivityImports } from './require-type-only-activity-imports.ts';
+export { searchAttributesUpsertShape } from './search-attributes-upsert-shape.ts';
 export { signalHandlerReturnsVoid } from './signal-handler-returns-void.ts';
+export { sinkArgsMustBeCloneable } from './sink-args-must-be-cloneable.ts';
 export { sinkNoAwait } from './sink-no-await.ts';
 export { sinkNoReturnValue } from './sink-no-return-value.ts';
 export { updateHandlerReturnType } from './update-handler-return-type.ts';

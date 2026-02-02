@@ -179,6 +179,8 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-weakref`                                      | Disallow WeakRef in workflows (non-deterministic).                          |         |
 | `workflow-no-worker-import`                                | Disallow importing @temporalio/worker in workflow files.                    |         |
 | `workflow-no-workflow-apis-in-query`                       | Disallow workflow APIs (sleep, condition, etc.) in query handlers.          |         |
+| `workflow-search-attributes-upsert-shape`                  | Require upsertSearchAttributes values to be arrays (use [] to remove).      |         |
+| `workflow-no-frequent-search-attribute-upserts`            | Warn when upsertSearchAttributes is called inside loops.                    |         |
 | `workflow-patch-id-literal`                                | Require patch IDs to be string literals.                                    |         |
 | `workflow-prefer-condition-over-polling`                   | Prefer condition() over polling loops with sleep().                         |         |
 | `workflow-prefer-single-object-args`                       | Prefer a single object parameter for workflows.                             |         |
@@ -193,6 +195,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-require-setHandler-early`                        | Suggest registering signal/query handlers early in the workflow.            |         |
 | `workflow-require-type-only-activity-imports`              | Require type-only imports for activity type definitions.                    |         |
 | `workflow-signal-handler-returns-void`                     | Require signal handlers to return void.                                     |         |
+| `workflow-sink-args-must-be-cloneable`                     | Require sink call arguments to be cloneable data.                           |         |
 | `workflow-sink-no-await`                                   | Disallow awaiting sink calls (sinks are fire-and-forget).                   |         |
 | `workflow-sink-no-return-value`                            | Disallow using return values from sink calls.                               |         |
 | `workflow-update-handler-return-type`                      | Suggest explicit return types for update handlers.                          |         |
@@ -215,6 +218,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | -------------------------------------------- | ----------------------------------------------------------------------------- | :-----: |
 | `worker-no-workflow-or-activity-definitions` | Disallow importing workflow or activity definitions directly in worker files. |         |
 | `worker-ignoremodules-requires-comment`      | Require a comment explaining why modules are being ignored in bundlerOptions. |         |
+| `worker-require-callDuringReplay-explicit`   | Require explicit callDuringReplay on sink definitions.                        |         |
 
 ### Client Rules
 

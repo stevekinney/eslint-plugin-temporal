@@ -16,6 +16,7 @@ import { taskQueueConstant } from './shared/task-queue-constant.ts';
 import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-comment.ts';
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
+import { requireCallDuringReplayExplicit } from './worker/require-callDuringReplay-explicit.ts';
 // Workflow rules
 import { activityTimeoutDurationFormat } from './workflow/activity-timeout-duration-format.ts';
 import { awaitCancelRequestedInNonCancellablePattern } from './workflow/await-cancelRequested-in-nonCancellable-pattern.ts';
@@ -42,6 +43,7 @@ import { noDynamicRequire } from './workflow/no-dynamic-require.ts';
 import { noErrorAsPayload } from './workflow/no-error-as-payload.ts';
 import { noFinalizationRegistry } from './workflow/no-finalization-registry.ts';
 import { noFloatingPromises } from './workflow/no-floating-promises.ts';
+import { noFrequentSearchAttributeUpserts } from './workflow/no-frequent-search-attribute-upserts.ts';
 import { noFsInWorkflow } from './workflow/no-fs-in-workflow.ts';
 import { noHeavyCpuInWorkflow } from './workflow/no-heavy-cpu-in-workflow.ts';
 import { noLargeInlineConstants } from './workflow/no-large-inline-constants.ts';
@@ -87,7 +89,9 @@ import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg
 import { requireMessageDefinitionsAtModuleScope } from './workflow/require-message-definitions-at-module-scope.ts';
 import { requireSetHandlerEarly } from './workflow/require-setHandler-early.ts';
 import { requireTypeOnlyActivityImports } from './workflow/require-type-only-activity-imports.ts';
+import { searchAttributesUpsertShape } from './workflow/search-attributes-upsert-shape.ts';
 import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void.ts';
+import { sinkArgsMustBeCloneable } from './workflow/sink-args-must-be-cloneable.ts';
 import { sinkNoAwait } from './workflow/sink-no-await.ts';
 import { sinkNoReturnValue } from './workflow/sink-no-return-value.ts';
 import { updateHandlerReturnType } from './workflow/update-handler-return-type.ts';
@@ -125,6 +129,7 @@ export const rules = {
   'workflow-no-fs-in-workflow': noFsInWorkflow,
   'workflow-no-finalization-registry': noFinalizationRegistry,
   'workflow-no-floating-promises': noFloatingPromises,
+  'workflow-no-frequent-search-attribute-upserts': noFrequentSearchAttributeUpserts,
   'workflow-no-heavy-cpu-in-workflow': noHeavyCpuInWorkflow,
   'workflow-no-large-inline-constants': noLargeInlineConstants,
   'workflow-no-large-literal-activity-payloads': noLargeLiteralActivityPayloads,
@@ -172,7 +177,9 @@ export const rules = {
     requireMessageDefinitionsAtModuleScope,
   'workflow-require-setHandler-early': requireSetHandlerEarly,
   'workflow-require-type-only-activity-imports': requireTypeOnlyActivityImports,
+  'workflow-search-attributes-upsert-shape': searchAttributesUpsertShape,
   'workflow-signal-handler-returns-void': signalHandlerReturnsVoid,
+  'workflow-sink-args-must-be-cloneable': sinkArgsMustBeCloneable,
   'workflow-sink-no-await': sinkNoAwait,
   'workflow-sink-no-return-value': sinkNoReturnValue,
   'workflow-update-handler-return-type': updateHandlerReturnType,
@@ -189,6 +196,7 @@ export const rules = {
   // Worker rules
   'worker-no-workflow-or-activity-definitions': noWorkflowOrActivityDefinitions,
   'worker-ignoremodules-requires-comment': ignoremodulesRequiresComment,
+  'worker-require-callDuringReplay-explicit': requireCallDuringReplayExplicit,
 
   // Client rules
   'client-require-workflow-id': requireWorkflowId,

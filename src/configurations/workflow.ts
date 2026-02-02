@@ -49,6 +49,9 @@ export const workflowRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-require-handler-serialization-safe-types': 'warn',
   'temporal/workflow-prefer-workflow-uuid': 'error',
   'temporal/workflow-no-floating-promises': 'error',
+  'temporal/workflow-no-frequent-search-attribute-upserts': 'warn',
   'temporal/workflow-no-throw-raw-error': 'warn',
   'temporal/workflow-patch-id-literal': 'warn',
+  'temporal/workflow-search-attributes-upsert-shape': 'warn',
+  'temporal/workflow-sink-args-must-be-cloneable': 'warn',
 };

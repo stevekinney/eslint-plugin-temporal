@@ -54,8 +54,11 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-require-handler-serialization-safe-types': 'error',
   'temporal/workflow-prefer-workflow-uuid': 'error',
   'temporal/workflow-no-floating-promises': 'error',
+  'temporal/workflow-no-frequent-search-attribute-upserts': 'error',
   'temporal/workflow-no-throw-raw-error': 'error',
   'temporal/workflow-patch-id-literal': 'error',
+  'temporal/workflow-search-attributes-upsert-shape': 'error',
+  'temporal/workflow-sink-args-must-be-cloneable': 'error',
 
   // Activity rules
   'temporal/activity-prefer-activity-log': 'error',
@@ -68,6 +71,7 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   // Worker rules
   'temporal/worker-no-workflow-or-activity-definitions': 'error',
   'temporal/worker-ignoremodules-requires-comment': 'error',
+  'temporal/worker-require-callDuringReplay-explicit': 'error',
 
   // Client rules
   'temporal/client-require-workflow-id': 'error',

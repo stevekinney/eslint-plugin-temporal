@@ -151,12 +151,18 @@ const whyByRule: Record<string, string> = {
     'Handlers registered after the first await can miss signals/updates. Registering early ensures deterministic handling.',
   'workflow-require-type-only-activity-imports':
     'Type-only imports keep activity implementations out of the workflow bundle, preserving sandbox safety.',
+  'workflow-search-attributes-upsert-shape':
+    'Search attribute updates must use arrays. Using [] for removals avoids runtime errors and keeps history tidy.',
   'workflow-signal-handler-returns-void':
     'Signal handlers do not return values to callers. Enforcing void return types keeps APIs honest and predictable.',
+  'workflow-sink-args-must-be-cloneable':
+    'Sink arguments are serialized across the workflow boundary. Non-cloneable values like functions or class instances fail at runtime.',
   'workflow-sink-no-await':
     'Sinks are fire-and-forget. Awaiting them can block workflow progress and mislead about delivery guarantees.',
   'workflow-sink-no-return-value':
     'Sink calls do not return values. Using their return values is a logic error that can hide missed side effects.',
+  'workflow-no-frequent-search-attribute-upserts':
+    'Frequent search attribute updates inside loops bloat workflow history. Batch updates or move upserts outside loops.',
   'workflow-update-handler-return-type':
     'Update handlers are part of your workflow API. Explicit return types prevent accidental breaking changes.',
   'workflow-uuid4-requires-security-comment':
@@ -177,6 +183,8 @@ const whyByRule: Record<string, string> = {
     'Workers should load workflows by path and pass activity implementations explicitly. Importing definitions can bundle code into the wrong environment.',
   'worker-ignoremodules-requires-comment':
     'Ignoring modules affects workflow bundling and can hide nondeterminism. A comment makes the safety trade-off explicit.',
+  'worker-require-callDuringReplay-explicit':
+    'callDuringReplay controls whether sinks run during replay. Making it explicit prevents accidental double-logging or missing events.',
   'client-require-workflow-id':
     'Workflow IDs provide idempotency and de-duplication. Omitting them can create duplicate workflows on retries.',
   'task-queue-constant':

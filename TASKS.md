@@ -80,10 +80,10 @@
 
 ### Sinks and observability
 
-- [ ] sink-args-must-be-cloneable
-- [ ] require-callDuringReplay-explicit
-- [ ] search-attributes-upsert-shape
-- [ ] no-frequent-search-attribute-upserts
+- [x] sink-args-must-be-cloneable
+- [x] require-callDuringReplay-explicit
+- [x] search-attributes-upsert-shape
+- [x] no-frequent-search-attribute-upserts
 
 ### Serialization and payload hygiene
 

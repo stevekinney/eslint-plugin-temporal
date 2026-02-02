@@ -58,6 +58,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-fs-in-workflow': 'error',
   'temporal/workflow-no-finalization-registry': 'error',
   'temporal/workflow-no-floating-promises': 'error',
+  'temporal/workflow-no-frequent-search-attribute-upserts': 'warn',
   'temporal/workflow-no-heavy-cpu-in-workflow': 'warn',
   'temporal/workflow-no-large-literal-activity-payloads': 'warn',
   'temporal/workflow-no-large-literal-payloads': 'warn',
@@ -98,7 +99,9 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-require-handler-serialization-safe-types': 'warn',
   'temporal/workflow-require-setHandler-early': 'warn',
   'temporal/workflow-require-type-only-activity-imports': 'error',
+  'temporal/workflow-search-attributes-upsert-shape': 'warn',
   'temporal/workflow-signal-handler-returns-void': 'error',
+  'temporal/workflow-sink-args-must-be-cloneable': 'warn',
   'temporal/workflow-sink-no-await': 'error',
   'temporal/workflow-sink-no-return-value': 'error',
   'temporal/workflow-update-handler-return-type': 'warn',
@@ -115,6 +118,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   // Worker rules (auto-detected via @temporalio/worker imports or file paths)
   'temporal/worker-no-workflow-or-activity-definitions': 'error',
   'temporal/worker-ignoremodules-requires-comment': 'warn',
+  'temporal/worker-require-callDuringReplay-explicit': 'warn',
 
   // Client rules (auto-detected via @temporalio/client imports or file paths)
   'temporal/client-require-workflow-id': 'warn',
