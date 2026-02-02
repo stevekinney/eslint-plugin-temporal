@@ -27,6 +27,7 @@ import { awaitCancelRequestedInNonCancellablePattern } from './workflow/await-ca
 import { conditionTimeoutStyle } from './workflow/condition-timeout-style.ts';
 import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
 import { durationFormat } from './workflow/duration-format.ts';
+import { localActivityOptionsRequired } from './workflow/local-activity-options-required.ts';
 import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
 import { noAnyInWorkflowPublicApi } from './workflow/no-any-in-workflow-public-api.ts';
@@ -75,11 +76,13 @@ import { noWallClockAssumptions } from './workflow/no-wall-clock-assumptions.ts'
 import { noWeakRef } from './workflow/no-weakref.ts';
 import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
+import { noWorkflowPrngForPersistedIds } from './workflow/no-workflow-prng-for-persisted-ids.ts';
 import { nonCancellableCleanupRequired } from './workflow/nonCancellable-cleanup-required.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
 import { patchedMustGuardIncompatibleChange } from './workflow/patched-must-guard-incompatible-change.ts';
 import { preferCancellationScopeWithTimeout } from './workflow/prefer-cancellation-scope-with-timeout.ts';
 import { preferConditionOverPolling } from './workflow/prefer-condition-over-polling.ts';
+import { preferLocalActivityForNondeterministicValue } from './workflow/prefer-local-activity-for-nondeterministic-value.ts';
 import { preferSingleObjectWorkflowArgs } from './workflow/prefer-single-object-workflow-args.ts';
 import { preferSleep } from './workflow/prefer-sleep.ts';
 import { preferWorkflowUuid } from './workflow/prefer-workflow-uuid.ts';
@@ -140,6 +143,7 @@ export const rules = {
   'workflow-no-large-inline-constants': noLargeInlineConstants,
   'workflow-no-large-literal-activity-payloads': noLargeLiteralActivityPayloads,
   'workflow-no-large-literal-payloads': noLargeLiteralPayloads,
+  'workflow-local-activity-options-required': localActivityOptionsRequired,
   'workflow-no-logger-library-in-workflow': noLoggerLibraryInWorkflow,
   'workflow-no-mixed-scope-exports': noMixedScopeExports,
   'workflow-no-network-in-workflow': noNetworkInWorkflow,
@@ -161,11 +165,14 @@ export const rules = {
   'workflow-no-weakref': noWeakRef,
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
+  'workflow-no-workflow-prng-for-persisted-ids': noWorkflowPrngForPersistedIds,
   'workflow-no-nonserializable-types-in-payloads': noNonserializableTypesInPayloads,
   'workflow-patch-id-literal': patchIdLiteral,
   'workflow-patched-must-guard-incompatible-change': patchedMustGuardIncompatibleChange,
   'workflow-prefer-CancellationScope-withTimeout': preferCancellationScopeWithTimeout,
   'workflow-prefer-condition-over-polling': preferConditionOverPolling,
+  'workflow-prefer-local-activity-for-nondeterministic-value':
+    preferLocalActivityForNondeterministicValue,
   'workflow-prefer-sleep': preferSleep,
   'workflow-prefer-single-object-args': preferSingleObjectWorkflowArgs,
   'workflow-prefer-workflow-uuid': preferWorkflowUuid,

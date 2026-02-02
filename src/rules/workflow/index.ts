@@ -1,4 +1,5 @@
 export { deprecatePatchRequiresComment } from './deprecate-patch-requires-comment.ts';
+export { localActivityOptionsRequired } from './local-activity-options-required.ts';
 export { messageNameLiteral } from './message-name-literal.ts';
 export { noActivityDefinitionsImport } from './no-activity-definitions-import.ts';
 export { noAnyInWorkflowPublicApi } from './no-any-in-workflow-public-api.ts';
@@ -32,9 +33,11 @@ export { noUnsafePackageImports } from './no-unsafe-package-imports.ts';
 export { noWeakRef } from './no-weakref.ts';
 export { noWorkerImport } from './no-worker-import.ts';
 export { noWorkflowApisInQuery } from './no-workflow-apis-in-query.ts';
+export { noWorkflowPrngForPersistedIds } from './no-workflow-prng-for-persisted-ids.ts';
 export { patchIdLiteral } from './patch-id-literal.ts';
 export { patchedMustGuardIncompatibleChange } from './patched-must-guard-incompatible-change.ts';
 export { preferConditionOverPolling } from './prefer-condition-over-polling.ts';
+export { preferLocalActivityForNondeterministicValue } from './prefer-local-activity-for-nondeterministic-value.ts';
 export { preferSleep } from './prefer-sleep.ts';
 export { preferWorkflowUuid } from './prefer-workflow-uuid.ts';
 export { replayTestingRequiredComment } from './replay-testing-required-comment.ts';

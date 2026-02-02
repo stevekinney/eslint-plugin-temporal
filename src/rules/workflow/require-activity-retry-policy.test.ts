@@ -37,14 +37,6 @@ describe('require-activity-retry-policy', () => {
         });
       `,
 
-      // proxyLocalActivities with retry
-      `
-        const localActivities = proxyLocalActivities({
-          startToCloseTimeout: '1m',
-          retry: { maximumAttempts: 3 }
-        });
-      `,
-
       // Options as variable (can't statically analyze)
       `
         const options = getActivityOptions();
@@ -62,16 +54,6 @@ describe('require-activity-retry-policy', () => {
       {
         code: `
           const activities = proxyActivities({
-            startToCloseTimeout: '1m'
-          });
-        `,
-        errors: [{ messageId: 'missingRetryPolicy' }],
-      },
-
-      // Missing retry in proxyLocalActivities
-      {
-        code: `
-          const localActivities = proxyLocalActivities({
             startToCloseTimeout: '1m'
           });
         `,

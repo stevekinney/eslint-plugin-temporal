@@ -22,11 +22,10 @@ export const requireActivityRetryPolicy = createWorkflowRule<[], MessageIds>({
   create(context) {
     return {
       CallExpression(node) {
-        // Check if this is a proxyActivities or proxyLocalActivities call
+        // Check if this is a proxyActivities call
         if (
           node.callee.type !== AST_NODE_TYPES.Identifier ||
-          (node.callee.name !== 'proxyActivities' &&
-            node.callee.name !== 'proxyLocalActivities')
+          node.callee.name !== 'proxyActivities'
         ) {
           return;
         }

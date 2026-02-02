@@ -105,6 +105,6 @@
 
 ### Local activities and side-effect patterns
 
-- [ ] prefer-local-activity-for-nondeterministic-value
-- [ ] no-workflow-prng-for-persisted-ids
-- [ ] local-activity-options-required
+- [x] prefer-local-activity-for-nondeterministic-value
+- [x] no-workflow-prng-for-persisted-ids
+- [x] local-activity-options-required

@@ -80,6 +80,8 @@ const whyByRule: Record<string, string> = {
     'Child workflow payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.',
   'workflow-no-large-inline-constants':
     'Large inline literals increase workflow bundle size and memory use. Move big constants out of workflow code.',
+  'workflow-local-activity-options-required':
+    'Local activities still schedule commands in workflow history. Explicit timeouts and retry policies keep behavior predictable and reviewable.',
   'workflow-no-nonserializable-types-in-payloads':
     'Workflow payloads must be serializable. Disallowing non-serializable types avoids runtime payload converter failures.',
   'workflow-no-error-as-payload':
@@ -102,6 +104,8 @@ const whyByRule: Record<string, string> = {
     'Workflows run in a restricted sandbox without Node or DOM APIs. Importing them will fail at runtime or break determinism.',
   'workflow-no-nondeterministic-control-flow':
     'Branching on time or randomness can break replay when code evolves. Require an explicit comment to make the choice intentional.',
+  'workflow-no-workflow-prng-for-persisted-ids':
+    'Workflow PRNG values can shift when code changes. Persisted IDs should be generated in activities or local activities to remain stable.',
   'workflow-no-assert-in-production-workflow':
     'Node assert failures can trigger workflow task retries and replay issues. Prefer explicit errors or ApplicationFailure.',
   'workflow-no-process-env':
@@ -134,6 +138,8 @@ const whyByRule: Record<string, string> = {
     'Patch IDs are long-lived version gates. Literals ensure they remain stable and searchable across the codebase.',
   'workflow-prefer-condition-over-polling':
     'Polling with timers creates extra workflow tasks and history. condition() is more efficient and replay-friendly.',
+  'workflow-prefer-local-activity-for-nondeterministic-value':
+    'Random or UUID values that must survive refactors are more stable when generated in a local activity and returned to the workflow.',
   'workflow-prefer-sleep':
     'sleep() is workflow-aware and cancellation-safe. setTimeout wrappers can behave differently under replay.',
   'workflow-prefer-single-object-args':

@@ -120,87 +120,90 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 
 ### Workflow Rules
 
-| Rule                                                       | Description                                                                 | Fixable |
-| ---------------------------------------------------------- | --------------------------------------------------------------------------- | :-----: |
-| `workflow-condition-timeout-style`                         | Enforce consistent timeout style for condition() calls.                     |         |
-| `workflow-deprecate-patch-requires-comment`                | Require a comment explaining why deprecatePatch is being used.              |         |
-| `workflow-patched-must-guard-incompatible-change`          | Require patched() to guard incompatible workflow changes.                   |         |
-| `workflow-require-deprecatePatch-after-branch-removal`     | Require deprecatePatch() after removing a patched fallback branch.          |         |
-| `workflow-replay-testing-required-comment`                 | Require a replay-tested comment when changing versioning logic.             |         |
-| `workflow-duration-format`                                 | Enforce consistent duration literal format (string vs ms number).           |         |
-| `workflow-activity-timeout-duration-format`                | Enforce consistent duration literal format for activity timeouts.           |         |
-| `workflow-message-name-literal`                            | Require signal/query/update names to be string literals.                    |         |
-| `workflow-require-message-definitions-at-module-scope`     | Require defineSignal/defineQuery/defineUpdate at module scope.              |         |
-| `workflow-prefer-CancellationScope-withTimeout`            | Prefer CancellationScope.withTimeout() over Promise.race timeouts.          |         |
-| `workflow-no-settimeout-in-cancellation-scope`             | Disallow setTimeout inside CancellationScope callbacks.                     |         |
-| `workflow-no-swallow-cancellation`                         | Require cancellation errors to be rethrown.                                 |         |
-| `workflow-nonCancellable-cleanup-required`                 | Require CancellationScope.nonCancellable for cleanup on cancellation.       |         |
-| `workflow-await-cancelRequested-in-nonCancellable-pattern` | Suggest awaiting cancelRequested after nonCancellable cleanup.              |         |
-| `workflow-no-activity-definitions-import`                  | Disallow importing activity implementations. Use proxyActivities() instead. |         |
-| `workflow-no-async-query-handler`                          | Disallow async query handlers (queries must be synchronous).                |         |
-| `workflow-no-busy-wait`                                    | Disallow busy-wait loops. Use sleep() or condition() instead.               |         |
-| `workflow-no-client-import`                                | Disallow importing @temporalio/client in workflow files.                    |         |
-| `workflow-no-console`                                      | Disallow console.\* in workflow files. Use log from @temporalio/workflow.   |   Yes   |
-| `workflow-no-continueAsNew-in-update-handler`              | Disallow calling continueAsNew inside update handlers.                      |         |
-| `workflow-no-continueAsNew-without-state-argument`         | Require continueAsNew() to pass workflow state arguments.                   |         |
-| `workflow-no-crypto-random-uuid`                           | Disallow crypto.randomUUID(). Use uuid4() from @temporalio/workflow.        |         |
-| `workflow-no-date-now-tight-loop`                          | Warn on multiple Date.now() calls without yielding.                         |         |
-| `workflow-no-duplicate-patch-ids`                          | Disallow duplicate patch IDs in the same workflow.                          |         |
-| `workflow-no-dynamic-import`                               | Disallow dynamic import() expressions in workflows.                         |         |
-| `workflow-no-dynamic-require`                              | Disallow dynamic require() calls in workflows.                              |         |
-| `workflow-no-fs-in-workflow`                               | Disallow filesystem access in workflows. Use activities for file I/O.       |         |
-| `workflow-no-finalization-registry`                        | Disallow FinalizationRegistry in workflows (non-deterministic).             |         |
-| `workflow-no-floating-promises`                            | Disallow floating (unhandled) promises in workflows.                        |         |
-| `workflow-no-heavy-cpu-in-workflow`                        | Warn on CPU-heavy work in workflows (move to activities).                   |         |
-| `workflow-no-large-literal-activity-payloads`              | Warn about large literal payloads sent to activities.                       |         |
-| `workflow-no-large-literal-payloads`                       | Warn about large literal payloads sent to child workflows.                  |         |
-| `workflow-no-large-inline-constants`                       | Warn about large inline literals in workflow code.                          |         |
-| `workflow-no-nonserializable-types-in-payloads`            | Disallow non-serializable types in workflow payloads.                       |         |
-| `workflow-no-error-as-payload`                             | Disallow Error objects in workflow payload types.                           |         |
-| `workflow-no-bigint-in-payload`                            | Disallow bigint in workflow payloads without a custom converter.            |         |
-| `workflow-no-date-object-in-payload`                       | Disallow Date objects in workflow payloads.                                 |         |
-| `workflow-require-explicit-payload-types`                  | Require explicit payload types for workflows and handlers.                  |         |
-| `workflow-no-any-in-workflow-public-api`                   | Disallow any in workflow public API payload types.                          |         |
-| `workflow-no-logger-library-in-workflow`                   | Disallow logger libraries in workflows. Use the workflow log instead.       |         |
-| `workflow-no-mixed-scope-exports`                          | Disallow exporting Worker/Client/Activity values from workflow files.       |         |
-| `workflow-no-network-in-workflow`                          | Disallow network access in workflows. Use activities for HTTP calls.        |         |
-| `workflow-no-node-or-dom-imports`                          | Disallow Node.js built-in modules and DOM APIs.                             |         |
-| `workflow-no-nondeterministic-control-flow`                | Warn when control flow depends on time/randomness without annotation.       |         |
-| `workflow-no-assert-in-production-workflow`                | Disallow Node assert usage in workflow code outside tests.                  |         |
-| `workflow-no-process-env`                                  | Disallow process.env access (non-deterministic).                            |         |
-| `workflow-no-query-mutation`                               | Disallow state mutations inside query handlers.                             |         |
-| `workflow-no-retry-for-nonidempotent-activities`           | Require retry.maximumAttempts: 1 for non-idempotent activities.             |         |
-| `workflow-no-setinterval`                                  | Disallow setInterval (use sleep() in a loop instead).                       |         |
-| `workflow-no-top-level-workflow-side-effects`              | Disallow scheduling workflow commands at module scope.                      |         |
-| `workflow-no-throw-raw-error`                              | Prefer throwing ApplicationFailure over raw Error.                          |         |
-| `workflow-no-unsafe-global-mutation`                       | Disallow mutating global state in workflows.                                |         |
-| `workflow-no-unsafe-package-imports`                       | Disallow importing packages unsafe for workflow determinism.                |         |
-| `workflow-no-uuid-library-in-workflow`                     | Disallow UUID libraries in workflows. Use uuid4() instead.                  |         |
-| `workflow-no-wall-clock-assumptions`                       | Warn when comparing Date.now() to external timestamps in workflows.         |         |
-| `workflow-no-weakref`                                      | Disallow WeakRef in workflows (non-deterministic).                          |         |
-| `workflow-no-worker-import`                                | Disallow importing @temporalio/worker in workflow files.                    |         |
-| `workflow-no-workflow-apis-in-query`                       | Disallow workflow APIs (sleep, condition, etc.) in query handlers.          |         |
-| `workflow-search-attributes-upsert-shape`                  | Require upsertSearchAttributes values to be arrays (use [] to remove).      |         |
-| `workflow-no-frequent-search-attribute-upserts`            | Warn when upsertSearchAttributes is called inside loops.                    |         |
-| `workflow-patch-id-literal`                                | Require patch IDs to be string literals.                                    |         |
-| `workflow-prefer-condition-over-polling`                   | Prefer condition() over polling loops with sleep().                         |         |
-| `workflow-prefer-single-object-args`                       | Prefer a single object parameter for workflows.                             |         |
-| `workflow-prefer-sleep`                                    | Prefer sleep() over setTimeout in workflows.                                |         |
-| `workflow-prefer-workflow-uuid`                            | Prefer uuid4() from @temporalio/workflow over other UUID libs.              |   Yes   |
-| `workflow-require-idempotency-key-arg`                     | Require idempotency keys for non-idempotent activity calls.                 |         |
-| `workflow-require-activity-retry-policy`                   | Suggest configuring retry policies for activities.                          |         |
-| `workflow-require-activity-timeouts`                       | Require timeout configuration when calling proxyActivities().               |         |
-| `workflow-require-all-handlers-finished`                   | Suggest using allHandlersFinished() before workflow completion.             |         |
-| `workflow-no-await-in-handler-without-exit-guard`          | Require allHandlersFinished() when handlers await work.                     |         |
-| `workflow-require-handler-serialization-safe-types`        | Require handler args/returns to be payload-serializable.                    |         |
-| `workflow-require-setHandler-early`                        | Suggest registering signal/query handlers early in the workflow.            |         |
-| `workflow-require-type-only-activity-imports`              | Require type-only imports for activity type definitions.                    |         |
-| `workflow-signal-handler-returns-void`                     | Require signal handlers to return void.                                     |         |
-| `workflow-sink-args-must-be-cloneable`                     | Require sink call arguments to be cloneable data.                           |         |
-| `workflow-sink-no-await`                                   | Disallow awaiting sink calls (sinks are fire-and-forget).                   |         |
-| `workflow-sink-no-return-value`                            | Disallow using return values from sink calls.                               |         |
-| `workflow-update-handler-return-type`                      | Suggest explicit return types for update handlers.                          |         |
-| `workflow-uuid4-requires-security-comment`                 | Require a comment noting uuid4() is deterministic and not secure.           |         |
+| Rule                                                        | Description                                                                 | Fixable |
+| ----------------------------------------------------------- | --------------------------------------------------------------------------- | :-----: |
+| `workflow-condition-timeout-style`                          | Enforce consistent timeout style for condition() calls.                     |         |
+| `workflow-deprecate-patch-requires-comment`                 | Require a comment explaining why deprecatePatch is being used.              |         |
+| `workflow-patched-must-guard-incompatible-change`           | Require patched() to guard incompatible workflow changes.                   |         |
+| `workflow-require-deprecatePatch-after-branch-removal`      | Require deprecatePatch() after removing a patched fallback branch.          |         |
+| `workflow-replay-testing-required-comment`                  | Require a replay-tested comment when changing versioning logic.             |         |
+| `workflow-duration-format`                                  | Enforce consistent duration literal format (string vs ms number).           |         |
+| `workflow-activity-timeout-duration-format`                 | Enforce consistent duration literal format for activity timeouts.           |         |
+| `workflow-message-name-literal`                             | Require signal/query/update names to be string literals.                    |         |
+| `workflow-require-message-definitions-at-module-scope`      | Require defineSignal/defineQuery/defineUpdate at module scope.              |         |
+| `workflow-prefer-CancellationScope-withTimeout`             | Prefer CancellationScope.withTimeout() over Promise.race timeouts.          |         |
+| `workflow-no-settimeout-in-cancellation-scope`              | Disallow setTimeout inside CancellationScope callbacks.                     |         |
+| `workflow-no-swallow-cancellation`                          | Require cancellation errors to be rethrown.                                 |         |
+| `workflow-nonCancellable-cleanup-required`                  | Require CancellationScope.nonCancellable for cleanup on cancellation.       |         |
+| `workflow-await-cancelRequested-in-nonCancellable-pattern`  | Suggest awaiting cancelRequested after nonCancellable cleanup.              |         |
+| `workflow-no-activity-definitions-import`                   | Disallow importing activity implementations. Use proxyActivities() instead. |         |
+| `workflow-no-async-query-handler`                           | Disallow async query handlers (queries must be synchronous).                |         |
+| `workflow-no-busy-wait`                                     | Disallow busy-wait loops. Use sleep() or condition() instead.               |         |
+| `workflow-no-client-import`                                 | Disallow importing @temporalio/client in workflow files.                    |         |
+| `workflow-no-console`                                       | Disallow console.\* in workflow files. Use log from @temporalio/workflow.   |   Yes   |
+| `workflow-no-continueAsNew-in-update-handler`               | Disallow calling continueAsNew inside update handlers.                      |         |
+| `workflow-no-continueAsNew-without-state-argument`          | Require continueAsNew() to pass workflow state arguments.                   |         |
+| `workflow-no-crypto-random-uuid`                            | Disallow crypto.randomUUID(). Use uuid4() from @temporalio/workflow.        |         |
+| `workflow-no-date-now-tight-loop`                           | Warn on multiple Date.now() calls without yielding.                         |         |
+| `workflow-no-duplicate-patch-ids`                           | Disallow duplicate patch IDs in the same workflow.                          |         |
+| `workflow-no-dynamic-import`                                | Disallow dynamic import() expressions in workflows.                         |         |
+| `workflow-no-dynamic-require`                               | Disallow dynamic require() calls in workflows.                              |         |
+| `workflow-no-fs-in-workflow`                                | Disallow filesystem access in workflows. Use activities for file I/O.       |         |
+| `workflow-no-finalization-registry`                         | Disallow FinalizationRegistry in workflows (non-deterministic).             |         |
+| `workflow-no-floating-promises`                             | Disallow floating (unhandled) promises in workflows.                        |         |
+| `workflow-no-heavy-cpu-in-workflow`                         | Warn on CPU-heavy work in workflows (move to activities).                   |         |
+| `workflow-no-large-literal-activity-payloads`               | Warn about large literal payloads sent to activities.                       |         |
+| `workflow-no-large-literal-payloads`                        | Warn about large literal payloads sent to child workflows.                  |         |
+| `workflow-no-large-inline-constants`                        | Warn about large inline literals in workflow code.                          |         |
+| `workflow-local-activity-options-required`                  | Require timeouts and retry policy for proxyLocalActivities().               |         |
+| `workflow-no-nonserializable-types-in-payloads`             | Disallow non-serializable types in workflow payloads.                       |         |
+| `workflow-no-error-as-payload`                              | Disallow Error objects in workflow payload types.                           |         |
+| `workflow-no-bigint-in-payload`                             | Disallow bigint in workflow payloads without a custom converter.            |         |
+| `workflow-no-date-object-in-payload`                        | Disallow Date objects in workflow payloads.                                 |         |
+| `workflow-require-explicit-payload-types`                   | Require explicit payload types for workflows and handlers.                  |         |
+| `workflow-no-any-in-workflow-public-api`                    | Disallow any in workflow public API payload types.                          |         |
+| `workflow-no-logger-library-in-workflow`                    | Disallow logger libraries in workflows. Use the workflow log instead.       |         |
+| `workflow-no-mixed-scope-exports`                           | Disallow exporting Worker/Client/Activity values from workflow files.       |         |
+| `workflow-no-network-in-workflow`                           | Disallow network access in workflows. Use activities for HTTP calls.        |         |
+| `workflow-no-node-or-dom-imports`                           | Disallow Node.js built-in modules and DOM APIs.                             |         |
+| `workflow-no-nondeterministic-control-flow`                 | Warn when control flow depends on time/randomness without annotation.       |         |
+| `workflow-no-workflow-prng-for-persisted-ids`               | Warn when workflow PRNG values are used for persisted IDs or payloads.      |         |
+| `workflow-no-assert-in-production-workflow`                 | Disallow Node assert usage in workflow code outside tests.                  |         |
+| `workflow-no-process-env`                                   | Disallow process.env access (non-deterministic).                            |         |
+| `workflow-no-query-mutation`                                | Disallow state mutations inside query handlers.                             |         |
+| `workflow-no-retry-for-nonidempotent-activities`            | Require retry.maximumAttempts: 1 for non-idempotent activities.             |         |
+| `workflow-no-setinterval`                                   | Disallow setInterval (use sleep() in a loop instead).                       |         |
+| `workflow-no-top-level-workflow-side-effects`               | Disallow scheduling workflow commands at module scope.                      |         |
+| `workflow-no-throw-raw-error`                               | Prefer throwing ApplicationFailure over raw Error.                          |         |
+| `workflow-no-unsafe-global-mutation`                        | Disallow mutating global state in workflows.                                |         |
+| `workflow-no-unsafe-package-imports`                        | Disallow importing packages unsafe for workflow determinism.                |         |
+| `workflow-no-uuid-library-in-workflow`                      | Disallow UUID libraries in workflows. Use uuid4() instead.                  |         |
+| `workflow-no-wall-clock-assumptions`                        | Warn when comparing Date.now() to external timestamps in workflows.         |         |
+| `workflow-no-weakref`                                       | Disallow WeakRef in workflows (non-deterministic).                          |         |
+| `workflow-no-worker-import`                                 | Disallow importing @temporalio/worker in workflow files.                    |         |
+| `workflow-no-workflow-apis-in-query`                        | Disallow workflow APIs (sleep, condition, etc.) in query handlers.          |         |
+| `workflow-search-attributes-upsert-shape`                   | Require upsertSearchAttributes values to be arrays (use [] to remove).      |         |
+| `workflow-no-frequent-search-attribute-upserts`             | Warn when upsertSearchAttributes is called inside loops.                    |         |
+| `workflow-patch-id-literal`                                 | Require patch IDs to be string literals.                                    |         |
+| `workflow-prefer-condition-over-polling`                    | Prefer condition() over polling loops with sleep().                         |         |
+| `workflow-prefer-local-activity-for-nondeterministic-value` | Suggest generating nondeterministic values in local activities.             |         |
+| `workflow-prefer-single-object-args`                        | Prefer a single object parameter for workflows.                             |         |
+| `workflow-prefer-sleep`                                     | Prefer sleep() over setTimeout in workflows.                                |         |
+| `workflow-prefer-workflow-uuid`                             | Prefer uuid4() from @temporalio/workflow over other UUID libs.              |   Yes   |
+| `workflow-require-idempotency-key-arg`                      | Require idempotency keys for non-idempotent activity calls.                 |         |
+| `workflow-require-activity-retry-policy`                    | Suggest configuring retry policies for activities.                          |         |
+| `workflow-require-activity-timeouts`                        | Require timeout configuration when calling proxyActivities().               |         |
+| `workflow-require-all-handlers-finished`                    | Suggest using allHandlersFinished() before workflow completion.             |         |
+| `workflow-no-await-in-handler-without-exit-guard`           | Require allHandlersFinished() when handlers await work.                     |         |
+| `workflow-require-handler-serialization-safe-types`         | Require handler args/returns to be payload-serializable.                    |         |
+| `workflow-require-setHandler-early`                         | Suggest registering signal/query handlers early in the workflow.            |         |
+| `workflow-require-type-only-activity-imports`               | Require type-only imports for activity type definitions.                    |         |
+| `workflow-signal-handler-returns-void`                      | Require signal handlers to return void.                                     |         |
+| `workflow-sink-args-must-be-cloneable`                      | Require sink call arguments to be cloneable data.                           |         |
+| `workflow-sink-no-await`                                    | Disallow awaiting sink calls (sinks are fire-and-forget).                   |         |
+| `workflow-sink-no-return-value`                             | Disallow using return values from sink calls.                               |         |
+| `workflow-update-handler-return-type`                       | Suggest explicit return types for update handlers.                          |         |
+| `workflow-uuid4-requires-security-comment`                  | Require a comment noting uuid4() is deterministic and not secure.           |         |
 
 ### Activity Rules
 
