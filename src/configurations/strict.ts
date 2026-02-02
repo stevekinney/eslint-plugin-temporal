@@ -32,6 +32,7 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-top-level-workflow-side-effects': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
   'temporal/workflow-no-nondeterministic-control-flow': 'error',
+  'temporal/workflow-no-assert-in-production-workflow': 'error',
   'temporal/workflow-no-date-now-tight-loop': 'error',
   'temporal/workflow-no-wall-clock-assumptions': 'error',
   'temporal/workflow-uuid4-requires-security-comment': 'error',
@@ -75,4 +76,10 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
 
   // Client rules
   'temporal/client-require-workflow-id': 'error',
+
+  // Test rules
+  'temporal/test-teardown-required': 'error',
+  'temporal/test-worker-runUntil-required': 'error',
+  'temporal/test-import-type-for-activities': 'error',
+  'temporal/replay-history-smoke-test-hook': 'error',
 };

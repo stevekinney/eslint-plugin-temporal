@@ -2,6 +2,7 @@ export { deprecatePatchRequiresComment } from './deprecate-patch-requires-commen
 export { messageNameLiteral } from './message-name-literal.ts';
 export { noActivityDefinitionsImport } from './no-activity-definitions-import.ts';
 export { noAnyInWorkflowPublicApi } from './no-any-in-workflow-public-api.ts';
+export { noAssertInProductionWorkflow } from './no-assert-in-production-workflow.ts';
 export { noAsyncQueryHandler } from './no-async-query-handler.ts';
 export { noBigintInPayload } from './no-bigint-in-payload.ts';
 export { noBusyWait } from './no-busy-wait.ts';

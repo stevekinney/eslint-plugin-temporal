@@ -166,6 +166,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-network-in-workflow`                          | Disallow network access in workflows. Use activities for HTTP calls.        |         |
 | `workflow-no-node-or-dom-imports`                          | Disallow Node.js built-in modules and DOM APIs.                             |         |
 | `workflow-no-nondeterministic-control-flow`                | Warn when control flow depends on time/randomness without annotation.       |         |
+| `workflow-no-assert-in-production-workflow`                | Disallow Node assert usage in workflow code outside tests.                  |         |
 | `workflow-no-process-env`                                  | Disallow process.env access (non-deterministic).                            |         |
 | `workflow-no-query-mutation`                               | Disallow state mutations inside query handlers.                             |         |
 | `workflow-no-retry-for-nonidempotent-activities`           | Require retry.maximumAttempts: 1 for non-idempotent activities.             |         |
@@ -225,6 +226,15 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | Rule                         | Description                                                                | Fixable |
 | ---------------------------- | -------------------------------------------------------------------------- | :-----: |
 | `client-require-workflow-id` | Require explicit workflowId when starting workflows to ensure idempotency. |         |
+
+### Test Rules
+
+| Rule                              | Description                                                                                 | Fixable |
+| --------------------------------- | ------------------------------------------------------------------------------------------- | :-----: |
+| `test-teardown-required`          | Require TestWorkflowEnvironment.teardown() in afterAll/afterEach.                           |         |
+| `test-worker-runUntil-required`   | Require worker.runUntil(...) when creating Workers in tests.                                |         |
+| `test-import-type-for-activities` | Require type-only imports for activity modules in tests.                                    |         |
+| `replay-history-smoke-test-hook`  | Require a replay history smoke test hook exporting a function calling runReplayHistories(). |         |
 
 ### Shared Rules
 

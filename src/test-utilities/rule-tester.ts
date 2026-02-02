@@ -1,4 +1,5 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
+// eslint-disable-next-line n/no-missing-import -- Bun provides this test module at runtime.
 import * as vitest from 'bun:test';
 
 // Configure RuleTester to use Bun's test framework
@@ -72,6 +73,13 @@ export function clientFile(filename: string = 'client.ts'): string {
   return `/project/src/client/${filename}`;
 }
 
+/**
+ * Helper to create a test file path for testing
+ */
+export function testFile(filename: string = 'workflow.test.ts'): string {
+  return `/project/src/__tests__/${filename}`;
+}
+
 export function createWorkflowRuleTester(): RuleTester {
   return createBasicRuleTester({
     defaultFilenames: { ts: workflowFile(), tsx: workflowFile('workflow.tsx') },
@@ -93,5 +101,11 @@ export function createWorkerRuleTester(): RuleTester {
 export function createClientRuleTester(): RuleTester {
   return createBasicRuleTester({
     defaultFilenames: { ts: clientFile(), tsx: clientFile('client.tsx') },
+  });
+}
+
+export function createTestRuleTester(): RuleTester {
+  return createBasicRuleTester({
+    defaultFilenames: { ts: testFile(), tsx: testFile('workflow.test.tsx') },
   });
 }

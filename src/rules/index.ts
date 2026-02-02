@@ -13,6 +13,10 @@ import { noTemporalInternalImports } from './shared/no-temporal-internal-imports
 import { noWorkflowAndActivityInSameFile } from './shared/no-workflow-and-activity-in-same-file.ts';
 // Shared rules
 import { taskQueueConstant } from './shared/task-queue-constant.ts';
+import { replayHistorySmokeTestHook } from './test/replay-history-smoke-test-hook.ts';
+import { testImportTypeForActivities } from './test/test-import-type-for-activities.ts';
+import { testTeardownRequired } from './test/test-teardown-required.ts';
+import { testWorkerRunUntilRequired } from './test/test-worker-runUntil-required.ts';
 import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-comment.ts';
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
@@ -26,6 +30,7 @@ import { durationFormat } from './workflow/duration-format.ts';
 import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
 import { noAnyInWorkflowPublicApi } from './workflow/no-any-in-workflow-public-api.ts';
+import { noAssertInProductionWorkflow } from './workflow/no-assert-in-production-workflow.ts';
 import { noAsyncQueryHandler } from './workflow/no-async-query-handler.ts';
 import { noAwaitInHandlerWithoutExitGuard } from './workflow/no-await-in-handler-without-exit-guard.ts';
 import { noBigintInPayload } from './workflow/no-bigint-in-payload.ts';
@@ -113,6 +118,7 @@ export const rules = {
   'workflow-no-activity-definitions-import': noActivityDefinitionsImport,
   'workflow-no-any-in-workflow-public-api': noAnyInWorkflowPublicApi,
   'workflow-no-async-query-handler': noAsyncQueryHandler,
+  'workflow-no-assert-in-production-workflow': noAssertInProductionWorkflow,
   'workflow-no-busy-wait': noBusyWait,
   'workflow-no-client-import': noClientImport,
   'workflow-no-console': noConsole,
@@ -200,6 +206,12 @@ export const rules = {
 
   // Client rules
   'client-require-workflow-id': requireWorkflowId,
+
+  // Test rules
+  'test-teardown-required': testTeardownRequired,
+  'test-worker-runUntil-required': testWorkerRunUntilRequired,
+  'test-import-type-for-activities': testImportTypeForActivities,
+  'replay-history-smoke-test-hook': replayHistorySmokeTestHook,
 
   // Shared rules
   'task-queue-constant': taskQueueConstant,

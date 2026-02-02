@@ -97,25 +97,14 @@
 
 ### Testing and replay safety
 
-- [ ] test-teardown-required
-- [ ] test-worker-runUntil-required
-- [ ] test-import-type-for-activities
-- [ ] no-assert-in-production-workflow
-- [ ] replay-history-smoke-test-hook
+- [x] test-teardown-required
+- [x] test-worker-runUntil-required
+- [x] test-import-type-for-activities
+- [x] no-assert-in-production-workflow
+- [x] replay-history-smoke-test-hook
 
 ### Local activities and side-effect patterns
 
 - [ ] prefer-local-activity-for-nondeterministic-value
 - [ ] no-workflow-prng-for-persisted-ids
 - [ ] local-activity-options-required
-
-## Release and CI (npm publishing)
-
-- [ ] Migrate npm publish workflow to trusted publishing (OIDC), remove NPM_TOKEN, ensure npm >= 11.5.1 and provenance enabled.
-- [ ] Add `publishConfig.access` and document the tag-driven release flow in `README.md`.
-- [ ] Add CI matrix coverage for Node/Bun and key ESLint/TypeScript versions; add `npm pack --dry-run` to verify publish contents.
-
-## Examples and adoption
-
-- [ ] Add `examples/` or fixtures for workflow/activity/worker/client showing typical violations and fixes.
-- [ ] Add a short "getting started" + "migration" guide for teams adopting the plugin.

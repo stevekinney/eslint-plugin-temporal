@@ -9,6 +9,7 @@ const contextLabels: Record<string, string> = {
   activity: 'Activity',
   worker: 'Worker',
   client: 'Client',
+  test: 'Test',
   shared: 'Shared',
 };
 
@@ -101,6 +102,8 @@ const whyByRule: Record<string, string> = {
     'Workflows run in a restricted sandbox without Node or DOM APIs. Importing them will fail at runtime or break determinism.',
   'workflow-no-nondeterministic-control-flow':
     'Branching on time or randomness can break replay when code evolves. Require an explicit comment to make the choice intentional.',
+  'workflow-no-assert-in-production-workflow':
+    'Node assert failures can trigger workflow task retries and replay issues. Prefer explicit errors or ApplicationFailure.',
   'workflow-no-process-env':
     'Environment variables can change between runs and replays. Pass configuration explicitly via workflow inputs.',
   'workflow-no-query-mutation':
@@ -185,6 +188,14 @@ const whyByRule: Record<string, string> = {
     'Ignoring modules affects workflow bundling and can hide nondeterminism. A comment makes the safety trade-off explicit.',
   'worker-require-callDuringReplay-explicit':
     'callDuringReplay controls whether sinks run during replay. Making it explicit prevents accidental double-logging or missing events.',
+  'test-teardown-required':
+    'TestWorkflowEnvironment spawns workers and resources that must be cleaned up. teardown() prevents leaked processes and hanging suites.',
+  'test-worker-runUntil-required':
+    'worker.runUntil bounds a test worker lifecycle to the test body, preventing hung test runs.',
+  'test-import-type-for-activities':
+    'Using type-only activity imports in tests keeps mocks lightweight and avoids loading real implementations.',
+  'replay-history-smoke-test-hook':
+    'Replay history smoke tests catch nondeterminism before production by running Worker.runReplayHistories() in CI.',
   'client-require-workflow-id':
     'Workflow IDs provide idempotency and de-duplication. Omitting them can create duplicate workflows on retries.',
   'task-queue-constant':
@@ -331,7 +342,7 @@ function ensureOutputDir(): void {
 function generateDocs(): void {
   ensureOutputDir();
 
-  const contexts = ['workflow', 'activity', 'worker', 'client', 'shared'];
+  const contexts = ['workflow', 'activity', 'worker', 'client', 'test', 'shared'];
 
   for (const context of contexts) {
     const dir = join(ROOT, context);

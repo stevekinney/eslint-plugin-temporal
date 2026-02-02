@@ -27,6 +27,7 @@ export const workflowRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-top-level-workflow-side-effects': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
   'temporal/workflow-no-nondeterministic-control-flow': 'warn',
+  'temporal/workflow-no-assert-in-production-workflow': 'warn',
   'temporal/workflow-no-date-now-tight-loop': 'warn',
   'temporal/workflow-no-wall-clock-assumptions': 'warn',
   'temporal/workflow-uuid4-requires-security-comment': 'warn',

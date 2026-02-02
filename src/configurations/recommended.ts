@@ -74,6 +74,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-network-in-workflow': 'error',
   'temporal/workflow-no-node-or-dom-imports': 'error',
   'temporal/workflow-no-nondeterministic-control-flow': 'warn',
+  'temporal/workflow-no-assert-in-production-workflow': 'warn',
   'temporal/workflow-no-process-env': 'error',
   'temporal/workflow-no-query-mutation': 'error',
   'temporal/workflow-no-retry-for-nonidempotent-activities': 'warn',
@@ -122,4 +123,10 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
 
   // Client rules (auto-detected via @temporalio/client imports or file paths)
   'temporal/client-require-workflow-id': 'warn',
+
+  // Test rules (auto-detected via @temporalio/testing imports or test file paths)
+  'temporal/test-teardown-required': 'warn',
+  'temporal/test-worker-runUntil-required': 'warn',
+  'temporal/test-import-type-for-activities': 'warn',
+  'temporal/replay-history-smoke-test-hook': 'warn',
 };

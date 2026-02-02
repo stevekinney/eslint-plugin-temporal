@@ -5,6 +5,7 @@ import {
   createActivityRuleTester,
   createBasicRuleTester,
   createClientRuleTester,
+  createTestRuleTester,
   createWorkerRuleTester,
   createWorkflowRuleTester,
 } from '../test-utilities/rule-tester.ts';
@@ -14,6 +15,7 @@ const workflowTester = createWorkflowRuleTester();
 const activityTester = createActivityRuleTester();
 const workerTester = createWorkerRuleTester();
 const clientTester = createClientRuleTester();
+const testTester = createTestRuleTester();
 const sharedTester = createBasicRuleTester();
 
 const falsePositiveCode = `
@@ -24,13 +26,14 @@ const falsePositiveCode = `
   export { add };
 `;
 
-type RuleContext = 'workflow' | 'activity' | 'worker' | 'client' | 'shared';
+type RuleContext = 'workflow' | 'activity' | 'worker' | 'client' | 'test' | 'shared';
 
 function getContext(ruleKey: string): RuleContext {
   if (ruleKey.startsWith('workflow-')) return 'workflow';
   if (ruleKey.startsWith('activity-')) return 'activity';
   if (ruleKey.startsWith('worker-')) return 'worker';
   if (ruleKey.startsWith('client-')) return 'client';
+  if (ruleKey.startsWith('test-') || ruleKey.startsWith('replay-')) return 'test';
   return 'shared';
 }
 
@@ -39,6 +42,7 @@ const testers = {
   activity: activityTester,
   worker: workerTester,
   client: clientTester,
+  test: testTester,
   shared: sharedTester,
 } as const;
 
