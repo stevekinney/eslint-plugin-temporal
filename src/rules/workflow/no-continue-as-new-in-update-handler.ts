@@ -12,7 +12,7 @@ import {
 type MessageIds = 'noContinueAsNewInUpdateHandler';
 
 export const noContinueAsNewInUpdateHandler = createWorkflowRule<[], MessageIds>({
-  name: 'workflow-no-continueAsNew-in-update-handler',
+  name: 'workflow-no-continue-as-new-in-update-handler',
   meta: {
     type: 'problem',
     docs: {

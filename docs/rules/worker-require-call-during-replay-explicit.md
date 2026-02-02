@@ -1,4 +1,4 @@
-# worker-require-callDuringReplay-explicit
+# worker-require-call-during-replay-explicit
 
 ## What it does
 

@@ -1,4 +1,4 @@
-# workflow-await-cancelRequested-in-nonCancellable-pattern
+# workflow-await-cancel-requested-in-non-cancellable-pattern
 
 ## What it does
 

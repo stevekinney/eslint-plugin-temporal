@@ -65,23 +65,23 @@
 
 ### Cancellation and scopes
 
-- [x] prefer-CancellationScope-withTimeout
+- [x] prefer-cancellation-scope-with-timeout
 - [x] no-settimeout-in-cancellation-scope
 - [x] no-swallow-cancellation
-- [x] nonCancellable-cleanup-required
-- [x] await-cancelRequested-in-nonCancellable-pattern
+- [x] non-cancellable-cleanup-required
+- [x] await-cancel-requested-in-non-cancellable-pattern
 
 ### Versioning and deployment safety
 
 - [x] patched-must-guard-incompatible-change
-- [x] require-deprecatePatch-after-branch-removal
-- [x] no-continueAsNew-without-state-argument
+- [x] require-deprecate-patch-after-branch-removal
+- [x] no-continue-as-new-without-state-argument
 - [x] replay-testing-required-comment
 
 ### Sinks and observability
 
 - [x] sink-args-must-be-cloneable
-- [x] require-callDuringReplay-explicit
+- [x] require-call-during-replay-explicit
 - [x] search-attributes-upsert-shape
 - [x] no-frequent-search-attribute-upserts
 
@@ -98,7 +98,7 @@
 ### Testing and replay safety
 
 - [x] test-teardown-required
-- [x] test-worker-runUntil-required
+- [x] test-worker-run-until-required
 - [x] test-import-type-for-activities
 - [x] no-assert-in-production-workflow
 - [x] replay-history-smoke-test-hook

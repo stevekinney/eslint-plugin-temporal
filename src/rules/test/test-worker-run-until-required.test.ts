@@ -1,12 +1,12 @@
 import { describe } from 'bun:test';
 
 import { createTestRuleTester } from '../../test-utilities/rule-tester.ts';
-import { testWorkerRunUntilRequired } from './test-worker-runUntil-required.ts';
+import { testWorkerRunUntilRequired } from './test-worker-run-until-required.ts';
 
 const ruleTester = createTestRuleTester();
 
-describe('test-worker-runUntil-required', () => {
-  ruleTester.run('test-worker-runUntil-required', testWorkerRunUntilRequired, {
+describe('test-worker-run-until-required', () => {
+  ruleTester.run('test-worker-run-until-required', testWorkerRunUntilRequired, {
     valid: [
       `import { Worker } from '@temporalio/worker';
        import { TestWorkflowEnvironment } from '@temporalio/testing';

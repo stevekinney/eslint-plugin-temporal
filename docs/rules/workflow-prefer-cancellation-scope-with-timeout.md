@@ -1,4 +1,4 @@
-# workflow-prefer-CancellationScope-withTimeout
+# workflow-prefer-cancellation-scope-with-timeout
 
 ## What it does
 

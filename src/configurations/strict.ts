@@ -15,13 +15,13 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-activity-timeout-duration-format': 'error',
   'temporal/workflow-require-message-definitions-at-module-scope': 'error',
   'temporal/workflow-patched-must-guard-incompatible-change': 'error',
-  'temporal/workflow-require-deprecatePatch-after-branch-removal': 'error',
+  'temporal/workflow-require-deprecate-patch-after-branch-removal': 'error',
   'temporal/workflow-replay-testing-required-comment': 'error',
-  'temporal/workflow-prefer-CancellationScope-withTimeout': 'error',
+  'temporal/workflow-prefer-cancellation-scope-with-timeout': 'error',
   'temporal/workflow-no-settimeout-in-cancellation-scope': 'error',
   'temporal/workflow-no-swallow-cancellation': 'error',
-  'temporal/workflow-nonCancellable-cleanup-required': 'error',
-  'temporal/workflow-await-cancelRequested-in-nonCancellable-pattern': 'error',
+  'temporal/workflow-non-cancellable-cleanup-required': 'error',
+  'temporal/workflow-await-cancel-requested-in-non-cancellable-pattern': 'error',
   'temporal/workflow-no-await-in-handler-without-exit-guard': 'error',
   'temporal/workflow-no-fs-in-workflow': 'error',
   'temporal/workflow-no-node-or-dom-imports': 'error',
@@ -49,7 +49,7 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-require-explicit-payload-types': 'error',
   'temporal/workflow-no-any-in-workflow-public-api': 'error',
   'temporal/workflow-no-console': 'error',
-  'temporal/workflow-no-continueAsNew-without-state-argument': 'error',
+  'temporal/workflow-no-continue-as-new-without-state-argument': 'error',
   'temporal/workflow-require-activity-timeouts': 'error',
   'temporal/workflow-no-retry-for-nonidempotent-activities': 'error',
   'temporal/workflow-require-idempotency-key-arg': 'error',
@@ -75,14 +75,14 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   // Worker rules
   'temporal/worker-no-workflow-or-activity-definitions': 'error',
   'temporal/worker-ignoremodules-requires-comment': 'error',
-  'temporal/worker-require-callDuringReplay-explicit': 'error',
+  'temporal/worker-require-call-during-replay-explicit': 'error',
 
   // Client rules
   'temporal/client-require-workflow-id': 'error',
 
   // Test rules
   'temporal/test-teardown-required': 'error',
-  'temporal/test-worker-runUntil-required': 'error',
+  'temporal/test-worker-run-until-required': 'error',
   'temporal/test-import-type-for-activities': 'error',
   'temporal/replay-history-smoke-test-hook': 'error',
 };

@@ -20,7 +20,7 @@ function isContinueAsNewCall(node: TSESTree.CallExpression): boolean {
 }
 
 export const noContinueAsNewWithoutStateArgument = createWorkflowRule<[], MessageIds>({
-  name: 'workflow-no-continueAsNew-without-state-argument',
+  name: 'workflow-no-continue-as-new-without-state-argument',
   meta: {
     type: 'problem',
     docs: {

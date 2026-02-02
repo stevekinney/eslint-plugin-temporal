@@ -16,14 +16,14 @@ import { taskQueueConstant } from './shared/task-queue-constant.ts';
 import { replayHistorySmokeTestHook } from './test/replay-history-smoke-test-hook.ts';
 import { testImportTypeForActivities } from './test/test-import-type-for-activities.ts';
 import { testTeardownRequired } from './test/test-teardown-required.ts';
-import { testWorkerRunUntilRequired } from './test/test-worker-runUntil-required.ts';
+import { testWorkerRunUntilRequired } from './test/test-worker-run-until-required.ts';
 import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-comment.ts';
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
-import { requireCallDuringReplayExplicit } from './worker/require-callDuringReplay-explicit.ts';
+import { requireCallDuringReplayExplicit } from './worker/require-call-during-replay-explicit.ts';
 // Workflow rules
 import { activityTimeoutDurationFormat } from './workflow/activity-timeout-duration-format.ts';
-import { awaitCancelRequestedInNonCancellablePattern } from './workflow/await-cancelRequested-in-nonCancellable-pattern.ts';
+import { awaitCancelRequestedInNonCancellablePattern } from './workflow/await-cancel-requested-in-non-cancellable-pattern.ts';
 import { conditionTimeoutStyle } from './workflow/condition-timeout-style.ts';
 import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
 import { durationFormat } from './workflow/duration-format.ts';
@@ -38,8 +38,8 @@ import { noBigintInPayload } from './workflow/no-bigint-in-payload.ts';
 import { noBusyWait } from './workflow/no-busy-wait.ts';
 import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
-import { noContinueAsNewInUpdateHandler } from './workflow/no-continueAsNew-in-update-handler.ts';
-import { noContinueAsNewWithoutStateArgument } from './workflow/no-continueAsNew-without-state-argument.ts';
+import { noContinueAsNewInUpdateHandler } from './workflow/no-continue-as-new-in-update-handler.ts';
+import { noContinueAsNewWithoutStateArgument } from './workflow/no-continue-as-new-without-state-argument.ts';
 import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
 import { noDateNowTightLoop } from './workflow/no-date-now-tight-loop.ts';
 import { noDateObjectInPayload } from './workflow/no-date-object-in-payload.ts';
@@ -77,7 +77,7 @@ import { noWeakRef } from './workflow/no-weakref.ts';
 import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
 import { noWorkflowPrngForPersistedIds } from './workflow/no-workflow-prng-for-persisted-ids.ts';
-import { nonCancellableCleanupRequired } from './workflow/nonCancellable-cleanup-required.ts';
+import { nonCancellableCleanupRequired } from './workflow/non-cancellable-cleanup-required.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
 import { patchedMustGuardIncompatibleChange } from './workflow/patched-must-guard-incompatible-change.ts';
 import { preferCancellationScopeWithTimeout } from './workflow/prefer-cancellation-scope-with-timeout.ts';
@@ -90,12 +90,12 @@ import { replayTestingRequiredComment } from './workflow/replay-testing-required
 import { requireActivityRetryPolicy } from './workflow/require-activity-retry-policy.ts';
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
 import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
-import { requireDeprecatePatchAfterBranchRemoval } from './workflow/require-deprecatePatch-after-branch-removal.ts';
+import { requireDeprecatePatchAfterBranchRemoval } from './workflow/require-deprecate-patch-after-branch-removal.ts';
 import { requireExplicitPayloadTypes } from './workflow/require-explicit-payload-types.ts';
 import { requireHandlerSerializationSafeTypes } from './workflow/require-handler-serialization-safe-types.ts';
 import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg.ts';
 import { requireMessageDefinitionsAtModuleScope } from './workflow/require-message-definitions-at-module-scope.ts';
-import { requireSetHandlerEarly } from './workflow/require-setHandler-early.ts';
+import { requireSetHandlerEarly } from './workflow/require-set-handler-early.ts';
 import { requireTypeOnlyActivityImports } from './workflow/require-type-only-activity-imports.ts';
 import { searchAttributesUpsertShape } from './workflow/search-attributes-upsert-shape.ts';
 import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void.ts';
@@ -111,7 +111,7 @@ import { uuid4RequiresSecurityComment } from './workflow/uuid4-requires-security
 export const rules = {
   // Workflow rules
   'workflow-activity-timeout-duration-format': activityTimeoutDurationFormat,
-  'workflow-await-cancelRequested-in-nonCancellable-pattern':
+  'workflow-await-cancel-requested-in-non-cancellable-pattern':
     awaitCancelRequestedInNonCancellablePattern,
   'workflow-condition-timeout-style': conditionTimeoutStyle,
   'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
@@ -125,8 +125,9 @@ export const rules = {
   'workflow-no-busy-wait': noBusyWait,
   'workflow-no-client-import': noClientImport,
   'workflow-no-console': noConsole,
-  'workflow-no-continueAsNew-in-update-handler': noContinueAsNewInUpdateHandler,
-  'workflow-no-continueAsNew-without-state-argument': noContinueAsNewWithoutStateArgument,
+  'workflow-no-continue-as-new-in-update-handler': noContinueAsNewInUpdateHandler,
+  'workflow-no-continue-as-new-without-state-argument':
+    noContinueAsNewWithoutStateArgument,
   'workflow-no-bigint-in-payload': noBigintInPayload,
   'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
   'workflow-no-date-object-in-payload': noDateObjectInPayload,
@@ -155,7 +156,7 @@ export const rules = {
   'workflow-no-settimeout-in-cancellation-scope': noSetTimeoutInCancellationScope,
   'workflow-no-setinterval': noSetInterval,
   'workflow-no-swallow-cancellation': noSwallowCancellation,
-  'workflow-nonCancellable-cleanup-required': nonCancellableCleanupRequired,
+  'workflow-non-cancellable-cleanup-required': nonCancellableCleanupRequired,
   'workflow-no-top-level-workflow-side-effects': noTopLevelWorkflowSideEffects,
   'workflow-no-throw-raw-error': noThrowRawError,
   'workflow-no-unsafe-global-mutation': noUnsafeGlobalMutation,
@@ -169,7 +170,7 @@ export const rules = {
   'workflow-no-nonserializable-types-in-payloads': noNonserializableTypesInPayloads,
   'workflow-patch-id-literal': patchIdLiteral,
   'workflow-patched-must-guard-incompatible-change': patchedMustGuardIncompatibleChange,
-  'workflow-prefer-CancellationScope-withTimeout': preferCancellationScopeWithTimeout,
+  'workflow-prefer-cancellation-scope-with-timeout': preferCancellationScopeWithTimeout,
   'workflow-prefer-condition-over-polling': preferConditionOverPolling,
   'workflow-prefer-local-activity-for-nondeterministic-value':
     preferLocalActivityForNondeterministicValue,
@@ -178,7 +179,7 @@ export const rules = {
   'workflow-prefer-workflow-uuid': preferWorkflowUuid,
   'workflow-require-explicit-payload-types': requireExplicitPayloadTypes,
   'workflow-replay-testing-required-comment': replayTestingRequiredComment,
-  'workflow-require-deprecatePatch-after-branch-removal':
+  'workflow-require-deprecate-patch-after-branch-removal':
     requireDeprecatePatchAfterBranchRemoval,
   'workflow-require-idempotency-key-arg': requireIdempotencyKeyArg,
   'workflow-require-activity-retry-policy': requireActivityRetryPolicy,
@@ -188,7 +189,7 @@ export const rules = {
     requireHandlerSerializationSafeTypes,
   'workflow-require-message-definitions-at-module-scope':
     requireMessageDefinitionsAtModuleScope,
-  'workflow-require-setHandler-early': requireSetHandlerEarly,
+  'workflow-require-set-handler-early': requireSetHandlerEarly,
   'workflow-require-type-only-activity-imports': requireTypeOnlyActivityImports,
   'workflow-search-attributes-upsert-shape': searchAttributesUpsertShape,
   'workflow-signal-handler-returns-void': signalHandlerReturnsVoid,
@@ -209,14 +210,14 @@ export const rules = {
   // Worker rules
   'worker-no-workflow-or-activity-definitions': noWorkflowOrActivityDefinitions,
   'worker-ignoremodules-requires-comment': ignoremodulesRequiresComment,
-  'worker-require-callDuringReplay-explicit': requireCallDuringReplayExplicit,
+  'worker-require-call-during-replay-explicit': requireCallDuringReplayExplicit,
 
   // Client rules
   'client-require-workflow-id': requireWorkflowId,
 
   // Test rules
   'test-teardown-required': testTeardownRequired,
-  'test-worker-runUntil-required': testWorkerRunUntilRequired,
+  'test-worker-run-until-required': testWorkerRunUntilRequired,
   'test-import-type-for-activities': testImportTypeForActivities,
   'replay-history-smoke-test-hook': replayHistorySmokeTestHook,
 

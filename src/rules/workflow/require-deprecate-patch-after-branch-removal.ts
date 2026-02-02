@@ -97,7 +97,7 @@ function isBranchRemovedContext(
 
 export const requireDeprecatePatchAfterBranchRemoval = createWorkflowRule<[], MessageIds>(
   {
-    name: 'workflow-require-deprecatePatch-after-branch-removal',
+    name: 'workflow-require-deprecate-patch-after-branch-removal',
     meta: {
       type: 'suggestion',
       docs: {

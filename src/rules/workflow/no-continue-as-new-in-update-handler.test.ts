@@ -1,12 +1,12 @@
 import { describe } from 'bun:test';
 
 import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
-import { noContinueAsNewInUpdateHandler } from './no-continueAsNew-in-update-handler.ts';
+import { noContinueAsNewInUpdateHandler } from './no-continue-as-new-in-update-handler.ts';
 
 const ruleTester = createWorkflowRuleTester();
 
-describe('no-continueAsNew-in-update-handler', () => {
-  ruleTester.run('no-continueAsNew-in-update-handler', noContinueAsNewInUpdateHandler, {
+describe('no-continue-as-new-in-update-handler', () => {
+  ruleTester.run('no-continue-as-new-in-update-handler', noContinueAsNewInUpdateHandler, {
     valid: [
       // Update handler that doesn't use continueAsNew
       `

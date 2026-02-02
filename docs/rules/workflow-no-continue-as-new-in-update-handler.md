@@ -1,4 +1,4 @@
-# workflow-no-continueAsNew-in-update-handler
+# workflow-no-continue-as-new-in-update-handler
 
 ## What it does
 

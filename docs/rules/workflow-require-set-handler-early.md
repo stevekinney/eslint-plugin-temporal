@@ -1,4 +1,4 @@
-# workflow-require-setHandler-early
+# workflow-require-set-handler-early
 
 ## What it does
 

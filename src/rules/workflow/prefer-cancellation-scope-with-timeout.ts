@@ -24,7 +24,7 @@ function isTimeoutCall(node: TSESTree.CallExpression): boolean {
 }
 
 export const preferCancellationScopeWithTimeout = createWorkflowRule<[], MessageIds>({
-  name: 'workflow-prefer-CancellationScope-withTimeout',
+  name: 'workflow-prefer-cancellation-scope-with-timeout',
   meta: {
     type: 'suggestion',
     docs: {

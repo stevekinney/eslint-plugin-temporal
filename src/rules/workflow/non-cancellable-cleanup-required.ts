@@ -156,7 +156,7 @@ function containsNonCancellableCall(
 }
 
 export const nonCancellableCleanupRequired = createWorkflowRule<[], MessageIds>({
-  name: 'workflow-nonCancellable-cleanup-required',
+  name: 'workflow-non-cancellable-cleanup-required',
   meta: {
     type: 'suggestion',
     docs: {

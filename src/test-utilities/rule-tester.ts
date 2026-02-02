@@ -1,5 +1,4 @@
 import { RuleTester } from '@typescript-eslint/rule-tester';
-// eslint-disable-next-line n/no-missing-import -- Bun provides this test module at runtime.
 import * as vitest from 'bun:test';
 
 // Configure RuleTester to use Bun's test framework

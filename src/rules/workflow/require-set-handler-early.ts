@@ -5,7 +5,7 @@ import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 type MessageIds = 'setHandlerAfterAwait';
 
 export const requireSetHandlerEarly = createWorkflowRule<[], MessageIds>({
-  name: 'workflow-require-setHandler-early',
+  name: 'workflow-require-set-handler-early',
   meta: {
     type: 'suggestion',
     docs: {

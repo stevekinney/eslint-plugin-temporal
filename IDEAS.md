@@ -116,7 +116,7 @@ Signals, Queries, and Updates rules
 
 temporal/require-message-definitions-at-module-scope — enforce defineSignal, defineQuery, defineUpdate live at module scope (not inside the Workflow function), matching recommended patterns. ￼
 
-temporal/require-setHandler-early — in a Workflow function, require setHandler(...) calls happen before the first await (so handlers are registered immediately).
+temporal/require-set-handler-early — in a Workflow function, require setHandler(...) calls happen before the first await (so handlers are registered immediately).
 
 temporal/no-async-query-handler — Query handlers passed to setHandler must not be async and must not return a Promise. ￼
 
@@ -128,7 +128,7 @@ temporal/signal-handler-returns-void — enforce Signal handlers return void or 
 
 temporal/update-handler-return-type — enforce Update handlers have an explicit return type annotation (so API changes don’t silently widen types).
 
-temporal/no-continueAsNew-in-update-handler — forbid Continue‑As‑New from inside Update handlers; require the main Workflow function to initiate it. ￼
+temporal/no-continue-as-new-in-update-handler — forbid Continue‑As‑New from inside Update handlers; require the main Workflow function to initiate it. ￼
 
 temporal/require-allHandlersFinished-before-exit — if the Workflow registers any Update/Signal handlers, require await condition(allHandlersFinished) before returning or Continue‑As‑New to avoid interrupting in‑flight handlers. ￼
 
@@ -140,15 +140,15 @@ temporal/require-handler-serialization-safe-types — enforce handler args/retur
 
 Cancellation and scopes rules
 
-temporal/prefer-CancellationScope-withTimeout — if code creates a timer just to cancel work after a deadline, suggest CancellationScope.withTimeout.
+temporal/prefer-cancellation-scope-with-timeout — if code creates a timer just to cancel work after a deadline, suggest CancellationScope.withTimeout.
 
 temporal/no-settimeout-in-cancellation-scope — warn when setTimeout is used where cancellation scopes are in play, given the SDK’s caveat. ￼
 
 temporal/no-swallow-cancellation — if catching cancellation errors, require rethrow unless explicitly handled (configurable allowlist).
 
-temporal/nonCancellable-cleanup-required — if a Workflow catches cancellation and runs cleanup logic, require it to be wrapped in CancellationScope.nonCancellable (pattern from docs/samples). ￼
+temporal/non-cancellable-cleanup-required — if a Workflow catches cancellation and runs cleanup logic, require it to be wrapped in CancellationScope.nonCancellable (pattern from docs/samples). ￼
 
-temporal/await-cancelRequested-in-nonCancellable-pattern — when using nonCancellable, encourage awaiting cancelRequested so the Workflow can react appropriately. ￼
+temporal/await-cancel-requested-in-non-cancellable-pattern — when using nonCancellable, encourage awaiting cancelRequested so the Workflow can react appropriately. ￼
 
 Versioning and safe deployments rules
 
@@ -158,11 +158,11 @@ temporal/no-duplicate-patch-ids — repo‑wide uniqueness check for patch IDs.
 
 temporal/patched-must-guard-incompatible-change — when a diff introduces a new Activity call ordering or removes an old call, require a patch guard (this one is ambitious but possible with patterns like “removed call to activityA, added activityB”).
 
-temporal/require-deprecatePatch-after-branch-removal — if a patch branch disappears but the patch ID is still in use elsewhere, warn.
+temporal/require-deprecate-patch-after-branch-removal — if a patch branch disappears but the patch ID is still in use elsewhere, warn.
 
 temporal/no-deprecatePatch-without-comment — require a comment explaining “what version are we in and why is it safe now?” because the lifecycle matters. ￼
 
-temporal/no-continueAsNew-without-state-argument — enforce Continue‑As‑New passes forward the necessary state in args (common correctness issue). ￼
+temporal/no-continue-as-new-without-state-argument — enforce Continue‑As‑New passes forward the necessary state in args (common correctness issue). ￼
 
 temporal/replay-testing-required-comment — when touching Workflow logic files, require a PR annotation comment like // replay-tested (enforced by lint in code touched areas). This is more process-y, but it works.
 
@@ -182,7 +182,7 @@ temporal/no-sink-return-value — forbid using sink calls in expressions (no ass
 
 temporal/sink-args-must-be-cloneable — warn when sink args include non‑cloneable types (functions, class instances, Errors, etc.). ￼
 
-temporal/require-callDuringReplay-explicit — when injecting sinks in Worker code, require explicitly setting callDuringReplay to avoid accidental behavior differences.
+temporal/require-call-during-replay-explicit — when injecting sinks in Worker code, require explicitly setting callDuringReplay to avoid accidental behavior differences.
 
 temporal/search-attributes-upsert-shape — enforce upsertSearchAttributes values are arrays and removal uses [] (not undefined or null). ￼
 
@@ -210,7 +210,7 @@ Testing and replay safety rules
 
 temporal/test-teardown-required — if using TestWorkflowEnvironment, require teardown() in afterAll/afterEach. ￼
 
-temporal/test-worker-runUntil-required — if a test creates a Worker, require it’s bounded via runUntil(...) to avoid hanging.
+temporal/test-worker-run-until-required — if a test creates a Worker, require it’s bounded via runUntil(...) to avoid hanging.
 
 temporal/test-import-type-for-activities — in Workflow unit tests, enforce import type \* as activities when building mock activity objects. ￼
 

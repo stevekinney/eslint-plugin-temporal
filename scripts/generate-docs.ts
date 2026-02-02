@@ -20,7 +20,7 @@ const whyByRule: Record<string, string> = {
     'Patch lifecycles are version-sensitive. A comment documents why a patch can be deprecated so future maintainers do not remove it prematurely and break replay compatibility.',
   'workflow-patched-must-guard-incompatible-change':
     'patched() should guard incompatible code paths so replay behavior is explicit and safe during version transitions.',
-  'workflow-require-deprecatePatch-after-branch-removal':
+  'workflow-require-deprecate-patch-after-branch-removal':
     'Once the old branch is removed, deprecatePatch makes the versioning lifecycle explicit and prevents accidental replay failures.',
   'workflow-replay-testing-required-comment':
     'Replay testing catches nondeterminism. A replay-tested comment documents that verification for versioning changes.',
@@ -32,15 +32,15 @@ const whyByRule: Record<string, string> = {
     'Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.',
   'workflow-require-message-definitions-at-module-scope':
     'Defining messages at module scope keeps handler identities stable and avoids redefining them on every workflow activation.',
-  'workflow-prefer-CancellationScope-withTimeout':
+  'workflow-prefer-cancellation-scope-with-timeout':
     'CancellationScope.withTimeout integrates with Temporal cancellation semantics and avoids ad-hoc timeout races.',
   'workflow-no-settimeout-in-cancellation-scope':
     'setTimeout bypasses Temporal’s cancellation semantics. sleep() ensures timers respect workflow cancellation.',
   'workflow-no-swallow-cancellation':
     'Swallowing cancellation can leave workflows in an inconsistent state. Rethrowing preserves cancellation semantics.',
-  'workflow-nonCancellable-cleanup-required':
+  'workflow-non-cancellable-cleanup-required':
     'Cleanup during cancellation should run inside a non-cancellable scope to ensure it completes safely.',
-  'workflow-await-cancelRequested-in-nonCancellable-pattern':
+  'workflow-await-cancel-requested-in-non-cancellable-pattern':
     'Awaiting cancelRequested after non-cancellable cleanup keeps workflow cancellation behavior explicit and predictable.',
   'workflow-no-activity-definitions-import':
     'Workflow code runs in the deterministic sandbox. Importing activity implementations can pull in Node APIs and nondeterminism; only proxy activities from the workflow API.',
@@ -52,9 +52,9 @@ const whyByRule: Record<string, string> = {
     'Workflows cannot use the Temporal Client. Client calls are non-deterministic and must be done in activities or by workflow APIs.',
   'workflow-no-console':
     'Console output is not replay-aware and can duplicate logs. Workflow logging integrates with Temporal and is safe for replay.',
-  'workflow-no-continueAsNew-in-update-handler':
+  'workflow-no-continue-as-new-in-update-handler':
     'Update handlers should complete within the current run. Continuing as new inside a handler can interrupt in-flight updates and violate update semantics.',
-  'workflow-no-continueAsNew-without-state-argument':
+  'workflow-no-continue-as-new-without-state-argument':
     'continueAsNew starts a new run with fresh inputs. Passing state forward prevents accidental resets and replay issues.',
   'workflow-no-crypto-random-uuid':
     'crypto.randomUUID() is nondeterministic. Use uuid4() in workflows or generate IDs in activities when you need true randomness.',
@@ -156,7 +156,7 @@ const whyByRule: Record<string, string> = {
     'Signals and updates may still be running when a workflow returns. Waiting ensures in-flight handlers complete safely.',
   'workflow-require-handler-serialization-safe-types':
     'Handler inputs and outputs become workflow payloads. Enforcing serialization-safe types prevents runtime payload failures.',
-  'workflow-require-setHandler-early':
+  'workflow-require-set-handler-early':
     'Handlers registered after the first await can miss signals/updates. Registering early ensures deterministic handling.',
   'workflow-require-type-only-activity-imports':
     'Type-only imports keep activity implementations out of the workflow bundle, preserving sandbox safety.',
@@ -192,11 +192,11 @@ const whyByRule: Record<string, string> = {
     'Workers should load workflows by path and pass activity implementations explicitly. Importing definitions can bundle code into the wrong environment.',
   'worker-ignoremodules-requires-comment':
     'Ignoring modules affects workflow bundling and can hide nondeterminism. A comment makes the safety trade-off explicit.',
-  'worker-require-callDuringReplay-explicit':
+  'worker-require-call-during-replay-explicit':
     'callDuringReplay controls whether sinks run during replay. Making it explicit prevents accidental double-logging or missing events.',
   'test-teardown-required':
     'TestWorkflowEnvironment spawns workers and resources that must be cleaned up. teardown() prevents leaked processes and hanging suites.',
-  'test-worker-runUntil-required':
+  'test-worker-run-until-required':
     'worker.runUntil bounds a test worker lifecycle to the test body, preventing hung test runs.',
   'test-import-type-for-activities':
     'Using type-only activity imports in tests keeps mocks lightweight and avoids loading real implementations.',

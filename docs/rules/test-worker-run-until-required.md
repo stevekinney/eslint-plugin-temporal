@@ -1,4 +1,4 @@
-# test-worker-runUntil-required
+# test-worker-run-until-required
 
 ## What it does
 

@@ -32,7 +32,7 @@ function collectSinkFunctionObjects(
 }
 
 export const requireCallDuringReplayExplicit = createWorkerRule<[], MessageIds>({
-  name: 'worker-require-callDuringReplay-explicit',
+  name: 'worker-require-call-during-replay-explicit',
   meta: {
     type: 'suggestion',
     docs: {

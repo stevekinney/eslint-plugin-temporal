@@ -1,4 +1,4 @@
-# workflow-require-deprecatePatch-after-branch-removal
+# workflow-require-deprecate-patch-after-branch-removal
 
 ## What it does
 

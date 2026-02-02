@@ -1,12 +1,12 @@
 import { describe } from 'bun:test';
 
 import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
-import { requireSetHandlerEarly } from './require-setHandler-early.ts';
+import { requireSetHandlerEarly } from './require-set-handler-early.ts';
 
 const ruleTester = createWorkflowRuleTester();
 
-describe('require-setHandler-early', () => {
-  ruleTester.run('require-setHandler-early', requireSetHandlerEarly, {
+describe('require-set-handler-early', () => {
+  ruleTester.run('require-set-handler-early', requireSetHandlerEarly, {
     valid: [
       // setHandler before any awaits
       `

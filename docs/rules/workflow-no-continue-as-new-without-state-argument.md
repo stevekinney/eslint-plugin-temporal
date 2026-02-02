@@ -1,4 +1,4 @@
-# workflow-no-continueAsNew-without-state-argument
+# workflow-no-continue-as-new-without-state-argument
 
 ## What it does
 

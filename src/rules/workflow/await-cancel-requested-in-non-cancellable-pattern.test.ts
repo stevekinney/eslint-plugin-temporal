@@ -1,13 +1,13 @@
 import { describe } from 'bun:test';
 
 import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
-import { awaitCancelRequestedInNonCancellablePattern } from './await-cancelRequested-in-nonCancellable-pattern.ts';
+import { awaitCancelRequestedInNonCancellablePattern } from './await-cancel-requested-in-non-cancellable-pattern.ts';
 
 const ruleTester = createWorkflowRuleTester();
 
-describe('await-cancelRequested-in-nonCancellable-pattern', () => {
+describe('await-cancel-requested-in-non-cancellable-pattern', () => {
   ruleTester.run(
-    'await-cancelRequested-in-nonCancellable-pattern',
+    'await-cancel-requested-in-non-cancellable-pattern',
     awaitCancelRequestedInNonCancellablePattern,
     {
       valid: [

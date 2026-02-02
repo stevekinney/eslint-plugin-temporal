@@ -1,4 +1,4 @@
-# workflow-nonCancellable-cleanup-required
+# workflow-non-cancellable-cleanup-required
 
 ## What it does
 

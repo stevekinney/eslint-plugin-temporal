@@ -1,13 +1,13 @@
 import { describe } from 'bun:test';
 
 import { createWorkflowRuleTester } from '../../test-utilities/rule-tester.ts';
-import { requireDeprecatePatchAfterBranchRemoval } from './require-deprecatePatch-after-branch-removal.ts';
+import { requireDeprecatePatchAfterBranchRemoval } from './require-deprecate-patch-after-branch-removal.ts';
 
 const ruleTester = createWorkflowRuleTester();
 
-describe('require-deprecatePatch-after-branch-removal', () => {
+describe('require-deprecate-patch-after-branch-removal', () => {
   ruleTester.run(
-    'require-deprecatePatch-after-branch-removal',
+    'require-deprecate-patch-after-branch-removal',
     requireDeprecatePatchAfterBranchRemoval,
     {
       valid: [

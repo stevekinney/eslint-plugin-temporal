@@ -32,7 +32,7 @@ function unwrapCallExpression(
 }
 
 export const testWorkerRunUntilRequired = createContextRule<[], MessageIds>('test', {
-  name: 'test-worker-runUntil-required',
+  name: 'test-worker-run-until-required',
   meta: {
     type: 'problem',
     docs: {

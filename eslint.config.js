@@ -215,6 +215,12 @@ export default [
       'n/no-unsupported-features/node-builtins': 'off',
     },
   },
+  {
+    files: ['src/test-utilities/**/*.{ts,tsx}'],
+    rules: {
+      'n/no-missing-import': 'off',
+    },
+  },
 
   // Test file overrides - looser restrictions for testing
   {

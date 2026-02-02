@@ -170,7 +170,7 @@ export const awaitCancelRequestedInNonCancellablePattern = createWorkflowRule<
   [],
   MessageIds
 >({
-  name: 'workflow-await-cancelRequested-in-nonCancellable-pattern',
+  name: 'workflow-await-cancel-requested-in-non-cancellable-pattern',
   meta: {
     type: 'suggestion',
     docs: {

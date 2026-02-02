@@ -1,12 +1,12 @@
 import { describe } from 'bun:test';
 
 import { createWorkerRuleTester } from '../../test-utilities/rule-tester.ts';
-import { requireCallDuringReplayExplicit } from './require-callDuringReplay-explicit.ts';
+import { requireCallDuringReplayExplicit } from './require-call-during-replay-explicit.ts';
 
 const ruleTester = createWorkerRuleTester();
 
-describe('require-callDuringReplay-explicit', () => {
-  ruleTester.run('require-callDuringReplay-explicit', requireCallDuringReplayExplicit, {
+describe('require-call-during-replay-explicit', () => {
+  ruleTester.run('require-call-during-replay-explicit', requireCallDuringReplayExplicit, {
     valid: [
       `Worker.create({
           sinks: {
