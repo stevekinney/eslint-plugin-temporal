@@ -29,6 +29,18 @@ describe('use-cancellation-signal', () => {
 
       // Custom client not in default list
       `superagent.get(url);`,
+
+      // Custom client list - allow a different client with signal
+      {
+        code: `customFetch(url, { signal: cancellationSignal });`,
+        options: [{ httpClients: ['customFetch'] }],
+      },
+
+      // Custom client list - ignore defaults when overridden
+      {
+        code: `fetch(url);`,
+        options: [{ httpClients: ['customFetch'] }],
+      },
     ],
     invalid: [
       // fetch without signal

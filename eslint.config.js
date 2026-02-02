@@ -107,6 +107,7 @@ export default [
   {
     ignores: [
       '**/{dist,build,coverage,.bun}/**',
+      '**/__fixtures__/**',
       '**/node_modules/**',
       '**/*.lock',
       '**/README.md',

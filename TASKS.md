@@ -23,9 +23,9 @@
 
 ## Testing and quality
 
-- [ ] Expand each rule test to include false positives and option variations; ensure every fixable rule has fix output tests.
-- [ ] Add integration tests for `configs.recommended` to validate context gating end-to-end.
-- [ ] Add performance guardrails (e.g., large-file fixture) to keep rules fast and deterministic.
+- [x] Expand each rule test to include false positives and option variations; ensure every fixable rule has fix output tests.
+- [x] Add integration tests for `configs.recommended` to validate context gating end-to-end.
+- [x] Add performance guardrails (e.g., large-file fixture) to keep rules fast and deterministic.
 
 ## Rule backlog (missing high-value rules)
 
