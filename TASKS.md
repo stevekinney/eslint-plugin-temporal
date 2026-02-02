@@ -10,11 +10,11 @@
 
 ## Documentation and DX
 
-- [ ] Create `docs/rules/*.md` for every rule with: what it does, why it matters, options, examples (bad/good), autofix notes, and when to disable.
-- [ ] Add `docs/settings.md` covering `settings.temporal` (deny/allow imports, file patterns, activityDirectories, httpClients, idempotencyKeyApis, taskQueuePattern).
-- [ ] Add `docs/configs.md` for `recommended`, `workflow`, `activity`, `worker`, `client`, and `strict` with intended use and example file globs.
-- [ ] Update `README.md` to link to rule docs/settings, clarify auto-detection behavior, and document overrides.
-- [ ] Add a docs consistency check (e.g., script that verifies every rule has a doc file and README table is in sync).
+- [x] Create `docs/rules/*.md` for every rule with: what it does, why it matters, options, examples (bad/good), autofix notes, and when to disable.
+- [x] Add `docs/settings.md` covering `settings.temporal` (deny/allow imports, file patterns, activityDirectories, httpClients, idempotencyKeyApis, taskQueuePattern).
+- [x] Add `docs/configs.md` for `recommended`, `workflow`, `activity`, `worker`, `client`, and `strict` with intended use and example file globs.
+- [x] Update `README.md` to link to rule docs/settings, clarify auto-detection behavior, and document overrides.
+- [x] Add a docs consistency check (e.g., script that verifies every rule has a doc file and README table is in sync).
 
 ## Linting the linter
 

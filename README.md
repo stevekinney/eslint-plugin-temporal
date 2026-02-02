@@ -74,6 +74,26 @@ export default [
 ];
 ```
 
+You can also keep auto-detection and customize the patterns with `settings.temporal.filePatterns`:
+
+```js
+import temporal from 'eslint-plugin-temporal';
+
+export default [
+  temporal.configs.recommended,
+  {
+    settings: {
+      temporal: {
+        filePatterns: {
+          workflow: ['src/temporal/workflows/**'],
+          activity: ['src/temporal/activities/**'],
+        },
+      },
+    },
+  },
+];
+```
+
 ## Configurations
 
 | Configuration | Description                                                                    |
@@ -84,6 +104,13 @@ export default [
 | `worker`      | Clean bootstrap rules. Use with explicit `files` pattern for manual config.    |
 | `client`      | Client code rules. Use with explicit `files` pattern for manual config.        |
 | `strict`      | All rules enabled as errors. For maximum enforcement.                          |
+
+## Documentation
+
+- Rule docs: `docs/rules/`
+- Settings: `docs/settings.md`
+- Configs: `docs/configs.md`
+- Docs consistency: `bun run docs:check`
 
 ## Rules
 
