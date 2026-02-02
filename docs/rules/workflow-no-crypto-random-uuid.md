@@ -6,7 +6,7 @@ Disallow crypto.randomUUID() in workflow files. Use uuid4() from @temporalio/wor
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow crypto.randomUUID() in workflow files. Use uuid4() from @temporalio/workflow instead.
+crypto.randomUUID() is nondeterministic. Use uuid4() in workflows or generate IDs in activities when you need true randomness.
 
 ## Options
 

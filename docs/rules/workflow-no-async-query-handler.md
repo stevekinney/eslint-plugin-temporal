@@ -6,7 +6,7 @@ Disallow async query handlers. Query handlers must be synchronous per Temporal S
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow async query handlers. Query handlers must be synchronous per Temporal SDK contract.
+Queries must be synchronous and side-effect free. Async queries can block workflow tasks and introduce nondeterminism during replay.
 
 ## Options
 

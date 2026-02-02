@@ -6,7 +6,7 @@ Disallow importing packages that are unsafe for workflow determinism.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing packages that are unsafe for workflow determinism.
+Many packages perform I/O or use nondeterministic sources. Keeping workflow dependencies safe prevents replay failures.
 
 ## Options
 

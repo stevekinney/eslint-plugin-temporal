@@ -6,7 +6,7 @@ Disallow importing both @temporalio/workflow and @temporalio/activity in the sam
 
 ## Why it matters
 
-Shared code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing both @temporalio/workflow and @temporalio/activity in the same file. These run in different environments and should not be mixed.
+Workflows and activities run in different environments. Mixing them in one module risks importing the wrong runtime dependencies.
 
 ## Options
 

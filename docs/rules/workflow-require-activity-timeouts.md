@@ -6,7 +6,7 @@ Require timeout configuration when calling proxyActivities().
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require timeout configuration when calling proxyActivities().
+Timeouts prevent stuck activities and make workflow progress deterministic under failure conditions.
 
 ## Options
 

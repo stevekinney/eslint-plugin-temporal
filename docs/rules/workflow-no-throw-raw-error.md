@@ -6,7 +6,7 @@ Prefer throwing ApplicationFailure over raw Error in workflows.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that prefer throwing ApplicationFailure over raw Error in workflows.
+ApplicationFailure preserves retryability and failure semantics. Throwing raw Error can hide intent and break retry policies.
 
 ## Options
 

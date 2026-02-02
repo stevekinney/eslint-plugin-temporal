@@ -6,7 +6,7 @@ Suggest using condition(allHandlersFinished) before workflow completion when asy
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that suggest using condition(allHandlersFinished) before workflow completion when async handlers are present.
+Signals and updates may still be running when a workflow returns. Waiting ensures in-flight handlers complete safely.
 
 ## Options
 

@@ -6,7 +6,7 @@ Disallow importing activity implementations in workflow files. Use proxyActiviti
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing activity implementations in workflow files. Use proxyActivities() instead.
+Workflow code runs in the deterministic sandbox. Importing activity implementations can pull in Node APIs and nondeterminism; only proxy activities from the workflow API.
 
 ## Options
 

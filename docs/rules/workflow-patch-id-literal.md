@@ -6,7 +6,7 @@ Require patch IDs to be string literals for traceability and determinism.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require patch IDs to be string literals for traceability and determinism.
+Patch IDs are long-lived version gates. Literals ensure they remain stable and searchable across the codebase.
 
 ## Options
 

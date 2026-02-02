@@ -6,7 +6,7 @@ Disallow importing @temporalio/worker in workflow files. Workflows run in a sand
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing @temporalio/worker in workflow files. Workflows run in a sandboxed environment and cannot use Worker APIs.
+Workers run outside the workflow sandbox. Importing worker code into workflows crosses environment boundaries and breaks determinism.
 
 ## Options
 

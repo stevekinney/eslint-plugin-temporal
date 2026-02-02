@@ -6,7 +6,7 @@ Prefer uuid4() from @temporalio/workflow over other UUID libraries.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that prefer uuid4() from @temporalio/workflow over other UUID libraries.
+uuid4() is deterministic under Temporal’s replay model. Third-party UUIDs often rely on randomness.
 
 ## Options
 

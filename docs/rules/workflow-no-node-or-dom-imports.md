@@ -6,7 +6,7 @@ Disallow Node.js built-in modules and DOM APIs in workflow files.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow Node.js built-in modules and DOM APIs in workflow files.
+Workflows run in a restricted sandbox without Node or DOM APIs. Importing them will fail at runtime or break determinism.
 
 ## Options
 

@@ -6,7 +6,7 @@ Disallow calling workflow APIs like proxyActivities, sleep, condition, etc. in q
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow calling workflow APIs like proxyActivities, sleep, condition, etc. in query handlers. Query handlers must be pure reads.
+Query handlers must be synchronous and side-effect free. Calling workflow APIs schedules commands and violates query semantics.
 
 ## Options
 

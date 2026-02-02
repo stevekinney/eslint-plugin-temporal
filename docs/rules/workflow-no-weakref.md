@@ -6,7 +6,7 @@ Disallow WeakRef usage in workflows. WeakRef behavior is non-deterministic and b
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow WeakRef usage in workflows. WeakRef behavior is non-deterministic and breaks workflow replay.
+WeakRef depends on garbage collection timing, which is nondeterministic and unsafe for workflow replay.
 
 ## Options
 

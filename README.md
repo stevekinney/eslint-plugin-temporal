@@ -112,6 +112,10 @@ export default [
 - Configs: `docs/configs.md`
 - Docs consistency: `bun run docs:check`
 
+### Docs contribution
+
+When you add or rename rules, update `docs/rules/` and ensure the README rule list stays in sync. Run `bun run docs:check` before committing to catch missing or extra docs.
+
 ## Rules
 
 ### Workflow Rules

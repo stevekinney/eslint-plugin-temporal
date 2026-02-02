@@ -6,7 +6,7 @@ Suggest calling heartbeat() in loops that contain await expressions.
 
 ## Why it matters
 
-Activity code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that suggest calling heartbeat() in loops that contain await expressions.
+Heartbeats allow cancellation and progress reporting. Long loops without heartbeats can run indefinitely after cancellation.
 
 ## Options
 

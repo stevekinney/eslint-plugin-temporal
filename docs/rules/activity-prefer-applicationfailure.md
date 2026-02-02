@@ -6,7 +6,7 @@ Prefer throwing ApplicationFailure over raw Error in activities.
 
 ## Why it matters
 
-Activity code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that prefer throwing ApplicationFailure over raw Error in activities.
+ApplicationFailure captures retryability and failure type. Raw Error can lead to unintended retries or opaque failures.
 
 ## Options
 

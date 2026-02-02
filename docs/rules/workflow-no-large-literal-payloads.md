@@ -6,7 +6,7 @@ Warn when passing large literal arrays, objects, or strings as arguments to acti
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that warn when passing large literal arrays, objects, or strings as arguments to activities or child workflows. Large payloads bloat workflow history.
+Payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.
 
 ## Options
 

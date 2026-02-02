@@ -6,7 +6,7 @@ Disallow awaiting sink calls. Sinks are fire-and-forget and return void - awaiti
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow awaiting sink calls. Sinks are fire-and-forget and return void - awaiting them is a mistake.
+Sinks are fire-and-forget. Awaiting them can block workflow progress and mislead about delivery guarantees.
 
 ## Options
 

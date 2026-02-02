@@ -6,7 +6,7 @@ Disallow storing Activity Context in variables that persist across async boundar
 
 ## Why it matters
 
-Activity code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow storing Activity Context in variables that persist across async boundaries.
+Activity Context is attempt-specific. Storing it across async boundaries can use stale data or miss cancellation.
 
 ## Options
 

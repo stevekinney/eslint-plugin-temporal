@@ -6,7 +6,7 @@ Suggest passing cancellation signal to HTTP clients in activities.
 
 ## Why it matters
 
-Activity code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that suggest passing cancellation signal to HTTP clients in activities.
+Passing cancellation signals lets HTTP clients abort work promptly, saving resources and preventing wasted retries.
 
 ## Options
 

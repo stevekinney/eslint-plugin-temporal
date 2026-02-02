@@ -6,7 +6,7 @@ Disallow floating (unhandled) promises in workflows, especially for activity and
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow floating (unhandled) promises in workflows, especially for activity and child workflow calls.
+Unhandled promises can lead to lost work or nondeterministic ordering. Workflows should await or explicitly manage all async work.
 
 ## Options
 

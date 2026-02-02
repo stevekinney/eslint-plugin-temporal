@@ -6,7 +6,7 @@ Require explicit return type annotations on update handlers. Update handlers ret
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require explicit return type annotations on update handlers. Update handlers return values to the caller and should have explicit types for API clarity.
+Update handlers are part of your workflow API. Explicit return types prevent accidental breaking changes.
 
 ## Options
 

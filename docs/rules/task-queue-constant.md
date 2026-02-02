@@ -6,7 +6,7 @@ Suggest using a constant for task queue names to ensure consistency.
 
 ## Why it matters
 
-Shared code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that suggest using a constant for task queue names to ensure consistency.
+Task queue names are shared across workers and clients. Constants prevent typos and make refactors safe.
 
 ## Options
 

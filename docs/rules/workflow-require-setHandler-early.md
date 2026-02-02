@@ -6,7 +6,7 @@ Require setHandler calls before the first await in workflow functions. This ensu
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require setHandler calls before the first await in workflow functions. This ensures handlers are registered before any async operations.
+Handlers registered after the first await can miss signals/updates. Registering early ensures deterministic handling.
 
 ## Options
 

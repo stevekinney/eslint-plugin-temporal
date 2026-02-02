@@ -6,7 +6,7 @@ Disallow console.\* in workflow files. Use log from @temporalio/workflow instead
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow console.\* in workflow files. Use log from @temporalio/workflow instead.
+Console output is not replay-aware and can duplicate logs. Workflow logging integrates with Temporal and is safe for replay.
 
 ## Options
 

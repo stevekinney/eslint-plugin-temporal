@@ -6,7 +6,7 @@ Suggest using condition() instead of polling loops with sleep(). Condition is mo
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that suggest using condition() instead of polling loops with sleep(). Condition is more efficient and results in cleaner workflow history.
+Polling with timers creates extra workflow tasks and history. condition() is more efficient and replay-friendly.
 
 ## Options
 

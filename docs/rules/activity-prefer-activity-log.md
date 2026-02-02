@@ -6,7 +6,7 @@ Prefer log from @temporalio/activity over console.\* for structured logging.
 
 ## Why it matters
 
-Activity code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that prefer log from @temporalio/activity over console.\* for structured logging.
+Activity logs include Temporal context and are structured for observability. console.\* loses metadata and consistency.
 
 ## Options
 

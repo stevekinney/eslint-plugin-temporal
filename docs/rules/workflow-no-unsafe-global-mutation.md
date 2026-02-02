@@ -6,7 +6,7 @@ Disallow mutations to globalThis or built-in prototypes in workflows. Such mutat
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow mutations to globalThis or built-in prototypes in workflows. Such mutations are non-deterministic and break workflow replay.
+Mutating globals or prototypes can cause replay divergence across workers and versions.
 
 ## Options
 

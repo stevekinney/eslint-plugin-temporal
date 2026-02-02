@@ -6,7 +6,7 @@ Require type-only imports for activity modules. Non-type imports pull non-determ
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require type-only imports for activity modules. Non-type imports pull non-deterministic code into the workflow bundle.
+Type-only imports keep activity implementations out of the workflow bundle, preserving sandbox safety.
 
 ## Options
 

@@ -6,7 +6,7 @@ Disallow calling continueAsNew in update handlers. Continue-As-New from update h
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow calling continueAsNew in update handlers. Continue-As-New from update handlers causes issues with the update lifecycle.
+Update handlers should complete within the current run. Continuing as new inside a handler can interrupt in-flight updates and violate update semantics.
 
 ## Options
 

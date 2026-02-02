@@ -6,7 +6,7 @@ Require a comment explaining why modules are being ignored in bundlerOptions.
 
 ## Why it matters
 
-Worker code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require a comment explaining why modules are being ignored in bundlerOptions.
+Ignoring modules affects workflow bundling and can hide nondeterminism. A comment makes the safety trade-off explicit.
 
 ## Options
 

@@ -6,7 +6,7 @@ Require a comment explaining why deprecatePatch is safe to call. Premature depre
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require a comment explaining why deprecatePatch is safe to call. Premature deprecation can break old workflow executions.
+Patch lifecycles are version-sensitive. A comment documents why a patch can be deprecated so future maintainers do not remove it prematurely and break replay compatibility.
 
 ## Options
 

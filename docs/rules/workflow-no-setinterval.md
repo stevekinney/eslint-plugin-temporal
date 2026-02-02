@@ -6,7 +6,7 @@ Disallow setInterval() in workflow files. There is no deterministic equivalent i
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow setInterval() in workflow files. There is no deterministic equivalent in Temporal.
+setInterval is not replay-safe and can ignore cancellation semantics. Use sleep in a loop or condition().
 
 ## Options
 

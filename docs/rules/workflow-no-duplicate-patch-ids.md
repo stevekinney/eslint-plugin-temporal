@@ -6,7 +6,7 @@ Disallow duplicate patch IDs within a file. Duplicate patch IDs cause unpredicta
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow duplicate patch IDs within a file. Duplicate patch IDs cause unpredictable versioning behavior.
+Patch IDs define version gates. Duplicates make versioning ambiguous and can lead to incorrect replay behavior.
 
 ## Options
 

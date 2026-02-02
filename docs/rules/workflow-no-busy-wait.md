@@ -6,7 +6,7 @@ Disallow loops without await that could block the workflow task. Use condition()
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow loops without await that could block the workflow task. Use condition() or sleep() for waiting.
+Busy-wait loops block the workflow task and can cause timeouts. Use Temporal timers or conditions to yield control.
 
 ## Options
 

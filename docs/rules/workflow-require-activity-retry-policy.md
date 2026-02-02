@@ -6,7 +6,7 @@ Require explicit retry policy configuration in proxyActivities. Explicit retry p
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require explicit retry policy configuration in proxyActivities. Explicit retry policies make activity behavior more predictable and reviewable.
+Retries are part of activity semantics. Explicit policies make behavior reviewable and prevent surprises in production.
 
 ## Options
 

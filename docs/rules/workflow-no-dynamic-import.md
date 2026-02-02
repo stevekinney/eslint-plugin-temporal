@@ -6,7 +6,7 @@ Disallow dynamic import() expressions in workflow files. Dynamic imports break b
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow dynamic import() expressions in workflow files. Dynamic imports break bundling and are non-deterministic.
+Dynamic imports can bypass bundling guarantees and lead to runtime differences between replays. Keep workflow dependencies static.
 
 ## Options
 

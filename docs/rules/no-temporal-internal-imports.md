@@ -6,7 +6,7 @@ Disallow importing from internal Temporal SDK paths (e.g., @temporalio/_/lib/_).
 
 ## Why it matters
 
-Shared code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing from internal Temporal SDK paths (e.g., @temporalio/_/lib/_).
+Internal SDK paths are not stable APIs. Using public entry points prevents breakage on SDK upgrades.
 
 ## Options
 

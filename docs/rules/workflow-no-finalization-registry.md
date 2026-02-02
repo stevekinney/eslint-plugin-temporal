@@ -6,7 +6,7 @@ Disallow FinalizationRegistry usage in workflows. FinalizationRegistry behavior 
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow FinalizationRegistry usage in workflows. FinalizationRegistry behavior is non-deterministic and breaks workflow replay.
+FinalizationRegistry depends on garbage collection timing, which is nondeterministic and unsafe for workflow replay.
 
 ## Options
 

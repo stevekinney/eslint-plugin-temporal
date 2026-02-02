@@ -6,7 +6,7 @@ Require explicit workflowId when starting workflows to ensure idempotency.
 
 ## Why it matters
 
-Client code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require explicit workflowId when starting workflows to ensure idempotency.
+Workflow IDs provide idempotency and de-duplication. Omitting them can create duplicate workflows on retries.
 
 ## Options
 

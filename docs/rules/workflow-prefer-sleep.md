@@ -6,7 +6,7 @@ Prefer sleep() from @temporalio/workflow over setTimeout(). Temporal sleep integ
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that prefer sleep() from @temporalio/workflow over setTimeout(). Temporal sleep integrates with cancellation scopes.
+sleep() is workflow-aware and cancellation-safe. setTimeout wrappers can behave differently under replay.
 
 ## Options
 

@@ -6,7 +6,7 @@ Disallow process.env in workflow files. Environment variables cause replay diver
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow process.env in workflow files. Environment variables cause replay divergence.
+Environment variables can change between runs and replays. Pass configuration explicitly via workflow inputs.
 
 ## Options
 

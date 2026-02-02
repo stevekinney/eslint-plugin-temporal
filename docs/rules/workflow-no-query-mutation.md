@@ -6,7 +6,7 @@ Disallow state mutations in query handlers. Query handlers must be pure reads.
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow state mutations in query handlers. Query handlers must be pure reads.
+Queries must be read-only. Mutating state in a query can cause nondeterministic behavior and violates the query contract.
 
 ## Options
 

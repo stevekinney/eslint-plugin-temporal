@@ -6,7 +6,7 @@ Signal handlers must return void. Return values from signal handlers are ignored
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that signal handlers must return void. Return values from signal handlers are ignored.
+Signal handlers do not return values to callers. Enforcing void return types keeps APIs honest and predictable.
 
 ## Options
 

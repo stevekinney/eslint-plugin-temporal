@@ -6,7 +6,7 @@ Disallow require() calls in workflows. require() is not deterministic because it
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow require() calls in workflows. require() is not deterministic because it can load different modules based on runtime conditions.
+Dynamic require() breaks bundling assumptions and can introduce nondeterministic module loading during replay.
 
 ## Options
 

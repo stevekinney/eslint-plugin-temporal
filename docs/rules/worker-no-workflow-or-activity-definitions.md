@@ -6,7 +6,7 @@ Disallow importing workflow or activity definitions directly in worker files.
 
 ## Why it matters
 
-Worker code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing workflow or activity definitions directly in worker files.
+Workers should load workflows by path and pass activity implementations explicitly. Importing definitions can bundle code into the wrong environment.
 
 ## Options
 

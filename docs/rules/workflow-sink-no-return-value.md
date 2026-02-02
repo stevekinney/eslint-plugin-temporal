@@ -6,7 +6,7 @@ Disallow using return values from sink calls. Sinks return void and their return
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow using return values from sink calls. Sinks return void and their return values should not be used.
+Sink calls do not return values. Using their return values is a logic error that can hide missed side effects.
 
 ## Options
 

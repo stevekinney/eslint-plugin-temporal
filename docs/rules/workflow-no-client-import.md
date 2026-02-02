@@ -6,7 +6,7 @@ Disallow importing @temporalio/client in workflow files. Workflows cannot use th
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that disallow importing @temporalio/client in workflow files. Workflows cannot use the Client directly.
+Workflows cannot use the Temporal Client. Client calls are non-deterministic and must be done in activities or by workflow APIs.
 
 ## Options
 

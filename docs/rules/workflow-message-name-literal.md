@@ -6,7 +6,7 @@ Require literal string names in defineSignal, defineQuery, and defineUpdate call
 
 ## Why it matters
 
-Workflow code has specific constraints around determinism, replay safety, and runtime boundaries. This rule enforces that require literal string names in defineSignal, defineQuery, and defineUpdate calls. Dynamic names can cause issues with workflow versioning and tooling.
+Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.
 
 ## Options
 
