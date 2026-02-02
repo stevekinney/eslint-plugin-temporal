@@ -114,7 +114,7 @@ export default [
 
 ### Docs contribution
 
-When you add or rename rules, update `docs/rules/` and ensure the README rule list stays in sync. Run `bun run docs:check` before committing to catch missing or extra docs.
+When you add or rename rules, regenerate the docs and keep the README rule list in sync. Run `bun run docs:generate` followed by `bun run docs:check` before committing to catch missing or extra docs.
 
 ## Rules
 
