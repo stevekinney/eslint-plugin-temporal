@@ -65,11 +65,11 @@
 
 ### Cancellation and scopes
 
-- [ ] prefer-CancellationScope-withTimeout
-- [ ] no-settimeout-in-cancellation-scope
-- [ ] no-swallow-cancellation
-- [ ] nonCancellable-cleanup-required
-- [ ] await-cancelRequested-in-nonCancellable-pattern
+- [x] prefer-CancellationScope-withTimeout
+- [x] no-settimeout-in-cancellation-scope
+- [x] no-swallow-cancellation
+- [x] nonCancellable-cleanup-required
+- [x] await-cancelRequested-in-nonCancellable-pattern
 
 ### Versioning and deployment safety
 

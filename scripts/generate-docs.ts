@@ -25,6 +25,16 @@ const whyByRule: Record<string, string> = {
     'Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.',
   'workflow-require-message-definitions-at-module-scope':
     'Defining messages at module scope keeps handler identities stable and avoids redefining them on every workflow activation.',
+  'workflow-prefer-CancellationScope-withTimeout':
+    'CancellationScope.withTimeout integrates with Temporal cancellation semantics and avoids ad-hoc timeout races.',
+  'workflow-no-settimeout-in-cancellation-scope':
+    'setTimeout bypasses Temporal’s cancellation semantics. sleep() ensures timers respect workflow cancellation.',
+  'workflow-no-swallow-cancellation':
+    'Swallowing cancellation can leave workflows in an inconsistent state. Rethrowing preserves cancellation semantics.',
+  'workflow-nonCancellable-cleanup-required':
+    'Cleanup during cancellation should run inside a non-cancellable scope to ensure it completes safely.',
+  'workflow-await-cancelRequested-in-nonCancellable-pattern':
+    'Awaiting cancelRequested after non-cancellable cleanup keeps workflow cancellation behavior explicit and predictable.',
   'workflow-no-activity-definitions-import':
     'Workflow code runs in the deterministic sandbox. Importing activity implementations can pull in Node APIs and nondeterminism; only proxy activities from the workflow API.',
   'workflow-no-async-query-handler':

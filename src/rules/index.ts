@@ -18,6 +18,7 @@ import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-co
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
 // Workflow rules
 import { activityTimeoutDurationFormat } from './workflow/activity-timeout-duration-format.ts';
+import { awaitCancelRequestedInNonCancellablePattern } from './workflow/await-cancelRequested-in-nonCancellable-pattern.ts';
 import { conditionTimeoutStyle } from './workflow/condition-timeout-style.ts';
 import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
 import { durationFormat } from './workflow/duration-format.ts';
@@ -49,6 +50,8 @@ import { noProcessEnv } from './workflow/no-process-env.ts';
 import { noQueryMutation } from './workflow/no-query-mutation.ts';
 import { noRetryForNonIdempotentActivities } from './workflow/no-retry-for-nonidempotent-activities.ts';
 import { noSetInterval } from './workflow/no-setinterval.ts';
+import { noSetTimeoutInCancellationScope } from './workflow/no-settimeout-in-cancellation-scope.ts';
+import { noSwallowCancellation } from './workflow/no-swallow-cancellation.ts';
 import { noThrowRawError } from './workflow/no-throw-raw-error.ts';
 import { noTopLevelWorkflowSideEffects } from './workflow/no-top-level-workflow-side-effects.ts';
 import { noUnsafeGlobalMutation } from './workflow/no-unsafe-global-mutation.ts';
@@ -58,7 +61,9 @@ import { noWallClockAssumptions } from './workflow/no-wall-clock-assumptions.ts'
 import { noWeakRef } from './workflow/no-weakref.ts';
 import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
+import { nonCancellableCleanupRequired } from './workflow/nonCancellable-cleanup-required.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
+import { preferCancellationScopeWithTimeout } from './workflow/prefer-cancellation-scope-with-timeout.ts';
 import { preferConditionOverPolling } from './workflow/prefer-condition-over-polling.ts';
 import { preferSingleObjectWorkflowArgs } from './workflow/prefer-single-object-workflow-args.ts';
 import { preferSleep } from './workflow/prefer-sleep.ts';
@@ -83,6 +88,8 @@ import { uuid4RequiresSecurityComment } from './workflow/uuid4-requires-security
 export const rules = {
   // Workflow rules
   'workflow-activity-timeout-duration-format': activityTimeoutDurationFormat,
+  'workflow-await-cancelRequested-in-nonCancellable-pattern':
+    awaitCancelRequestedInNonCancellablePattern,
   'workflow-condition-timeout-style': conditionTimeoutStyle,
   'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
   'workflow-duration-format': durationFormat,
@@ -113,7 +120,10 @@ export const rules = {
   'workflow-no-process-env': noProcessEnv,
   'workflow-no-query-mutation': noQueryMutation,
   'workflow-no-retry-for-nonidempotent-activities': noRetryForNonIdempotentActivities,
+  'workflow-no-settimeout-in-cancellation-scope': noSetTimeoutInCancellationScope,
   'workflow-no-setinterval': noSetInterval,
+  'workflow-no-swallow-cancellation': noSwallowCancellation,
+  'workflow-nonCancellable-cleanup-required': nonCancellableCleanupRequired,
   'workflow-no-top-level-workflow-side-effects': noTopLevelWorkflowSideEffects,
   'workflow-no-throw-raw-error': noThrowRawError,
   'workflow-no-unsafe-global-mutation': noUnsafeGlobalMutation,
@@ -124,6 +134,7 @@ export const rules = {
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
   'workflow-patch-id-literal': patchIdLiteral,
+  'workflow-prefer-CancellationScope-withTimeout': preferCancellationScopeWithTimeout,
   'workflow-prefer-condition-over-polling': preferConditionOverPolling,
   'workflow-prefer-sleep': preferSleep,
   'workflow-prefer-single-object-args': preferSingleObjectWorkflowArgs,
