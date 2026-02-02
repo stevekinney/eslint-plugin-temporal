@@ -30,6 +30,7 @@ import { noBusyWait } from './workflow/no-busy-wait.ts';
 import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
 import { noContinueAsNewInUpdateHandler } from './workflow/no-continueAsNew-in-update-handler.ts';
+import { noContinueAsNewWithoutStateArgument } from './workflow/no-continueAsNew-without-state-argument.ts';
 import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
 import { noDateNowTightLoop } from './workflow/no-date-now-tight-loop.ts';
 import { noDuplicatePatchIds } from './workflow/no-duplicate-patch-ids.ts';
@@ -63,14 +64,17 @@ import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
 import { nonCancellableCleanupRequired } from './workflow/nonCancellable-cleanup-required.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
+import { patchedMustGuardIncompatibleChange } from './workflow/patched-must-guard-incompatible-change.ts';
 import { preferCancellationScopeWithTimeout } from './workflow/prefer-cancellation-scope-with-timeout.ts';
 import { preferConditionOverPolling } from './workflow/prefer-condition-over-polling.ts';
 import { preferSingleObjectWorkflowArgs } from './workflow/prefer-single-object-workflow-args.ts';
 import { preferSleep } from './workflow/prefer-sleep.ts';
 import { preferWorkflowUuid } from './workflow/prefer-workflow-uuid.ts';
+import { replayTestingRequiredComment } from './workflow/replay-testing-required-comment.ts';
 import { requireActivityRetryPolicy } from './workflow/require-activity-retry-policy.ts';
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
 import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
+import { requireDeprecatePatchAfterBranchRemoval } from './workflow/require-deprecatePatch-after-branch-removal.ts';
 import { requireHandlerSerializationSafeTypes } from './workflow/require-handler-serialization-safe-types.ts';
 import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg.ts';
 import { requireMessageDefinitionsAtModuleScope } from './workflow/require-message-definitions-at-module-scope.ts';
@@ -101,6 +105,7 @@ export const rules = {
   'workflow-no-client-import': noClientImport,
   'workflow-no-console': noConsole,
   'workflow-no-continueAsNew-in-update-handler': noContinueAsNewInUpdateHandler,
+  'workflow-no-continueAsNew-without-state-argument': noContinueAsNewWithoutStateArgument,
   'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
   'workflow-no-date-now-tight-loop': noDateNowTightLoop,
   'workflow-no-duplicate-patch-ids': noDuplicatePatchIds,
@@ -134,11 +139,15 @@ export const rules = {
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
   'workflow-patch-id-literal': patchIdLiteral,
+  'workflow-patched-must-guard-incompatible-change': patchedMustGuardIncompatibleChange,
   'workflow-prefer-CancellationScope-withTimeout': preferCancellationScopeWithTimeout,
   'workflow-prefer-condition-over-polling': preferConditionOverPolling,
   'workflow-prefer-sleep': preferSleep,
   'workflow-prefer-single-object-args': preferSingleObjectWorkflowArgs,
   'workflow-prefer-workflow-uuid': preferWorkflowUuid,
+  'workflow-replay-testing-required-comment': replayTestingRequiredComment,
+  'workflow-require-deprecatePatch-after-branch-removal':
+    requireDeprecatePatchAfterBranchRemoval,
   'workflow-require-idempotency-key-arg': requireIdempotencyKeyArg,
   'workflow-require-activity-retry-policy': requireActivityRetryPolicy,
   'workflow-require-activity-timeouts': requireActivityTimeouts,

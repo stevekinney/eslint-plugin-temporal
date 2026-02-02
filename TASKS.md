@@ -73,10 +73,10 @@
 
 ### Versioning and deployment safety
 
-- [ ] patched-must-guard-incompatible-change
-- [ ] require-deprecatePatch-after-branch-removal
-- [ ] no-continueAsNew-without-state-argument
-- [ ] replay-testing-required-comment
+- [x] patched-must-guard-incompatible-change
+- [x] require-deprecatePatch-after-branch-removal
+- [x] no-continueAsNew-without-state-argument
+- [x] replay-testing-required-comment
 
 ### Sinks and observability
 

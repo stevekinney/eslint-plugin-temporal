@@ -124,6 +124,9 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | ---------------------------------------------------------- | --------------------------------------------------------------------------- | :-----: |
 | `workflow-condition-timeout-style`                         | Enforce consistent timeout style for condition() calls.                     |         |
 | `workflow-deprecate-patch-requires-comment`                | Require a comment explaining why deprecatePatch is being used.              |         |
+| `workflow-patched-must-guard-incompatible-change`          | Require patched() to guard incompatible workflow changes.                   |         |
+| `workflow-require-deprecatePatch-after-branch-removal`     | Require deprecatePatch() after removing a patched fallback branch.          |         |
+| `workflow-replay-testing-required-comment`                 | Require a replay-tested comment when changing versioning logic.             |         |
 | `workflow-duration-format`                                 | Enforce consistent duration literal format (string vs ms number).           |         |
 | `workflow-activity-timeout-duration-format`                | Enforce consistent duration literal format for activity timeouts.           |         |
 | `workflow-message-name-literal`                            | Require signal/query/update names to be string literals.                    |         |
@@ -139,6 +142,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-client-import`                                | Disallow importing @temporalio/client in workflow files.                    |         |
 | `workflow-no-console`                                      | Disallow console.\* in workflow files. Use log from @temporalio/workflow.   |   Yes   |
 | `workflow-no-continueAsNew-in-update-handler`              | Disallow calling continueAsNew inside update handlers.                      |         |
+| `workflow-no-continueAsNew-without-state-argument`         | Require continueAsNew() to pass workflow state arguments.                   |         |
 | `workflow-no-crypto-random-uuid`                           | Disallow crypto.randomUUID(). Use uuid4() from @temporalio/workflow.        |         |
 | `workflow-no-date-now-tight-loop`                          | Warn on multiple Date.now() calls without yielding.                         |         |
 | `workflow-no-duplicate-patch-ids`                          | Disallow duplicate patch IDs in the same workflow.                          |         |

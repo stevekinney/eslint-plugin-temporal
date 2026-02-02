@@ -17,6 +17,12 @@ const whyByRule: Record<string, string> = {
     'Consistent condition() timeout usage prevents accidental infinite waits and keeps workflow timing behavior reviewable.',
   'workflow-deprecate-patch-requires-comment':
     'Patch lifecycles are version-sensitive. A comment documents why a patch can be deprecated so future maintainers do not remove it prematurely and break replay compatibility.',
+  'workflow-patched-must-guard-incompatible-change':
+    'patched() should guard incompatible code paths so replay behavior is explicit and safe during version transitions.',
+  'workflow-require-deprecatePatch-after-branch-removal':
+    'Once the old branch is removed, deprecatePatch makes the versioning lifecycle explicit and prevents accidental replay failures.',
+  'workflow-replay-testing-required-comment':
+    'Replay testing catches nondeterminism. A replay-tested comment documents that verification for versioning changes.',
   'workflow-duration-format':
     'Mixing duration formats makes timers harder to read and audit. A consistent style reduces mistakes when reasoning about timeouts.',
   'workflow-activity-timeout-duration-format':
@@ -47,6 +53,8 @@ const whyByRule: Record<string, string> = {
     'Console output is not replay-aware and can duplicate logs. Workflow logging integrates with Temporal and is safe for replay.',
   'workflow-no-continueAsNew-in-update-handler':
     'Update handlers should complete within the current run. Continuing as new inside a handler can interrupt in-flight updates and violate update semantics.',
+  'workflow-no-continueAsNew-without-state-argument':
+    'continueAsNew starts a new run with fresh inputs. Passing state forward prevents accidental resets and replay issues.',
   'workflow-no-crypto-random-uuid':
     'crypto.randomUUID() is nondeterministic. Use uuid4() in workflows or generate IDs in activities when you need true randomness.',
   'workflow-no-date-now-tight-loop':

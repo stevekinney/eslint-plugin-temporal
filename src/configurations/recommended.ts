@@ -30,6 +30,9 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   // Workflow rules (auto-detected via @temporalio/workflow imports or file paths)
   'temporal/workflow-condition-timeout-style': 'warn',
   'temporal/workflow-deprecate-patch-requires-comment': 'warn',
+  'temporal/workflow-patched-must-guard-incompatible-change': 'warn',
+  'temporal/workflow-require-deprecatePatch-after-branch-removal': 'warn',
+  'temporal/workflow-replay-testing-required-comment': 'warn',
   'temporal/workflow-duration-format': 'warn',
   'temporal/workflow-activity-timeout-duration-format': 'warn',
   'temporal/workflow-message-name-literal': 'warn',
@@ -46,6 +49,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-client-import': 'error',
   'temporal/workflow-no-console': 'error',
   'temporal/workflow-no-continueAsNew-in-update-handler': 'error',
+  'temporal/workflow-no-continueAsNew-without-state-argument': 'warn',
   'temporal/workflow-no-crypto-random-uuid': 'error',
   'temporal/workflow-no-date-now-tight-loop': 'warn',
   'temporal/workflow-no-duplicate-patch-ids': 'error',
