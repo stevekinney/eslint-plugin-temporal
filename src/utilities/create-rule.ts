@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 const DOCS_BASE_URL =
-  'https://github.com/stevekinney/eslint-plugin-temporal/blob/main/docs/rules';
+  'https://github.com/stevekinney/eslint-plugin-temporal/blob/main/documentation/rules';
 
 /**
  * Creates a rule with consistent documentation URL generation.

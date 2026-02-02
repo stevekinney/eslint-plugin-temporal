@@ -7,7 +7,7 @@ import { ImportTracker } from './import-tracker.ts';
 import { detectContext, isContextMatch } from './temporal-context.ts';
 
 const DOCS_BASE_URL =
-  'https://github.com/stevekinney/eslint-plugin-temporal/blob/main/docs/rules';
+  'https://github.com/stevekinney/eslint-plugin-temporal/blob/main/documentation/rules';
 
 /**
  * Options for context-aware rules

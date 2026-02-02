@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
 
-const OUTPUT_DIR = 'docs/rules';
+const OUTPUT_DIR = 'documentation/rules';
 const ROOT = 'src/rules';
 
 const contextLabels: Record<string, string> = {

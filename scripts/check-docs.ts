@@ -5,7 +5,7 @@ const ruleNames = [...rulesFile.matchAll(/'([^']+)':/g)]
   .map((match) => match[1])
   .filter((rule): rule is string => Boolean(rule));
 
-const docsDir = 'docs/rules';
+const docsDir = 'documentation/rules';
 const docFiles = readdirSync(docsDir)
   .filter((file) => file.endsWith('.md'))
   .map((file) => file.replace(/\.md$/, ''));

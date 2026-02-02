@@ -85,7 +85,7 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 
 const createRule = ESLintUtils.RuleCreator(
   (name) =>
-    `https://github.com/your-org/eslint-plugin-temporal/blob/main/docs/rules/${name}.md`,
+    `https://github.com/stevekinney/eslint-plugin-temporal/blob/main/documentation/rules/${name}.md`,
 );
 
 export const ruleName = createRule({
