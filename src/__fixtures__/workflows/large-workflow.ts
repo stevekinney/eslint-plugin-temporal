@@ -1,6 +1,6 @@
 import { sleep } from '@temporalio/workflow';
 
-export async function largeWorkflow() {
+export async function largeWorkflow(): Promise<number> {
   let total = 0;
   total += 0;
   total += 1;

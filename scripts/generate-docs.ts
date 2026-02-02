@@ -77,6 +77,20 @@ const whyByRule: Record<string, string> = {
     'Activity payloads are stored in workflow history. Large literals bloat history, slow replays, and increase storage costs.',
   'workflow-no-large-literal-payloads':
     'Child workflow payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.',
+  'workflow-no-large-inline-constants':
+    'Large inline literals increase workflow bundle size and memory use. Move big constants out of workflow code.',
+  'workflow-no-nonserializable-types-in-payloads':
+    'Workflow payloads must be serializable. Disallowing non-serializable types avoids runtime payload converter failures.',
+  'workflow-no-error-as-payload':
+    'Error objects do not serialize cleanly. Use structured error shapes when passing errors as payloads.',
+  'workflow-no-bigint-in-payload':
+    'bigint is not JSON-serializable by default. Convert to string/number or configure a payload converter.',
+  'workflow-no-date-object-in-payload':
+    'Date objects are not JSON-serializable by default. Use ISO strings or epoch values.',
+  'workflow-require-explicit-payload-types':
+    'Explicit payload types make workflow APIs and message contracts clear and stable.',
+  'workflow-no-any-in-workflow-public-api':
+    'Avoiding any in public workflow APIs improves correctness and keeps payload contracts explicit.',
   'workflow-no-logger-library-in-workflow':
     'Logger libraries can perform I/O and are not replay-aware. Use the workflow logger instead.',
   'workflow-no-mixed-scope-exports':

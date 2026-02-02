@@ -24,8 +24,10 @@ import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requir
 import { durationFormat } from './workflow/duration-format.ts';
 import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
+import { noAnyInWorkflowPublicApi } from './workflow/no-any-in-workflow-public-api.ts';
 import { noAsyncQueryHandler } from './workflow/no-async-query-handler.ts';
 import { noAwaitInHandlerWithoutExitGuard } from './workflow/no-await-in-handler-without-exit-guard.ts';
+import { noBigintInPayload } from './workflow/no-bigint-in-payload.ts';
 import { noBusyWait } from './workflow/no-busy-wait.ts';
 import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
@@ -33,13 +35,16 @@ import { noContinueAsNewInUpdateHandler } from './workflow/no-continueAsNew-in-u
 import { noContinueAsNewWithoutStateArgument } from './workflow/no-continueAsNew-without-state-argument.ts';
 import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
 import { noDateNowTightLoop } from './workflow/no-date-now-tight-loop.ts';
+import { noDateObjectInPayload } from './workflow/no-date-object-in-payload.ts';
 import { noDuplicatePatchIds } from './workflow/no-duplicate-patch-ids.ts';
 import { noDynamicImport } from './workflow/no-dynamic-import.ts';
 import { noDynamicRequire } from './workflow/no-dynamic-require.ts';
+import { noErrorAsPayload } from './workflow/no-error-as-payload.ts';
 import { noFinalizationRegistry } from './workflow/no-finalization-registry.ts';
 import { noFloatingPromises } from './workflow/no-floating-promises.ts';
 import { noFsInWorkflow } from './workflow/no-fs-in-workflow.ts';
 import { noHeavyCpuInWorkflow } from './workflow/no-heavy-cpu-in-workflow.ts';
+import { noLargeInlineConstants } from './workflow/no-large-inline-constants.ts';
 import { noLargeLiteralActivityPayloads } from './workflow/no-large-literal-activity-payloads.ts';
 import { noLargeLiteralPayloads } from './workflow/no-large-literal-payloads.ts';
 import { noLoggerLibraryInWorkflow } from './workflow/no-logger-library-in-workflow.ts';
@@ -47,6 +52,7 @@ import { noMixedScopeExports } from './workflow/no-mixed-scope-exports.ts';
 import { noNetworkInWorkflow } from './workflow/no-network-in-workflow.ts';
 import { noNodeOrDomImports } from './workflow/no-node-or-dom-imports.ts';
 import { noNondeterministicControlFlow } from './workflow/no-nondeterministic-control-flow.ts';
+import { noNonserializableTypesInPayloads } from './workflow/no-nonserializable-types-in-payloads.ts';
 import { noProcessEnv } from './workflow/no-process-env.ts';
 import { noQueryMutation } from './workflow/no-query-mutation.ts';
 import { noRetryForNonIdempotentActivities } from './workflow/no-retry-for-nonidempotent-activities.ts';
@@ -75,6 +81,7 @@ import { requireActivityRetryPolicy } from './workflow/require-activity-retry-po
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
 import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
 import { requireDeprecatePatchAfterBranchRemoval } from './workflow/require-deprecatePatch-after-branch-removal.ts';
+import { requireExplicitPayloadTypes } from './workflow/require-explicit-payload-types.ts';
 import { requireHandlerSerializationSafeTypes } from './workflow/require-handler-serialization-safe-types.ts';
 import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg.ts';
 import { requireMessageDefinitionsAtModuleScope } from './workflow/require-message-definitions-at-module-scope.ts';
@@ -100,21 +107,26 @@ export const rules = {
   'workflow-message-name-literal': messageNameLiteral,
   'workflow-no-await-in-handler-without-exit-guard': noAwaitInHandlerWithoutExitGuard,
   'workflow-no-activity-definitions-import': noActivityDefinitionsImport,
+  'workflow-no-any-in-workflow-public-api': noAnyInWorkflowPublicApi,
   'workflow-no-async-query-handler': noAsyncQueryHandler,
   'workflow-no-busy-wait': noBusyWait,
   'workflow-no-client-import': noClientImport,
   'workflow-no-console': noConsole,
   'workflow-no-continueAsNew-in-update-handler': noContinueAsNewInUpdateHandler,
   'workflow-no-continueAsNew-without-state-argument': noContinueAsNewWithoutStateArgument,
+  'workflow-no-bigint-in-payload': noBigintInPayload,
   'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
+  'workflow-no-date-object-in-payload': noDateObjectInPayload,
   'workflow-no-date-now-tight-loop': noDateNowTightLoop,
   'workflow-no-duplicate-patch-ids': noDuplicatePatchIds,
   'workflow-no-dynamic-import': noDynamicImport,
   'workflow-no-dynamic-require': noDynamicRequire,
+  'workflow-no-error-as-payload': noErrorAsPayload,
   'workflow-no-fs-in-workflow': noFsInWorkflow,
   'workflow-no-finalization-registry': noFinalizationRegistry,
   'workflow-no-floating-promises': noFloatingPromises,
   'workflow-no-heavy-cpu-in-workflow': noHeavyCpuInWorkflow,
+  'workflow-no-large-inline-constants': noLargeInlineConstants,
   'workflow-no-large-literal-activity-payloads': noLargeLiteralActivityPayloads,
   'workflow-no-large-literal-payloads': noLargeLiteralPayloads,
   'workflow-no-logger-library-in-workflow': noLoggerLibraryInWorkflow,
@@ -138,6 +150,7 @@ export const rules = {
   'workflow-no-weakref': noWeakRef,
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
+  'workflow-no-nonserializable-types-in-payloads': noNonserializableTypesInPayloads,
   'workflow-patch-id-literal': patchIdLiteral,
   'workflow-patched-must-guard-incompatible-change': patchedMustGuardIncompatibleChange,
   'workflow-prefer-CancellationScope-withTimeout': preferCancellationScopeWithTimeout,
@@ -145,6 +158,7 @@ export const rules = {
   'workflow-prefer-sleep': preferSleep,
   'workflow-prefer-single-object-args': preferSingleObjectWorkflowArgs,
   'workflow-prefer-workflow-uuid': preferWorkflowUuid,
+  'workflow-require-explicit-payload-types': requireExplicitPayloadTypes,
   'workflow-replay-testing-required-comment': replayTestingRequiredComment,
   'workflow-require-deprecatePatch-after-branch-removal':
     requireDeprecatePatchAfterBranchRemoval,

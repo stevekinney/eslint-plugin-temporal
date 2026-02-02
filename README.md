@@ -154,6 +154,13 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-heavy-cpu-in-workflow`                        | Warn on CPU-heavy work in workflows (move to activities).                   |         |
 | `workflow-no-large-literal-activity-payloads`              | Warn about large literal payloads sent to activities.                       |         |
 | `workflow-no-large-literal-payloads`                       | Warn about large literal payloads sent to child workflows.                  |         |
+| `workflow-no-large-inline-constants`                       | Warn about large inline literals in workflow code.                          |         |
+| `workflow-no-nonserializable-types-in-payloads`            | Disallow non-serializable types in workflow payloads.                       |         |
+| `workflow-no-error-as-payload`                             | Disallow Error objects in workflow payload types.                           |         |
+| `workflow-no-bigint-in-payload`                            | Disallow bigint in workflow payloads without a custom converter.            |         |
+| `workflow-no-date-object-in-payload`                       | Disallow Date objects in workflow payloads.                                 |         |
+| `workflow-require-explicit-payload-types`                  | Require explicit payload types for workflows and handlers.                  |         |
+| `workflow-no-any-in-workflow-public-api`                   | Disallow any in workflow public API payload types.                          |         |
 | `workflow-no-logger-library-in-workflow`                   | Disallow logger libraries in workflows. Use the workflow log instead.       |         |
 | `workflow-no-mixed-scope-exports`                          | Disallow exporting Worker/Client/Activity values from workflow files.       |         |
 | `workflow-no-network-in-workflow`                          | Disallow network access in workflows. Use activities for HTTP calls.        |         |

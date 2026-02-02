@@ -87,13 +87,13 @@
 
 ### Serialization and payload hygiene
 
-- [ ] no-nonserializable-types-in-payloads
-- [ ] no-error-as-payload
-- [ ] no-bigint-in-payload
-- [ ] no-date-object-in-payload
-- [ ] require-explicit-payload-types
-- [ ] no-any-in-workflow-public-api
-- [ ] no-large-inline-constants
+- [x] no-nonserializable-types-in-payloads
+- [x] no-error-as-payload
+- [x] no-bigint-in-payload
+- [x] no-date-object-in-payload
+- [x] require-explicit-payload-types
+- [x] no-any-in-workflow-public-api
+- [x] no-large-inline-constants
 
 ### Testing and replay safety
 
