@@ -18,8 +18,8 @@
 
 ## Linting the linter
 
-- [ ] Enable `eslint-plugin-eslint-plugin` rules in `eslint.config.js` to validate rule metadata, schemas, docs, and fixers.
-- [ ] Consider adding `eslint-plugin-n` or similar to validate Node/bundler usage in the plugin codebase.
+- [x] Enable `eslint-plugin-eslint-plugin` rules in `eslint.config.js` to validate rule metadata, schemas, docs, and fixers.
+- [x] Consider adding `eslint-plugin-n` or similar to validate Node/bundler usage in the plugin codebase.
 
 ## Testing and quality
 

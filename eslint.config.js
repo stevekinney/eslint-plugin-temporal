@@ -1,7 +1,9 @@
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintComments from 'eslint-plugin-eslint-comments';
+import eslintPlugin from 'eslint-plugin-eslint-plugin';
 import importPlugin from 'eslint-plugin-import';
+import nodePlugin from 'eslint-plugin-n';
 import promise from 'eslint-plugin-promise';
 import regexp from 'eslint-plugin-regexp';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
@@ -16,6 +18,32 @@ const testFiles = [
   '**/test/**/*.{js,jsx,ts,tsx}',
   '**/__tests__/**/*.{js,jsx,ts,tsx}',
 ];
+const ruleFiles = 'src/rules/**/*.{ts,tsx}';
+const ruleTestFiles = 'src/rules/**/*.test.{ts,tsx}';
+const nodeFiles = [
+  'src/**/*.{ts,tsx}',
+  'scripts/**/*.{js,jsx,cjs,mjs,ts,tsx}',
+  'eslint.config.js',
+];
+
+const eslintPluginRulesConfig = eslintPlugin.configs['rules-recommended'];
+const eslintPluginTestsConfig = eslintPlugin.configs['tests-recommended'];
+const nodePluginRecommended = nodePlugin.configs['flat/recommended-module'];
+const nodeMissingImportOptions = {
+  tryExtensions: ['.js', '.mjs', '.cjs', '.ts', '.tsx', '.d.ts'],
+  tsconfigPath: './tsconfig.json',
+  ignoreTypeImport: true,
+};
+const nodeUnpublishedImportOptions = {
+  tryExtensions: ['.js', '.mjs', '.cjs', '.ts', '.tsx', '.d.ts'],
+  ignoreTypeImport: true,
+  ignorePrivate: true,
+};
+const nodeRules = {
+  ...nodePluginRecommended.rules,
+  'n/no-missing-import': ['error', nodeMissingImportOptions],
+  'n/no-unpublished-import': ['error', nodeUnpublishedImportOptions],
+};
 
 const commonPlugins = {
   promise,
@@ -154,6 +182,38 @@ export default [
       ],
     },
   })),
+
+  // ESLint rule authoring rules for plugin development
+  {
+    files: [ruleFiles],
+    ...eslintPluginRulesConfig,
+  },
+  {
+    files: [ruleTestFiles],
+    ...eslintPluginTestsConfig,
+  },
+
+  // Node/bundler correctness for plugin source and tooling
+  {
+    files: nodeFiles,
+    ignores: testFiles,
+    plugins: nodePluginRecommended.plugins,
+    languageOptions: nodePluginRecommended.languageOptions,
+    settings: {
+      node: {
+        version: '>=18.0.0',
+      },
+    },
+    rules: nodeRules,
+  },
+  {
+    files: ['scripts/**/*.{js,jsx,cjs,mjs,ts,tsx}'],
+    rules: {
+      'n/hashbang': 'off',
+      'n/no-process-exit': 'off',
+      'n/no-unsupported-features/node-builtins': 'off',
+    },
+  },
 
   // Test file overrides - looser restrictions for testing
   {

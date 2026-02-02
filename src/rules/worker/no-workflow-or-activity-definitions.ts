@@ -2,7 +2,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkerRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'noWorkflowDefinitions' | 'noActivityDefinitions';
+type MessageIds = 'noWorkflowDefinitions';
 
 export const noWorkflowOrActivityDefinitions = createWorkerRule<[], MessageIds>({
   name: 'worker-no-workflow-or-activity-definitions',
@@ -15,8 +15,6 @@ export const noWorkflowOrActivityDefinitions = createWorkerRule<[], MessageIds>(
     messages: {
       noWorkflowDefinitions:
         'Do not import workflow definitions directly in worker files. Workers should only reference workflow files via the workflowsPath option, not import them directly. This ensures workflows run in the isolated sandbox.',
-      noActivityDefinitions:
-        'Do not import activity implementations directly in worker files. Instead, pass activities as an object to Worker.create(). Example: Worker.create({ activities: { myActivity } })',
     },
     schema: [],
   },

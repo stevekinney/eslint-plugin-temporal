@@ -26,6 +26,7 @@ export const noUnsafePackageImports = createWorkflowRule<Options, MessageIds>({
       description:
         'Disallow importing packages that are unsafe for workflow determinism.',
     },
+    defaultOptions: [{}],
     messages: {
       unsafePackageImport:
         "Package '{{ package }}' is not safe for workflows. {{ reason }}",

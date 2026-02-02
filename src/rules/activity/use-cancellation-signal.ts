@@ -21,6 +21,7 @@ export const useCancellationSignal = createActivityRule<Options, MessageIds>({
     docs: {
       description: 'Suggest passing cancellation signal to HTTP clients in activities.',
     },
+    defaultOptions: [{}],
     messages: {
       missingSignal:
         'Consider passing Context.current().cancellationSignal to {{ client }}(). This allows the HTTP request to be cancelled when the activity is cancelled. Example: fetch(url, { signal: Context.current().cancellationSignal })',

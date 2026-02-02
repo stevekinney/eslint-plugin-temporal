@@ -24,6 +24,7 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
       description:
         'Warn when passing large literal arrays, objects, or strings as arguments to activities or child workflows. Large payloads bloat workflow history.',
     },
+    defaultOptions: [{}],
     messages: {
       largeArrayPayload:
         'Avoid passing large array literals ({{ count }} elements) to activities. Large payloads bloat workflow history and slow down replay. Consider passing a reference or identifier instead, or breaking the data into smaller chunks.',
@@ -39,14 +40,17 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
           maxArrayElements: {
             type: 'number',
             minimum: 1,
+            description: 'Maximum number of elements allowed in array literals.',
           },
           maxObjectProperties: {
             type: 'number',
             minimum: 1,
+            description: 'Maximum number of properties allowed in object literals.',
           },
           maxStringLength: {
             type: 'number',
             minimum: 1,
+            description: 'Maximum length allowed for string literals.',
           },
         },
         additionalProperties: false,
