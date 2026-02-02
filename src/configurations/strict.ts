@@ -9,7 +9,9 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/no-temporal-internal-imports': 'error',
 
   // Workflow rules
+  'temporal/workflow-condition-timeout-style': 'error',
   'temporal/workflow-no-activity-definitions-import': 'error',
+  'temporal/workflow-duration-format': 'error',
   'temporal/workflow-no-fs-in-workflow': 'error',
   'temporal/workflow-no-node-or-dom-imports': 'error',
   'temporal/workflow-no-network-in-workflow': 'error',
@@ -19,6 +21,8 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-top-level-workflow-side-effects': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
   'temporal/workflow-no-nondeterministic-control-flow': 'error',
+  'temporal/workflow-no-date-now-tight-loop': 'error',
+  'temporal/workflow-no-wall-clock-assumptions': 'error',
   'temporal/workflow-uuid4-requires-security-comment': 'error',
   'temporal/workflow-no-heavy-cpu-in-workflow': 'error',
   'temporal/workflow-no-console': 'error',

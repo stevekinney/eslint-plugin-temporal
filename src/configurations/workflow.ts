@@ -4,7 +4,9 @@ import type { TSESLint } from '@typescript-eslint/utils';
  * Workflow config - strict determinism rules for workflow files
  */
 export const workflowRules: TSESLint.FlatConfig.Rules = {
+  'temporal/workflow-condition-timeout-style': 'warn',
   'temporal/workflow-no-activity-definitions-import': 'error',
+  'temporal/workflow-duration-format': 'warn',
   'temporal/workflow-no-fs-in-workflow': 'error',
   'temporal/workflow-no-node-or-dom-imports': 'error',
   'temporal/workflow-no-network-in-workflow': 'error',
@@ -14,6 +16,8 @@ export const workflowRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-top-level-workflow-side-effects': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
   'temporal/workflow-no-nondeterministic-control-flow': 'warn',
+  'temporal/workflow-no-date-now-tight-loop': 'warn',
+  'temporal/workflow-no-wall-clock-assumptions': 'warn',
   'temporal/workflow-uuid4-requires-security-comment': 'warn',
   'temporal/workflow-no-heavy-cpu-in-workflow': 'warn',
   'temporal/workflow-no-console': 'error',

@@ -43,10 +43,10 @@
 
 ### Timers and time
 
-- [ ] condition-timeout-style
-- [ ] duration-format (ms number vs string)
-- [ ] no-date-now-tight-loop
-- [ ] no-wall-clock-assumptions
+- [x] condition-timeout-style
+- [x] duration-format (ms number vs string)
+- [x] no-date-now-tight-loop
+- [x] no-wall-clock-assumptions
 
 ### Activity invocation and retry hygiene
 

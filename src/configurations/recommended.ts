@@ -28,7 +28,9 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/no-workflow-and-activity-in-same-file': 'error',
 
   // Workflow rules (auto-detected via @temporalio/workflow imports or file paths)
+  'temporal/workflow-condition-timeout-style': 'warn',
   'temporal/workflow-deprecate-patch-requires-comment': 'warn',
+  'temporal/workflow-duration-format': 'warn',
   'temporal/workflow-message-name-literal': 'warn',
   'temporal/workflow-no-activity-definitions-import': 'error',
   'temporal/workflow-no-async-query-handler': 'error',
@@ -37,6 +39,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-console': 'error',
   'temporal/workflow-no-continueAsNew-in-update-handler': 'error',
   'temporal/workflow-no-crypto-random-uuid': 'error',
+  'temporal/workflow-no-date-now-tight-loop': 'warn',
   'temporal/workflow-no-duplicate-patch-ids': 'error',
   'temporal/workflow-no-dynamic-import': 'error',
   'temporal/workflow-no-dynamic-require': 'error',
@@ -58,6 +61,7 @@ export const recommendedRules: TSESLint.FlatConfig.Rules = {
   'temporal/workflow-no-unsafe-global-mutation': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
   'temporal/workflow-no-uuid-library-in-workflow': 'error',
+  'temporal/workflow-no-wall-clock-assumptions': 'warn',
   'temporal/workflow-no-weakref': 'error',
   'temporal/workflow-no-worker-import': 'error',
   'temporal/workflow-no-workflow-apis-in-query': 'error',

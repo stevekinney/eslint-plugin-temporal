@@ -122,7 +122,9 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 
 | Rule                                          | Description                                                                 | Fixable |
 | --------------------------------------------- | --------------------------------------------------------------------------- | :-----: |
+| `workflow-condition-timeout-style`            | Enforce consistent timeout style for condition() calls.                     |         |
 | `workflow-deprecate-patch-requires-comment`   | Require a comment explaining why deprecatePatch is being used.              |         |
+| `workflow-duration-format`                    | Enforce consistent duration literal format (string vs ms number).           |         |
 | `workflow-message-name-literal`               | Require signal/query/update names to be string literals.                    |         |
 | `workflow-no-activity-definitions-import`     | Disallow importing activity implementations. Use proxyActivities() instead. |         |
 | `workflow-no-async-query-handler`             | Disallow async query handlers (queries must be synchronous).                |         |
@@ -131,6 +133,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-console`                         | Disallow console.\* in workflow files. Use log from @temporalio/workflow.   |   Yes   |
 | `workflow-no-continueAsNew-in-update-handler` | Disallow calling continueAsNew inside update handlers.                      |         |
 | `workflow-no-crypto-random-uuid`              | Disallow crypto.randomUUID(). Use uuid4() from @temporalio/workflow.        |         |
+| `workflow-no-date-now-tight-loop`             | Warn on multiple Date.now() calls without yielding.                         |         |
 | `workflow-no-duplicate-patch-ids`             | Disallow duplicate patch IDs in the same workflow.                          |         |
 | `workflow-no-dynamic-import`                  | Disallow dynamic import() expressions in workflows.                         |         |
 | `workflow-no-dynamic-require`                 | Disallow dynamic require() calls in workflows.                              |         |
@@ -152,6 +155,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-unsafe-global-mutation`          | Disallow mutating global state in workflows.                                |         |
 | `workflow-no-unsafe-package-imports`          | Disallow importing packages unsafe for workflow determinism.                |         |
 | `workflow-no-uuid-library-in-workflow`        | Disallow UUID libraries in workflows. Use uuid4() instead.                  |         |
+| `workflow-no-wall-clock-assumptions`          | Warn when comparing Date.now() to external timestamps in workflows.         |         |
 | `workflow-no-weakref`                         | Disallow WeakRef in workflows (non-deterministic).                          |         |
 | `workflow-no-worker-import`                   | Disallow importing @temporalio/worker in workflow files.                    |         |
 | `workflow-no-workflow-apis-in-query`          | Disallow workflow APIs (sleep, condition, etc.) in query handlers.          |         |

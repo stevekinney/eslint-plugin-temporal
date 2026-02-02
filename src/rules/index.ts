@@ -16,7 +16,9 @@ import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-co
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
 // Workflow rules
+import { conditionTimeoutStyle } from './workflow/condition-timeout-style.ts';
 import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
+import { durationFormat } from './workflow/duration-format.ts';
 import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
 import { noAsyncQueryHandler } from './workflow/no-async-query-handler.ts';
@@ -25,6 +27,7 @@ import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
 import { noContinueAsNewInUpdateHandler } from './workflow/no-continueAsNew-in-update-handler.ts';
 import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
+import { noDateNowTightLoop } from './workflow/no-date-now-tight-loop.ts';
 import { noDuplicatePatchIds } from './workflow/no-duplicate-patch-ids.ts';
 import { noDynamicImport } from './workflow/no-dynamic-import.ts';
 import { noDynamicRequire } from './workflow/no-dynamic-require.ts';
@@ -46,6 +49,7 @@ import { noTopLevelWorkflowSideEffects } from './workflow/no-top-level-workflow-
 import { noUnsafeGlobalMutation } from './workflow/no-unsafe-global-mutation.ts';
 import { noUnsafePackageImports } from './workflow/no-unsafe-package-imports.ts';
 import { noUuidLibraryInWorkflow } from './workflow/no-uuid-library-in-workflow.ts';
+import { noWallClockAssumptions } from './workflow/no-wall-clock-assumptions.ts';
 import { noWeakRef } from './workflow/no-weakref.ts';
 import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
@@ -69,7 +73,9 @@ import { uuid4RequiresSecurityComment } from './workflow/uuid4-requires-security
  */
 export const rules = {
   // Workflow rules
+  'workflow-condition-timeout-style': conditionTimeoutStyle,
   'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
+  'workflow-duration-format': durationFormat,
   'workflow-message-name-literal': messageNameLiteral,
   'workflow-no-activity-definitions-import': noActivityDefinitionsImport,
   'workflow-no-async-query-handler': noAsyncQueryHandler,
@@ -78,6 +84,7 @@ export const rules = {
   'workflow-no-console': noConsole,
   'workflow-no-continueAsNew-in-update-handler': noContinueAsNewInUpdateHandler,
   'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
+  'workflow-no-date-now-tight-loop': noDateNowTightLoop,
   'workflow-no-duplicate-patch-ids': noDuplicatePatchIds,
   'workflow-no-dynamic-import': noDynamicImport,
   'workflow-no-dynamic-require': noDynamicRequire,
@@ -99,6 +106,7 @@ export const rules = {
   'workflow-no-unsafe-global-mutation': noUnsafeGlobalMutation,
   'workflow-no-unsafe-package-imports': noUnsafePackageImports,
   'workflow-no-uuid-library-in-workflow': noUuidLibraryInWorkflow,
+  'workflow-no-wall-clock-assumptions': noWallClockAssumptions,
   'workflow-no-weakref': noWeakRef,
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,

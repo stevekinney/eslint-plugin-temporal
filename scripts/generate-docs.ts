@@ -13,8 +13,12 @@ const contextLabels: Record<string, string> = {
 };
 
 const whyByRule: Record<string, string> = {
+  'workflow-condition-timeout-style':
+    'Consistent condition() timeout usage prevents accidental infinite waits and keeps workflow timing behavior reviewable.',
   'workflow-deprecate-patch-requires-comment':
     'Patch lifecycles are version-sensitive. A comment documents why a patch can be deprecated so future maintainers do not remove it prematurely and break replay compatibility.',
+  'workflow-duration-format':
+    'Mixing duration formats makes timers harder to read and audit. A consistent style reduces mistakes when reasoning about timeouts.',
   'workflow-message-name-literal':
     'Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.',
   'workflow-no-activity-definitions-import':
@@ -31,6 +35,8 @@ const whyByRule: Record<string, string> = {
     'Update handlers should complete within the current run. Continuing as new inside a handler can interrupt in-flight updates and violate update semantics.',
   'workflow-no-crypto-random-uuid':
     'crypto.randomUUID() is nondeterministic. Use uuid4() in workflows or generate IDs in activities when you need true randomness.',
+  'workflow-no-date-now-tight-loop':
+    'Workflow time only advances with timers. Multiple Date.now() calls without yielding can mislead logic and create replay surprises.',
   'workflow-no-duplicate-patch-ids':
     'Patch IDs define version gates. Duplicates make versioning ambiguous and can lead to incorrect replay behavior.',
   'workflow-no-dynamic-import':
@@ -71,6 +77,8 @@ const whyByRule: Record<string, string> = {
     'Many packages perform I/O or use nondeterministic sources. Keeping workflow dependencies safe prevents replay failures.',
   'workflow-no-uuid-library-in-workflow':
     'UUID libraries typically rely on randomness. Use uuid4() or generate IDs in activities.',
+  'workflow-no-wall-clock-assumptions':
+    'Workflow time is deterministic and advances with timers. Comparing Date.now() to external timestamps can encode brittle wall-clock assumptions.',
   'workflow-no-weakref':
     'WeakRef depends on garbage collection timing, which is nondeterministic and unsafe for workflow replay.',
   'workflow-no-worker-import':
