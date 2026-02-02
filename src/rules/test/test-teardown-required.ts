@@ -3,7 +3,7 @@ import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 import { getMemberExpressionProperty } from '../../utilities/ast-helpers.ts';
 import { createContextRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'teardownRequired';
+type MessageIds = 'teardownRequired' | 'addTeardownHook';
 
 function unwrapCallExpression(
   node: TSESTree.Node | null | undefined,
@@ -73,9 +73,11 @@ export const testTeardownRequired = createContextRule<[], MessageIds>('test', {
       description:
         'Require TestWorkflowEnvironment.teardown() to run in afterAll/afterEach when tests create a TestWorkflowEnvironment.',
     },
+    hasSuggestions: true,
     messages: {
       teardownRequired:
         'Tests using TestWorkflowEnvironment must call teardown() in afterAll/afterEach to avoid leaked workers and hanging tests.',
+      addTeardownHook: 'Add afterAll hook with teardown call.',
     },
     schema: [],
   },
@@ -237,9 +239,23 @@ export const testTeardownRequired = createContextRule<[], MessageIds>('test', {
         if (!usesTestEnv || hasTeardownInAfterHook) return;
 
         const reportNode = createCalls[0] ?? context.sourceCode.ast;
+        const envVarName = [...testEnvVariables][0] ?? 'testEnv';
+        const program = sourceCode.ast;
+        const lastStatement = program.body.at(-1);
+
         context.report({
           node: reportNode,
           messageId: 'teardownRequired',
+          suggest: [
+            {
+              messageId: 'addTeardownHook',
+              fix(fixer) {
+                if (!lastStatement) return null;
+                const afterAllCode = `\n\nafterAll(async () => {\n  await ${envVarName}.teardown();\n});`;
+                return fixer.insertTextAfter(lastStatement, afterAllCode);
+              },
+            },
+          ],
         });
       },
     };

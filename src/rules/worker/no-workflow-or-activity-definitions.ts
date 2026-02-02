@@ -2,7 +2,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkerRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'noWorkflowDefinitions';
+type MessageIds = 'noWorkflowDefinitions' | 'convertToTypeImport';
 
 export const noWorkflowOrActivityDefinitions = createWorkerRule<[], MessageIds>({
   name: 'worker-no-workflow-or-activity-definitions',
@@ -12,9 +12,11 @@ export const noWorkflowOrActivityDefinitions = createWorkerRule<[], MessageIds>(
       description:
         'Disallow importing workflow or activity definitions directly in worker files.',
     },
+    hasSuggestions: true,
     messages: {
       noWorkflowDefinitions:
         'Do not import workflow definitions directly in worker files. Workers should only reference workflow files via the workflowsPath option, not import them directly. This ensures workflows run in the isolated sandbox.',
+      convertToTypeImport: 'Convert to type-only import.',
     },
     schema: [],
   },
@@ -47,9 +49,21 @@ export const noWorkflowOrActivityDefinitions = createWorkerRule<[], MessageIds>(
           });
 
           if (hasValueImport) {
+            const sourceCode = context.sourceCode;
+
             context.report({
               node,
               messageId: 'noWorkflowDefinitions',
+              suggest: [
+                {
+                  messageId: 'convertToTypeImport',
+                  fix(fixer) {
+                    const importKeyword = sourceCode.getFirstToken(node);
+                    if (!importKeyword || importKeyword.value !== 'import') return null;
+                    return fixer.insertTextAfter(importKeyword, ' type');
+                  },
+                },
+              ],
             });
           }
         }

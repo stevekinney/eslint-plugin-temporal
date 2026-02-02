@@ -17,7 +17,7 @@ type Options = [
   },
 ];
 
-type MessageIds = 'missingIdempotencyKey';
+type MessageIds = 'missingIdempotencyKey' | 'addIdempotencyKey';
 
 export const requireIdempotencyKeyArg = createWorkflowRule<Options, MessageIds>({
   name: 'workflow-require-idempotency-key-arg',
@@ -27,9 +27,11 @@ export const requireIdempotencyKeyArg = createWorkflowRule<Options, MessageIds>(
       description:
         'Require an idempotency key (or workflow identifiers) when calling non-idempotent activities.',
     },
+    hasSuggestions: true,
     messages: {
       missingIdempotencyKey:
         'Activity "{{ name }}" appears non-idempotent. Include an idempotency key in the activity input (e.g., idempotencyKey, workflowId, runId).',
+      addIdempotencyKey: 'Add idempotencyKey property using workflowId.',
     },
     schema: [
       {
@@ -175,10 +177,34 @@ export const requireIdempotencyKeyArg = createWorkflowRule<Options, MessageIds>(
 
         if (hasAcceptedKey(firstArg)) return;
 
+        const sourceCode = context.sourceCode;
+        const openBrace = sourceCode.getFirstToken(firstArg);
+
         context.report({
           node,
           messageId: 'missingIdempotencyKey',
           data: { name: activityName },
+          suggest: [
+            {
+              messageId: 'addIdempotencyKey',
+              fix(fixer) {
+                if (!openBrace || openBrace.value !== '{') return null;
+
+                // Add idempotencyKey after the opening brace
+                if (firstArg.properties.length > 0) {
+                  return fixer.insertTextAfter(
+                    openBrace,
+                    ' idempotencyKey: workflowInfo().workflowId,',
+                  );
+                } else {
+                  return fixer.replaceText(
+                    firstArg,
+                    `{ idempotencyKey: workflowInfo().workflowId }`,
+                  );
+                }
+              },
+            },
+          ],
         });
       },
     };

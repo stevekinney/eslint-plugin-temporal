@@ -1,8 +1,15 @@
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
+import {
+  getIndentation,
+  getParentStatement,
+} from '../../utilities/get-parent-statement.ts';
 
 type MessageIds = 'requiresComment';
+
+const DEPRECATION_COMMENT =
+  '// TODO: Safe to deprecate after YYYY-MM-DD when all old workflows have completed';
 
 export const deprecatePatchRequiresComment = createWorkflowRule<[], MessageIds>({
   name: 'workflow-deprecate-patch-requires-comment',
@@ -12,6 +19,7 @@ export const deprecatePatchRequiresComment = createWorkflowRule<[], MessageIds>(
       description:
         'Require a comment explaining why deprecatePatch is safe to call. Premature deprecation can break old workflow executions.',
     },
+    fixable: 'code',
     messages: {
       requiresComment:
         'Add a comment explaining why deprecatePatch is safe. Deprecating a patch before all old workflow executions have completed can cause non-determinism errors. Include: (1) when the patch was introduced, (2) why it\'s safe to deprecate (e.g., "All workflows from before 2024-01-01 have completed").',
@@ -60,9 +68,18 @@ export const deprecatePatchRequiresComment = createWorkflowRule<[], MessageIds>(
         }
 
         if (!hasCallLeadingComment && !hasStatementComment && !hasTrailingComment) {
+          const statement = getParentStatement(node);
+          const indent = getIndentation(statement);
+
           context.report({
             node,
             messageId: 'requiresComment',
+            fix(fixer) {
+              return fixer.insertTextBefore(
+                statement,
+                `${DEPRECATION_COMMENT}\n${indent}`,
+              );
+            },
           });
         }
       },

@@ -28,31 +28,91 @@ describe('no-workflow-or-activity-definitions', () => {
       // Direct workflow import
       {
         code: `import { myWorkflow } from '../workflows';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { myWorkflow } from '../workflows';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import * as workflows from './workflows';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type * as workflows from './workflows';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import myWorkflow from '../workflow';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type myWorkflow from '../workflow';`,
+              },
+            ],
+          },
+        ],
       },
 
       // Workflow with suffix
       {
         code: `import { orderWorkflow } from './order.workflow';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { orderWorkflow } from './order.workflow';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { processOrder } from '../workflows/order';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { processOrder } from '../workflows/order';`,
+              },
+            ],
+          },
+        ],
       },
 
       // Mixed type and value imports
       {
         code: `import { type MyType, myWorkflow } from '../workflows';`,
-        errors: [{ messageId: 'noWorkflowDefinitions' }],
+        errors: [
+          {
+            messageId: 'noWorkflowDefinitions',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { type MyType, myWorkflow } from '../workflows';`,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

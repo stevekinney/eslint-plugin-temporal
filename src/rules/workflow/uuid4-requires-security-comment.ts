@@ -1,11 +1,14 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
+import { getParentStatement } from '../../utilities/get-parent-statement.ts';
 import { ImportTracker } from '../../utilities/import-tracker.ts';
 import { TEMPORAL_PACKAGES } from '../../utilities/temporal-packages.ts';
 
 const UUID4_COMMENT =
   /(temporal-uuid4|uuid4.*(deterministic|not secure|insecure|not crypt)|deterministic.*uuid4)/i;
+
+const SECURITY_COMMENT = '// temporal-uuid4: deterministic, not cryptographically secure';
 
 type MessageIds = 'uuid4RequiresComment';
 
@@ -17,6 +20,7 @@ export const uuid4RequiresSecurityComment = createWorkflowRule<[], MessageIds>({
       description:
         'Require a comment noting that uuid4() is deterministic and not cryptographically secure.',
     },
+    fixable: 'code',
     messages: {
       uuid4RequiresComment:
         'Add a comment noting that uuid4() is deterministic and not cryptographically secure.',
@@ -117,7 +121,16 @@ export const uuid4RequiresSecurityComment = createWorkflowRule<[], MessageIds>({
         if (!isUuid4Call(node)) return;
         if (hasSecurityComment(node)) return;
 
-        context.report({ node, messageId: 'uuid4RequiresComment' });
+        const statement = getParentStatement(node);
+        const indent = statement.loc ? ' '.repeat(statement.loc.start.column) : '';
+
+        context.report({
+          node,
+          messageId: 'uuid4RequiresComment',
+          fix(fixer) {
+            return fixer.insertTextBefore(statement, `${SECURITY_COMMENT}\n${indent}`);
+          },
+        });
       },
     };
   },

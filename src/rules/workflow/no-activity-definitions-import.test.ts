@@ -29,36 +29,116 @@ describe('no-activity-definitions-import', () => {
     invalid: [
       {
         code: `import { myActivity } from '../activities';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { myActivity } from '../activities';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import * as activities from '../activities';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type * as activities from '../activities';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import activities from '../activities';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type activities from '../activities';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { greet, farewell } from './activities/greetings';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { greet, farewell } from './activities/greetings';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { sendEmail } from '../activity/email';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { sendEmail } from '../activity/email';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { processOrder } from './order.activities';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { processOrder } from './order.activities';`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { doWork } from './work.activity';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { doWork } from './work.activity';`,
+              },
+            ],
+          },
+        ],
       },
       // Mixed imports where at least one is a value import
       {
         code: `import { type MyType, myActivity } from '../activities';`,
-        errors: [{ messageId: 'noActivityDefinitionsImport' }],
+        errors: [
+          {
+            messageId: 'noActivityDefinitionsImport',
+            suggestions: [
+              {
+                messageId: 'convertToTypeImport',
+                output: `import type { type MyType, myActivity } from '../activities';`,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

@@ -39,18 +39,51 @@ describe('require-idempotency-key-arg', () => {
       {
         code: `const activities = proxyActivities();
                await activities.chargeCard({ amount: 42 });`,
-        errors: [{ messageId: 'missingIdempotencyKey' }],
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const activities = proxyActivities();
+               await activities.chargeCard({ idempotencyKey: workflowInfo().workflowId, amount: 42 });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `const { createInvoice } = proxyActivities();
                await createInvoice({ orderId: 'order-1' });`,
-        errors: [{ messageId: 'missingIdempotencyKey' }],
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const { createInvoice } = proxyActivities();
+               await createInvoice({ idempotencyKey: workflowInfo().workflowId, orderId: 'order-1' });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `const activities = proxyActivities();
                await activities.chargeCard({ workflowId, runId });`,
         options: [{ allowWorkflowIdentifiers: false }],
-        errors: [{ messageId: 'missingIdempotencyKey' }],
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const activities = proxyActivities();
+               await activities.chargeCard({ idempotencyKey: workflowInfo().workflowId, workflowId, runId });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `const activities = proxyActivities();
@@ -62,7 +95,18 @@ describe('require-idempotency-key-arg', () => {
             },
           },
         },
-        errors: [{ messageId: 'missingIdempotencyKey' }],
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const activities = proxyActivities();
+               await activities.processPayment({ idempotencyKey: workflowInfo().workflowId, amount: 10 });`,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

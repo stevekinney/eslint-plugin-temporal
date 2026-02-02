@@ -55,6 +55,12 @@ describe('ignoremodules-requires-comment', () => {
               ignoreModules: ['pg', 'redis']
             }
           });`,
+        output: `Worker.create({
+            bundlerOptions: {
+              // TODO: Explain why these modules are ignored (e.g., server-only, not used in workflows)
+              ignoreModules: ['pg', 'redis']
+            }
+          });`,
         errors: [{ messageId: 'requiresComment' }],
       },
 
@@ -63,6 +69,13 @@ describe('ignoremodules-requires-comment', () => {
         code: `Worker.create({
             bundlerOptions: {
               // ignore
+              ignoreModules: ['pg']
+            }
+          });`,
+        output: `Worker.create({
+            bundlerOptions: {
+              // ignore
+              // TODO: Explain why these modules are ignored (e.g., server-only, not used in workflows)
               ignoreModules: ['pg']
             }
           });`,

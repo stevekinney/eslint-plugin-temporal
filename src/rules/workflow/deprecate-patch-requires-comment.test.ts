@@ -32,6 +32,8 @@ describe('deprecate-patch-requires-comment', () => {
       // No comment at all
       {
         code: `deprecatePatch('feature-v1');`,
+        output: `// TODO: Safe to deprecate after YYYY-MM-DD when all old workflows have completed
+deprecatePatch('feature-v1');`,
         errors: [{ messageId: 'requiresComment' }],
       },
 
@@ -39,12 +41,19 @@ describe('deprecate-patch-requires-comment', () => {
       {
         code: `doSomething();
                deprecatePatch('feature');`,
+        output: `doSomething();
+               // TODO: Safe to deprecate after YYYY-MM-DD when all old workflows have completed
+               deprecatePatch('feature');`,
         errors: [{ messageId: 'requiresComment' }],
       },
 
       // Multiple deprecatePatch without comments
       {
         code: `deprecatePatch('feature-a');
+               deprecatePatch('feature-b');`,
+        output: `// TODO: Safe to deprecate after YYYY-MM-DD when all old workflows have completed
+deprecatePatch('feature-a');
+               // TODO: Safe to deprecate after YYYY-MM-DD when all old workflows have completed
                deprecatePatch('feature-b');`,
         errors: [{ messageId: 'requiresComment' }, { messageId: 'requiresComment' }],
       },

@@ -5,6 +5,9 @@ import { createWorkerRule } from '../../utilities/create-context-rule.ts';
 
 type MessageIds = 'requiresComment';
 
+const EXPLANATION_COMMENT =
+  '// TODO: Explain why these modules are ignored (e.g., server-only, not used in workflows)';
+
 export const ignoremodulesRequiresComment = createWorkerRule<[], MessageIds>({
   name: 'worker-ignoremodules-requires-comment',
   meta: {
@@ -13,6 +16,7 @@ export const ignoremodulesRequiresComment = createWorkerRule<[], MessageIds>({
       description:
         'Require a comment explaining why modules are being ignored in bundlerOptions.',
     },
+    fixable: 'code',
     messages: {
       requiresComment:
         'Each module in ignoreModules should have a comment explaining why it is being ignored. Ignoring modules can cause runtime errors if the module is actually needed.',
@@ -72,9 +76,19 @@ export const ignoremodulesRequiresComment = createWorkerRule<[], MessageIds>({
             }
           }
 
+          const indent = ignoreModulesProp.loc
+            ? ' '.repeat(ignoreModulesProp.loc.start.column)
+            : '';
+
           context.report({
             node: ignoreModulesProp,
             messageId: 'requiresComment',
+            fix(fixer) {
+              return fixer.insertTextBefore(
+                ignoreModulesProp,
+                `${EXPLANATION_COMMENT}\n${indent}`,
+              );
+            },
           });
         }
       },

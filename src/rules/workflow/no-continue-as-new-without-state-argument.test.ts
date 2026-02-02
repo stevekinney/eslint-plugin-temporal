@@ -20,11 +20,31 @@ describe('no-continue-as-new-without-state-argument', () => {
       invalid: [
         {
           code: `continueAsNew();`,
-          errors: [{ messageId: 'missingStateArgument' }],
+          errors: [
+            {
+              messageId: 'missingStateArgument',
+              suggestions: [
+                {
+                  messageId: 'addStatePlaceholder',
+                  output: `continueAsNew(/* TODO: pass workflow state */);`,
+                },
+              ],
+            },
+          ],
         },
         {
           code: `workflow.continueAsNew();`,
-          errors: [{ messageId: 'missingStateArgument' }],
+          errors: [
+            {
+              messageId: 'missingStateArgument',
+              suggestions: [
+                {
+                  messageId: 'addStatePlaceholder',
+                  output: `workflow.continueAsNew(/* TODO: pass workflow state */);`,
+                },
+              ],
+            },
+          ],
         },
       ],
     },

@@ -57,7 +57,21 @@ describe('require-activity-retry-policy', () => {
             startToCloseTimeout: '1m'
           });
         `,
-        errors: [{ messageId: 'missingRetryPolicy' }],
+        errors: [
+          {
+            messageId: 'missingRetryPolicy',
+            suggestions: [
+              {
+                messageId: 'addRetryPolicy',
+                output: `
+          const activities = proxyActivities({ retry: { maximumAttempts: 3 },
+            startToCloseTimeout: '1m'
+          });
+        `,
+              },
+            ],
+          },
+        ],
       },
 
       // Has other options but no retry
@@ -69,13 +83,39 @@ describe('require-activity-retry-policy', () => {
             heartbeatTimeout: '30s'
           });
         `,
-        errors: [{ messageId: 'missingRetryPolicy' }],
+        errors: [
+          {
+            messageId: 'missingRetryPolicy',
+            suggestions: [
+              {
+                messageId: 'addRetryPolicy',
+                output: `
+          const activities = proxyActivities({ retry: { maximumAttempts: 3 },
+            startToCloseTimeout: '1m',
+            scheduleToCloseTimeout: '5m',
+            heartbeatTimeout: '30s'
+          });
+        `,
+              },
+            ],
+          },
+        ],
       },
 
       // Empty options object
       {
         code: `const activities = proxyActivities({});`,
-        errors: [{ messageId: 'missingRetryPolicy' }],
+        errors: [
+          {
+            messageId: 'missingRetryPolicy',
+            suggestions: [
+              {
+                messageId: 'addRetryPolicy',
+                output: `const activities = proxyActivities({ retry: { maximumAttempts: 3 } });`,
+              },
+            ],
+          },
+        ],
       },
 
       // With taskQueue but no retry
@@ -86,7 +126,22 @@ describe('require-activity-retry-policy', () => {
             startToCloseTimeout: '1m'
           });
         `,
-        errors: [{ messageId: 'missingRetryPolicy' }],
+        errors: [
+          {
+            messageId: 'missingRetryPolicy',
+            suggestions: [
+              {
+                messageId: 'addRetryPolicy',
+                output: `
+          const activities = proxyActivities({ retry: { maximumAttempts: 3 },
+            taskQueue: 'my-queue',
+            startToCloseTimeout: '1m'
+          });
+        `,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

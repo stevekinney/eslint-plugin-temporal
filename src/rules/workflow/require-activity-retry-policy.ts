@@ -2,7 +2,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'missingRetryPolicy';
+type MessageIds = 'missingRetryPolicy' | 'addRetryPolicy';
 
 export const requireActivityRetryPolicy = createWorkflowRule<[], MessageIds>({
   name: 'workflow-require-activity-retry-policy',
@@ -12,9 +12,11 @@ export const requireActivityRetryPolicy = createWorkflowRule<[], MessageIds>({
       description:
         'Require explicit retry policy configuration in proxyActivities. Explicit retry policies make activity behavior more predictable and reviewable.',
     },
+    hasSuggestions: true,
     messages: {
       missingRetryPolicy:
         'proxyActivities() should include an explicit retry policy. Add a `retry` option to make activity retry behavior explicit and reviewable. Example: proxyActivities({ startToCloseTimeout: "1m", retry: { maximumAttempts: 3 } })',
+      addRetryPolicy: 'Add retry policy with maximumAttempts: 3.',
     },
     schema: [],
   },
@@ -59,9 +61,32 @@ export const requireActivityRetryPolicy = createWorkflowRule<[], MessageIds>({
         });
 
         if (!hasRetryProperty) {
+          const sourceCode = context.sourceCode;
           context.report({
             node,
             messageId: 'missingRetryPolicy',
+            suggest: [
+              {
+                messageId: 'addRetryPolicy',
+                fix(fixer) {
+                  const openBrace = sourceCode.getFirstToken(optionsArg);
+                  if (!openBrace) return null;
+
+                  // Check if there are existing properties
+                  if (optionsArg.properties.length > 0) {
+                    return fixer.insertTextAfter(
+                      openBrace,
+                      ` retry: { maximumAttempts: 3 },`,
+                    );
+                  } else {
+                    return fixer.replaceText(
+                      optionsArg,
+                      `{ retry: { maximumAttempts: 3 } }`,
+                    );
+                  }
+                },
+              },
+            ],
           });
         }
       },

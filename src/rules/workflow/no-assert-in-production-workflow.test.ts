@@ -15,15 +15,45 @@ describe('no-assert-in-production-workflow', () => {
     invalid: [
       {
         code: `import assert from 'assert';`,
-        errors: [{ messageId: 'noAssertInWorkflow' }],
+        errors: [
+          {
+            messageId: 'noAssertInWorkflow',
+            suggestions: [
+              {
+                messageId: 'removeAssertImport',
+                output: ``,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { strict as assert } from 'node:assert';`,
-        errors: [{ messageId: 'noAssertInWorkflow' }],
+        errors: [
+          {
+            messageId: 'noAssertInWorkflow',
+            suggestions: [
+              {
+                messageId: 'removeAssertImport',
+                output: ``,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `const assert = require('assert');`,
-        errors: [{ messageId: 'noAssertInWorkflow' }],
+        errors: [
+          {
+            messageId: 'noAssertInWorkflow',
+            suggestions: [
+              {
+                messageId: 'removeAssertImport',
+                output: ``,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

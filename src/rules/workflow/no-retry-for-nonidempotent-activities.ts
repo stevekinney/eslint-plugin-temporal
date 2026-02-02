@@ -13,7 +13,7 @@ type Options = [
   },
 ];
 
-type MessageIds = 'noRetryForNonIdempotent';
+type MessageIds = 'noRetryForNonIdempotent' | 'disableForLine';
 
 type RetryInfo = { known: false } | { known: true; hasMaxAttemptsOne: boolean };
 
@@ -24,9 +24,11 @@ export const noRetryForNonIdempotentActivities = createWorkflowRule<Options, Mes
     docs: {
       description: 'Require non-idempotent activities to use retry.maximumAttempts: 1.',
     },
+    hasSuggestions: true,
     messages: {
       noRetryForNonIdempotent:
         'Activity "{{ name }}" appears non-idempotent. Configure proxyActivities with retry: { maximumAttempts: 1 } (or use a dedicated proxy for this activity).',
+      disableForLine: 'Disable this warning for this line (verify retry is safe first).',
     },
     schema: [
       {
@@ -180,7 +182,38 @@ export const noRetryForNonIdempotentActivities = createWorkflowRule<Options, Mes
     }
 
     function report(node: TSESTree.Node, name: string): void {
-      context.report({ node, messageId: 'noRetryForNonIdempotent', data: { name } });
+      // Find the statement containing this call for proper indentation
+      let statement: TSESTree.Node = node;
+      while (
+        statement.parent &&
+        statement.parent.type !== AST_NODE_TYPES.ExpressionStatement &&
+        statement.parent.type !== AST_NODE_TYPES.VariableDeclaration &&
+        statement.parent.type !== AST_NODE_TYPES.ReturnStatement
+      ) {
+        statement = statement.parent;
+      }
+      if (statement.parent) {
+        statement = statement.parent;
+      }
+
+      const indent = statement.loc ? ' '.repeat(statement.loc.start.column) : '';
+
+      context.report({
+        node,
+        messageId: 'noRetryForNonIdempotent',
+        data: { name },
+        suggest: [
+          {
+            messageId: 'disableForLine',
+            fix(fixer) {
+              return fixer.insertTextBefore(
+                statement,
+                `// eslint-disable-next-line temporal/workflow-no-retry-for-nonidempotent-activities -- verified safe\n${indent}`,
+              );
+            },
+          },
+        ],
+      });
     }
 
     return {

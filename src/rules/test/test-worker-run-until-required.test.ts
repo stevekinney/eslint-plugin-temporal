@@ -27,13 +27,36 @@ describe('test-worker-run-until-required', () => {
       {
         code: `import { Worker } from '@temporalio/worker';
           await Worker.create({ workflowsPath: '/tmp/workflows' });`,
-        errors: [{ messageId: 'runUntilRequired' }],
+        errors: [
+          {
+            messageId: 'runUntilRequired',
+            suggestions: [
+              {
+                messageId: 'useRunUntil',
+                output: `import { Worker } from '@temporalio/worker';
+          await Worker.create({ workflowsPath: '/tmp/workflows' }).runUntil(async () => { /* TODO: run workflow */ });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { Worker } from '@temporalio/worker';
           const worker = await Worker.create({ workflowsPath: '/tmp/workflows' });
           await worker.run();`,
-        errors: [{ messageId: 'runUntilRequired' }],
+        errors: [
+          {
+            messageId: 'runUntilRequired',
+            suggestions: [
+              {
+                messageId: 'useRunUntil',
+                output: `import { Worker } from '@temporalio/worker';
+          const worker = await Worker.create({ workflowsPath: '/tmp/workflows' }).runUntil(async () => { /* TODO: run workflow */ });
+          await worker.run();`,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

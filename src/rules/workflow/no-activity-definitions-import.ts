@@ -2,7 +2,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'noActivityDefinitionsImport';
+type MessageIds = 'noActivityDefinitionsImport' | 'convertToTypeImport';
 
 export const noActivityDefinitionsImport = createWorkflowRule<[], MessageIds>({
   name: 'workflow-no-activity-definitions-import',
@@ -12,9 +12,11 @@ export const noActivityDefinitionsImport = createWorkflowRule<[], MessageIds>({
       description:
         'Disallow importing activity implementations in workflow files. Use proxyActivities() instead.',
     },
+    hasSuggestions: true,
     messages: {
       noActivityDefinitionsImport:
         'Do not import activity definitions directly in workflows. Activity functions contain non-deterministic code. Use proxyActivities<typeof activities>() to create type-safe activity stubs.',
+      convertToTypeImport: 'Convert to type-only import.',
     },
     schema: [],
   },
@@ -76,9 +78,24 @@ export const noActivityDefinitionsImport = createWorkflowRule<[], MessageIds>({
         });
 
         if (hasValueImport) {
+          const sourceCode = context.sourceCode;
+
           context.report({
             node,
             messageId: 'noActivityDefinitionsImport',
+            suggest: [
+              {
+                messageId: 'convertToTypeImport',
+                fix(fixer) {
+                  // Get the import keyword token
+                  const importKeyword = sourceCode.getFirstToken(node);
+                  if (!importKeyword || importKeyword.value !== 'import') return null;
+
+                  // Insert 'type' after 'import'
+                  return fixer.insertTextAfter(importKeyword, ' type');
+                },
+              },
+            ],
           });
         }
       },

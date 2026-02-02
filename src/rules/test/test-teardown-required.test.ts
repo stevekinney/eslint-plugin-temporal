@@ -43,13 +43,47 @@ describe('test-teardown-required', () => {
           beforeAll(async () => {
             testEnv = await TestWorkflowEnvironment.createTimeSkipping();
           });`,
-        errors: [{ messageId: 'teardownRequired' }],
+        errors: [
+          {
+            messageId: 'teardownRequired',
+            suggestions: [
+              {
+                messageId: 'addTeardownHook',
+                output: `import { TestWorkflowEnvironment } from '@temporalio/testing';
+          let testEnv;
+          beforeAll(async () => {
+            testEnv = await TestWorkflowEnvironment.createTimeSkipping();
+          });
+
+afterAll(async () => {
+  await testEnv.teardown();
+});`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `import { TestWorkflowEnvironment } from '@temporalio/testing';
           const env = await TestWorkflowEnvironment.createLocal();
           env.teardown();`,
-        errors: [{ messageId: 'teardownRequired' }],
+        errors: [
+          {
+            messageId: 'teardownRequired',
+            suggestions: [
+              {
+                messageId: 'addTeardownHook',
+                output: `import { TestWorkflowEnvironment } from '@temporalio/testing';
+          const env = await TestWorkflowEnvironment.createLocal();
+          env.teardown();
+
+afterAll(async () => {
+  await env.teardown();
+});`,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

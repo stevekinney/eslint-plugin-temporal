@@ -31,11 +31,31 @@ describe('local-activity-options-required', () => {
     invalid: [
       {
         code: `const local = proxyLocalActivities();`,
-        errors: [{ messageId: 'missingOptions' }],
+        errors: [
+          {
+            messageId: 'missingOptions',
+            suggestions: [
+              {
+                messageId: 'addOptions',
+                output: `const local = proxyLocalActivities({ startToCloseTimeout: '1 minute', retry: { maximumAttempts: 3 } });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `const local = proxyLocalActivities({});`,
-        errors: [{ messageId: 'missingTimeoutAndRetry' }],
+        errors: [
+          {
+            messageId: 'missingTimeoutAndRetry',
+            suggestions: [
+              {
+                messageId: 'addTimeoutAndRetry',
+                output: `const local = proxyLocalActivities({ startToCloseTimeout: '1 minute', retry: { maximumAttempts: 3 } });`,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `
@@ -43,7 +63,21 @@ describe('local-activity-options-required', () => {
             retry: { maximumAttempts: 2 }
           });
         `,
-        errors: [{ messageId: 'missingTimeout' }],
+        errors: [
+          {
+            messageId: 'missingTimeout',
+            suggestions: [
+              {
+                messageId: 'addTimeout',
+                output: `
+          const local = proxyLocalActivities({ startToCloseTimeout: '1 minute',
+            retry: { maximumAttempts: 2 }
+          });
+        `,
+              },
+            ],
+          },
+        ],
       },
       {
         code: `
@@ -51,7 +85,21 @@ describe('local-activity-options-required', () => {
             startToCloseTimeout: '1m'
           });
         `,
-        errors: [{ messageId: 'missingRetry' }],
+        errors: [
+          {
+            messageId: 'missingRetry',
+            suggestions: [
+              {
+                messageId: 'addRetry',
+                output: `
+          const local = proxyLocalActivities({ retry: { maximumAttempts: 3 },
+            startToCloseTimeout: '1m'
+          });
+        `,
+              },
+            ],
+          },
+        ],
       },
     ],
   });

@@ -20,14 +20,33 @@ export { value };`,
     invalid: [
       {
         code: `patched('feature');`,
+        output: `// replay-tested: YYYY-MM-DD
+patched('feature');`,
         errors: [{ messageId: 'replayTestedCommentRequired' }],
       },
       {
         code: `continueAsNew(state);`,
+        output: `// replay-tested: YYYY-MM-DD
+continueAsNew(state);`,
         errors: [{ messageId: 'replayTestedCommentRequired' }],
       },
       {
         code: `deprecatePatch('feature');`,
+        output: `// replay-tested: YYYY-MM-DD
+deprecatePatch('feature');`,
+        errors: [{ messageId: 'replayTestedCommentRequired' }],
+      },
+      // Test with multiple versioning calls (only first gets comment)
+      {
+        code: `if (patched('feature')) {
+  newBehavior();
+}
+deprecatePatch('old-feature');`,
+        output: `// replay-tested: YYYY-MM-DD
+if (patched('feature')) {
+  newBehavior();
+}
+deprecatePatch('old-feature');`,
         errors: [{ messageId: 'replayTestedCommentRequired' }],
       },
     ],

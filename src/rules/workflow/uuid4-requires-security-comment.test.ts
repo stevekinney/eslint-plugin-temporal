@@ -21,11 +21,30 @@ describe('uuid4-requires-security-comment', () => {
       {
         code: `import { uuid4 } from '@temporalio/workflow';
 const id = uuid4();`,
+        output: `import { uuid4 } from '@temporalio/workflow';
+// temporal-uuid4: deterministic, not cryptographically secure
+const id = uuid4();`,
         errors: [{ messageId: 'uuid4RequiresComment' }],
       },
       {
         code: `import * as workflow from '@temporalio/workflow';
 const id = workflow.uuid4();`,
+        output: `import * as workflow from '@temporalio/workflow';
+// temporal-uuid4: deterministic, not cryptographically secure
+const id = workflow.uuid4();`,
+        errors: [{ messageId: 'uuid4RequiresComment' }],
+      },
+      // Test with indentation
+      {
+        code: `import { uuid4 } from '@temporalio/workflow';
+function test() {
+  const id = uuid4();
+}`,
+        output: `import { uuid4 } from '@temporalio/workflow';
+function test() {
+  // temporal-uuid4: deterministic, not cryptographically secure
+  const id = uuid4();
+}`,
         errors: [{ messageId: 'uuid4RequiresComment' }],
       },
     ],

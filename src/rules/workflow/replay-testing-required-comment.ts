@@ -1,8 +1,14 @@
 import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
+import {
+  getIndentation,
+  getParentStatement,
+} from '../../utilities/get-parent-statement.ts';
 
 type MessageIds = 'replayTestedCommentRequired';
+
+const REPLAY_TESTED_COMMENT = '// replay-tested: YYYY-MM-DD';
 
 const REPLAY_COMMENT_PATTERN = /replay[- ]tested/i;
 const REPLAY_TRIGGER_FUNCTIONS = new Set(['patched', 'deprecatePatch', 'continueAsNew']);
@@ -30,6 +36,7 @@ export const replayTestingRequiredComment = createWorkflowRule<[], MessageIds>({
       description:
         'Require a replay-tested comment when workflow versioning logic is changed.',
     },
+    fixable: 'code',
     messages: {
       replayTestedCommentRequired:
         'Add a replay-tested comment (for example: // replay-tested: 2025-02-02) when changing workflow versioning logic to confirm replay coverage.',
@@ -68,9 +75,19 @@ export const replayTestingRequiredComment = createWorkflowRule<[], MessageIds>({
           return;
         }
 
+        const targetNode = firstNode ?? node;
+        const statement = getParentStatement(targetNode);
+        const indent = getIndentation(statement);
+
         context.report({
-          node: firstNode ?? node,
+          node: targetNode,
           messageId: 'replayTestedCommentRequired',
+          fix(fixer) {
+            return fixer.insertTextBefore(
+              statement,
+              `${REPLAY_TESTED_COMMENT}\n${indent}`,
+            );
+          },
         });
       },
     };

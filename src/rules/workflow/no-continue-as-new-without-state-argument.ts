@@ -2,7 +2,7 @@ import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'missingStateArgument';
+type MessageIds = 'missingStateArgument' | 'addStatePlaceholder';
 
 function isContinueAsNewCall(node: TSESTree.CallExpression): boolean {
   if (node.callee.type === AST_NODE_TYPES.Identifier) {
@@ -27,9 +27,11 @@ export const noContinueAsNewWithoutStateArgument = createWorkflowRule<[], Messag
       description:
         'Require continueAsNew() to receive workflow state arguments so state is preserved across runs.',
     },
+    hasSuggestions: true,
     messages: {
       missingStateArgument:
         'continueAsNew() should pass workflow state arguments to the next run. Provide the state you need to carry forward.',
+      addStatePlaceholder: 'Add state argument placeholder.',
     },
     schema: [],
   },
@@ -43,9 +45,29 @@ export const noContinueAsNewWithoutStateArgument = createWorkflowRule<[], Messag
           return;
         }
 
+        const sourceCode = context.sourceCode;
+
+        // Get the opening paren
+        const openParen = sourceCode.getTokenAfter(
+          node.callee,
+          (token) => token.value === '(',
+        );
+
         context.report({
           node,
           messageId: 'missingStateArgument',
+          suggest: [
+            {
+              messageId: 'addStatePlaceholder',
+              fix(fixer) {
+                if (!openParen) return null;
+                return fixer.insertTextAfter(
+                  openParen,
+                  '/* TODO: pass workflow state */',
+                );
+              },
+            },
+          ],
         });
       },
     };

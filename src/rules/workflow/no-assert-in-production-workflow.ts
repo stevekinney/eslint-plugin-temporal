@@ -2,7 +2,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 
 import { createWorkflowRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'noAssertInWorkflow';
+type MessageIds = 'noAssertInWorkflow' | 'removeAssertImport';
 
 const ASSERT_MODULES = new Set([
   'assert',
@@ -24,9 +24,11 @@ export const noAssertInProductionWorkflow = createWorkflowRule<[], MessageIds>(
         description:
           'Disallow Node.js assert usage in workflow code outside tests to avoid replay failures and workflow task retries.',
       },
+      hasSuggestions: true,
       messages: {
         noAssertInWorkflow:
           'Avoid Node assert in workflow code. Failed asserts can trigger workflow task retries and replay issues. Throw ApplicationFailure or handle errors explicitly.',
+        removeAssertImport: 'Remove assert import.',
       },
       schema: [],
     },
@@ -50,6 +52,14 @@ export const noAssertInProductionWorkflow = createWorkflowRule<[], MessageIds>(
           context.report({
             node,
             messageId: 'noAssertInWorkflow',
+            suggest: [
+              {
+                messageId: 'removeAssertImport',
+                fix(fixer) {
+                  return fixer.remove(node);
+                },
+              },
+            ],
           });
         },
 
@@ -67,9 +77,31 @@ export const noAssertInProductionWorkflow = createWorkflowRule<[], MessageIds>(
 
           if (!isAssertImport(arg.value)) return;
 
+          // For require(), we need to find the parent statement to remove
+          let statement: import('@typescript-eslint/utils').TSESTree.Node | undefined =
+            node.parent;
+          while (
+            statement &&
+            statement.type !== AST_NODE_TYPES.VariableDeclaration &&
+            statement.type !== AST_NODE_TYPES.ExpressionStatement
+          ) {
+            statement = statement.parent;
+          }
+
           context.report({
             node,
             messageId: 'noAssertInWorkflow',
+            suggest: [
+              {
+                messageId: 'removeAssertImport',
+                fix(fixer) {
+                  if (statement) {
+                    return fixer.remove(statement);
+                  }
+                  return fixer.remove(node);
+                },
+              },
+            ],
           });
         },
       };

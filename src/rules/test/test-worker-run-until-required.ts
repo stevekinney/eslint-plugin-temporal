@@ -3,7 +3,7 @@ import { AST_NODE_TYPES, type TSESTree } from '@typescript-eslint/utils';
 import { getMemberExpressionProperty } from '../../utilities/ast-helpers.ts';
 import { createContextRule } from '../../utilities/create-context-rule.ts';
 
-type MessageIds = 'runUntilRequired';
+type MessageIds = 'runUntilRequired' | 'useRunUntil';
 
 function unwrapCallExpression(
   node: TSESTree.Node | null | undefined,
@@ -39,9 +39,11 @@ export const testWorkerRunUntilRequired = createContextRule<[], MessageIds>('tes
       description:
         'Require workers created in tests to be bounded via worker.runUntil(...) to avoid hanging test suites.',
     },
+    hasSuggestions: true,
     messages: {
       runUntilRequired:
         'Tests that create a Worker must call worker.runUntil(...) to ensure the worker shuts down and the test does not hang.',
+      useRunUntil: 'Chain .runUntil() to the Worker.create() call.',
     },
     schema: [],
   },
@@ -175,6 +177,18 @@ export const testWorkerRunUntilRequired = createContextRule<[], MessageIds>('tes
           context.report({
             node: createCall,
             messageId: 'runUntilRequired',
+            suggest: [
+              {
+                messageId: 'useRunUntil',
+                fix(fixer) {
+                  // Add .runUntil() after the create call
+                  return fixer.insertTextAfter(
+                    createCall,
+                    `.runUntil(async () => { /* TODO: run workflow */ })`,
+                  );
+                },
+              },
+            ],
           });
         }
       },

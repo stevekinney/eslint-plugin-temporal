@@ -35,18 +35,55 @@ describe('no-retry-for-nonidempotent-activities', () => {
         {
           code: `const activities = proxyActivities({ retry: { maximumAttempts: 3 } });
                  await activities.chargeCustomer();`,
-          errors: [{ messageId: 'noRetryForNonIdempotent' }],
+          errors: [
+            {
+              messageId: 'noRetryForNonIdempotent',
+              suggestions: [
+                {
+                  messageId: 'disableForLine',
+                  output: `const activities = proxyActivities({ retry: { maximumAttempts: 3 } });
+                 // eslint-disable-next-line temporal/workflow-no-retry-for-nonidempotent-activities -- verified safe
+                 await activities.chargeCustomer();`,
+                },
+              ],
+            },
+          ],
         },
         {
           code: `const activities = proxyActivities({ startToCloseTimeout: '1m' });
                  // @nonIdempotent
                  await activities.refundPayment();`,
-          errors: [{ messageId: 'noRetryForNonIdempotent' }],
+          errors: [
+            {
+              messageId: 'noRetryForNonIdempotent',
+              suggestions: [
+                {
+                  messageId: 'disableForLine',
+                  output: `const activities = proxyActivities({ startToCloseTimeout: '1m' });
+                 // @nonIdempotent
+                 // eslint-disable-next-line temporal/workflow-no-retry-for-nonidempotent-activities -- verified safe
+                 await activities.refundPayment();`,
+                },
+              ],
+            },
+          ],
         },
         {
           code: `const { createInvoice } = proxyActivities({ retry: { maximumAttempts: 2 } });
                  await createInvoice();`,
-          errors: [{ messageId: 'noRetryForNonIdempotent' }],
+          errors: [
+            {
+              messageId: 'noRetryForNonIdempotent',
+              suggestions: [
+                {
+                  messageId: 'disableForLine',
+                  output: `const { createInvoice } = proxyActivities({ retry: { maximumAttempts: 2 } });
+                 // eslint-disable-next-line temporal/workflow-no-retry-for-nonidempotent-activities -- verified safe
+                 await createInvoice();`,
+                },
+              ],
+            },
+          ],
         },
       ],
     },
