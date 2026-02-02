@@ -30,14 +30,22 @@ import { noDynamicImport } from './workflow/no-dynamic-import.ts';
 import { noDynamicRequire } from './workflow/no-dynamic-require.ts';
 import { noFinalizationRegistry } from './workflow/no-finalization-registry.ts';
 import { noFloatingPromises } from './workflow/no-floating-promises.ts';
+import { noFsInWorkflow } from './workflow/no-fs-in-workflow.ts';
+import { noHeavyCpuInWorkflow } from './workflow/no-heavy-cpu-in-workflow.ts';
 import { noLargeLiteralPayloads } from './workflow/no-large-literal-payloads.ts';
+import { noLoggerLibraryInWorkflow } from './workflow/no-logger-library-in-workflow.ts';
+import { noMixedScopeExports } from './workflow/no-mixed-scope-exports.ts';
+import { noNetworkInWorkflow } from './workflow/no-network-in-workflow.ts';
 import { noNodeOrDomImports } from './workflow/no-node-or-dom-imports.ts';
+import { noNondeterministicControlFlow } from './workflow/no-nondeterministic-control-flow.ts';
 import { noProcessEnv } from './workflow/no-process-env.ts';
 import { noQueryMutation } from './workflow/no-query-mutation.ts';
 import { noSetInterval } from './workflow/no-setinterval.ts';
 import { noThrowRawError } from './workflow/no-throw-raw-error.ts';
+import { noTopLevelWorkflowSideEffects } from './workflow/no-top-level-workflow-side-effects.ts';
 import { noUnsafeGlobalMutation } from './workflow/no-unsafe-global-mutation.ts';
 import { noUnsafePackageImports } from './workflow/no-unsafe-package-imports.ts';
+import { noUuidLibraryInWorkflow } from './workflow/no-uuid-library-in-workflow.ts';
 import { noWeakRef } from './workflow/no-weakref.ts';
 import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
@@ -54,6 +62,7 @@ import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void
 import { sinkNoAwait } from './workflow/sink-no-await.ts';
 import { sinkNoReturnValue } from './workflow/sink-no-return-value.ts';
 import { updateHandlerReturnType } from './workflow/update-handler-return-type.ts';
+import { uuid4RequiresSecurityComment } from './workflow/uuid4-requires-security-comment.ts';
 
 /**
  * All rules exported by the plugin
@@ -72,16 +81,24 @@ export const rules = {
   'workflow-no-duplicate-patch-ids': noDuplicatePatchIds,
   'workflow-no-dynamic-import': noDynamicImport,
   'workflow-no-dynamic-require': noDynamicRequire,
+  'workflow-no-fs-in-workflow': noFsInWorkflow,
   'workflow-no-finalization-registry': noFinalizationRegistry,
   'workflow-no-floating-promises': noFloatingPromises,
+  'workflow-no-heavy-cpu-in-workflow': noHeavyCpuInWorkflow,
   'workflow-no-large-literal-payloads': noLargeLiteralPayloads,
+  'workflow-no-logger-library-in-workflow': noLoggerLibraryInWorkflow,
+  'workflow-no-mixed-scope-exports': noMixedScopeExports,
+  'workflow-no-network-in-workflow': noNetworkInWorkflow,
   'workflow-no-node-or-dom-imports': noNodeOrDomImports,
+  'workflow-no-nondeterministic-control-flow': noNondeterministicControlFlow,
   'workflow-no-process-env': noProcessEnv,
   'workflow-no-query-mutation': noQueryMutation,
   'workflow-no-setinterval': noSetInterval,
+  'workflow-no-top-level-workflow-side-effects': noTopLevelWorkflowSideEffects,
   'workflow-no-throw-raw-error': noThrowRawError,
   'workflow-no-unsafe-global-mutation': noUnsafeGlobalMutation,
   'workflow-no-unsafe-package-imports': noUnsafePackageImports,
+  'workflow-no-uuid-library-in-workflow': noUuidLibraryInWorkflow,
   'workflow-no-weakref': noWeakRef,
   'workflow-no-worker-import': noWorkerImport,
   'workflow-no-workflow-apis-in-query': noWorkflowApisInQuery,
@@ -98,6 +115,7 @@ export const rules = {
   'workflow-sink-no-await': sinkNoAwait,
   'workflow-sink-no-return-value': sinkNoReturnValue,
   'workflow-update-handler-return-type': updateHandlerReturnType,
+  'workflow-uuid4-requires-security-comment': uuid4RequiresSecurityComment,
 
   // Activity rules
   'activity-prefer-activity-log': preferActivityLog,

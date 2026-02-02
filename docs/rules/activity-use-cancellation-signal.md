@@ -27,7 +27,7 @@ fetch(url);
 ### Correct
 
 ```ts
-fetch(url, { signal: Context.current().cancellationSignal });
+customFetch(url, { signal: cancellationSignal });
 ```
 
 ## When to disable

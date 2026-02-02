@@ -31,15 +31,15 @@
 
 ### Workflow sandbox and determinism
 
-- [ ] no-top-level-workflow-side-effects
-- [ ] no-mixed-scope-exports
-- [ ] no-network-in-workflow
-- [ ] no-fs-in-workflow (or expand the unsafe-package logic to cover this explicitly)
-- [ ] no-nondeterministic-control-flow (time/randomness used for branching without annotation)
-- [ ] no-uuid-library-in-workflow (explicit rule or expand denylist)
-- [ ] uuid4-requires-security-comment
-- [ ] no-heavy-cpu-in-workflow
-- [ ] no-logger-library-in-workflow (explicit rule or expand denylist)
+- [x] no-top-level-workflow-side-effects
+- [x] no-mixed-scope-exports
+- [x] no-network-in-workflow
+- [x] no-fs-in-workflow (or expand the unsafe-package logic to cover this explicitly)
+- [x] no-nondeterministic-control-flow (time/randomness used for branching without annotation)
+- [x] no-uuid-library-in-workflow (explicit rule or expand denylist)
+- [x] uuid4-requires-security-comment
+- [x] no-heavy-cpu-in-workflow
+- [x] no-logger-library-in-workflow (explicit rule or expand denylist)
 
 ### Timers and time
 

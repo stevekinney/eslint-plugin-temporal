@@ -10,8 +10,17 @@ export const strictRules: TSESLint.FlatConfig.Rules = {
 
   // Workflow rules
   'temporal/workflow-no-activity-definitions-import': 'error',
+  'temporal/workflow-no-fs-in-workflow': 'error',
   'temporal/workflow-no-node-or-dom-imports': 'error',
+  'temporal/workflow-no-network-in-workflow': 'error',
+  'temporal/workflow-no-logger-library-in-workflow': 'error',
+  'temporal/workflow-no-uuid-library-in-workflow': 'error',
+  'temporal/workflow-no-mixed-scope-exports': 'error',
+  'temporal/workflow-no-top-level-workflow-side-effects': 'error',
   'temporal/workflow-no-unsafe-package-imports': 'error',
+  'temporal/workflow-no-nondeterministic-control-flow': 'error',
+  'temporal/workflow-uuid4-requires-security-comment': 'error',
+  'temporal/workflow-no-heavy-cpu-in-workflow': 'error',
   'temporal/workflow-no-console': 'error',
   'temporal/workflow-require-activity-timeouts': 'error',
   'temporal/workflow-prefer-workflow-uuid': 'error',

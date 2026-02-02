@@ -134,16 +134,24 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-no-duplicate-patch-ids`             | Disallow duplicate patch IDs in the same workflow.                          |         |
 | `workflow-no-dynamic-import`                  | Disallow dynamic import() expressions in workflows.                         |         |
 | `workflow-no-dynamic-require`                 | Disallow dynamic require() calls in workflows.                              |         |
+| `workflow-no-fs-in-workflow`                  | Disallow filesystem access in workflows. Use activities for file I/O.       |         |
 | `workflow-no-finalization-registry`           | Disallow FinalizationRegistry in workflows (non-deterministic).             |         |
 | `workflow-no-floating-promises`               | Disallow floating (unhandled) promises in workflows.                        |         |
+| `workflow-no-heavy-cpu-in-workflow`           | Warn on CPU-heavy work in workflows (move to activities).                   |         |
 | `workflow-no-large-literal-payloads`          | Warn about large literal objects that may exceed payload limits.            |         |
+| `workflow-no-logger-library-in-workflow`      | Disallow logger libraries in workflows. Use the workflow log instead.       |         |
+| `workflow-no-mixed-scope-exports`             | Disallow exporting Worker/Client/Activity values from workflow files.       |         |
+| `workflow-no-network-in-workflow`             | Disallow network access in workflows. Use activities for HTTP calls.        |         |
 | `workflow-no-node-or-dom-imports`             | Disallow Node.js built-in modules and DOM APIs.                             |         |
+| `workflow-no-nondeterministic-control-flow`   | Warn when control flow depends on time/randomness without annotation.       |         |
 | `workflow-no-process-env`                     | Disallow process.env access (non-deterministic).                            |         |
 | `workflow-no-query-mutation`                  | Disallow state mutations inside query handlers.                             |         |
 | `workflow-no-setinterval`                     | Disallow setInterval (use sleep() in a loop instead).                       |         |
+| `workflow-no-top-level-workflow-side-effects` | Disallow scheduling workflow commands at module scope.                      |         |
 | `workflow-no-throw-raw-error`                 | Prefer throwing ApplicationFailure over raw Error.                          |         |
 | `workflow-no-unsafe-global-mutation`          | Disallow mutating global state in workflows.                                |         |
 | `workflow-no-unsafe-package-imports`          | Disallow importing packages unsafe for workflow determinism.                |         |
+| `workflow-no-uuid-library-in-workflow`        | Disallow UUID libraries in workflows. Use uuid4() instead.                  |         |
 | `workflow-no-weakref`                         | Disallow WeakRef in workflows (non-deterministic).                          |         |
 | `workflow-no-worker-import`                   | Disallow importing @temporalio/worker in workflow files.                    |         |
 | `workflow-no-workflow-apis-in-query`          | Disallow workflow APIs (sleep, condition, etc.) in query handlers.          |         |
@@ -160,6 +168,7 @@ When you add or rename rules, regenerate the docs and keep the README rule list 
 | `workflow-sink-no-await`                      | Disallow awaiting sink calls (sinks are fire-and-forget).                   |         |
 | `workflow-sink-no-return-value`               | Disallow using return values from sink calls.                               |         |
 | `workflow-update-handler-return-type`         | Suggest explicit return types for update handlers.                          |         |
+| `workflow-uuid4-requires-security-comment`    | Require a comment noting uuid4() is deterministic and not secure.           |         |
 
 ### Activity Rules
 

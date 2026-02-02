@@ -39,12 +39,24 @@ const whyByRule: Record<string, string> = {
     'Dynamic require() breaks bundling assumptions and can introduce nondeterministic module loading during replay.',
   'workflow-no-finalization-registry':
     'FinalizationRegistry depends on garbage collection timing, which is nondeterministic and unsafe for workflow replay.',
+  'workflow-no-fs-in-workflow':
+    'Workflows run in a sandbox without filesystem access. File I/O must happen in activities.',
   'workflow-no-floating-promises':
     'Unhandled promises can lead to lost work or nondeterministic ordering. Workflows should await or explicitly manage all async work.',
+  'workflow-no-heavy-cpu-in-workflow':
+    'CPU-heavy work can block the workflow task and slow replays. Move expensive computation to activities.',
   'workflow-no-large-literal-payloads':
     'Payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.',
+  'workflow-no-logger-library-in-workflow':
+    'Logger libraries can perform I/O and are not replay-aware. Use the workflow logger instead.',
+  'workflow-no-mixed-scope-exports':
+    'Workflow modules should only export workflow code and message definitions. Exporting workers or clients blurs runtime boundaries.',
+  'workflow-no-network-in-workflow':
+    'Network calls are nondeterministic and not allowed in workflow code. Use activities for I/O.',
   'workflow-no-node-or-dom-imports':
     'Workflows run in a restricted sandbox without Node or DOM APIs. Importing them will fail at runtime or break determinism.',
+  'workflow-no-nondeterministic-control-flow':
+    'Branching on time or randomness can break replay when code evolves. Require an explicit comment to make the choice intentional.',
   'workflow-no-process-env':
     'Environment variables can change between runs and replays. Pass configuration explicitly via workflow inputs.',
   'workflow-no-query-mutation':
@@ -57,6 +69,8 @@ const whyByRule: Record<string, string> = {
     'Mutating globals or prototypes can cause replay divergence across workers and versions.',
   'workflow-no-unsafe-package-imports':
     'Many packages perform I/O or use nondeterministic sources. Keeping workflow dependencies safe prevents replay failures.',
+  'workflow-no-uuid-library-in-workflow':
+    'UUID libraries typically rely on randomness. Use uuid4() or generate IDs in activities.',
   'workflow-no-weakref':
     'WeakRef depends on garbage collection timing, which is nondeterministic and unsafe for workflow replay.',
   'workflow-no-worker-import':
@@ -89,6 +103,8 @@ const whyByRule: Record<string, string> = {
     'Sink calls do not return values. Using their return values is a logic error that can hide missed side effects.',
   'workflow-update-handler-return-type':
     'Update handlers are part of your workflow API. Explicit return types prevent accidental breaking changes.',
+  'workflow-uuid4-requires-security-comment':
+    'uuid4() is deterministic and not cryptographically secure. A comment helps prevent accidental misuse for security tokens.',
   'activity-prefer-activity-log':
     'Activity logs include Temporal context and are structured for observability. console.* loses metadata and consistency.',
   'activity-prefer-applicationfailure':
