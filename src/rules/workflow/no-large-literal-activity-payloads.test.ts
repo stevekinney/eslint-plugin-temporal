@@ -132,6 +132,65 @@ describe('no-large-literal-activity-payloads', () => {
           },
         ],
       },
+
+      // Destructured proxy activities without rename
+      {
+        code: `
+          const { send } = proxyActivities();
+          await send([1, 2, 3, 4, 5, 6]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Large payload as second argument
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.func(smallId, [1, 2, 3, 4, 5, 6]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Template literal payload
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.process(\`this is a very long string for testing\`);
+        `,
+        options: [{ maxStringLength: 20 }],
+        errors: [
+          {
+            messageId: 'largeStringPayload',
+          },
+        ],
+      },
+
+      // Nested arrays counting
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.process([[1, 2, 3], [4, 5, 6]]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '8' },
+          },
+        ],
+      },
     ],
   });
 });

@@ -18,6 +18,9 @@ describe('no-console', () => {
       // Other objects with log method
       `logger.info('hello');`,
       `myConsole.log('hello');`,
+
+      // Destructuring console (just reference)
+      `const { log } = console;`,
     ],
     invalid: [
       // Basic console.log
@@ -101,6 +104,24 @@ log.info('a');
 log.error('b');`,
         ],
         errors: [{ messageId: 'noConsole' }, { messageId: 'noConsole' }],
+      },
+
+      // Bracket notation access
+      {
+        code: `console['log']('test');`,
+        output: `import { log } from '@temporalio/workflow';
+log.info('test');`,
+        errors: [{ messageId: 'noConsole', data: { method: 'log', logMethod: 'info' } }],
+      },
+
+      // console.trace
+      {
+        code: `console.trace('stack');`,
+        output: `import { log } from '@temporalio/workflow';
+log.trace('stack');`,
+        errors: [
+          { messageId: 'noConsole', data: { method: 'trace', logMethod: 'trace' } },
+        ],
       },
     ],
   });
