@@ -59,9 +59,9 @@
 
 ### Handlers (signals, queries, updates)
 
-- [ ] require-message-definitions-at-module-scope
-- [ ] no-await-in-handler-without-exit-guard
-- [ ] require-handler-serialization-safe-types
+- [x] require-message-definitions-at-module-scope
+- [x] no-await-in-handler-without-exit-guard
+- [x] require-handler-serialization-safe-types
 
 ### Cancellation and scopes
 

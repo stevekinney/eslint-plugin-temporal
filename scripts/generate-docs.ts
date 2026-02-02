@@ -23,6 +23,8 @@ const whyByRule: Record<string, string> = {
     'Consistent activity timeout formats make proxyActivities options easier to review and prevent unit mix-ups.',
   'workflow-message-name-literal':
     'Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.',
+  'workflow-require-message-definitions-at-module-scope':
+    'Defining messages at module scope keeps handler identities stable and avoids redefining them on every workflow activation.',
   'workflow-no-activity-definitions-import':
     'Workflow code runs in the deterministic sandbox. Importing activity implementations can pull in Node APIs and nondeterminism; only proxy activities from the workflow API.',
   'workflow-no-async-query-handler':
@@ -71,6 +73,8 @@ const whyByRule: Record<string, string> = {
     'Environment variables can change between runs and replays. Pass configuration explicitly via workflow inputs.',
   'workflow-no-query-mutation':
     'Queries must be read-only. Mutating state in a query can cause nondeterministic behavior and violates the query contract.',
+  'workflow-no-await-in-handler-without-exit-guard':
+    'Async handlers can still be running when a workflow exits. Waiting on allHandlersFinished avoids dropping in-flight handler work.',
   'workflow-no-retry-for-nonidempotent-activities':
     'Retries can duplicate side effects for non-idempotent activities. Limiting retries avoids accidental double-charges or writes.',
   'workflow-no-setinterval':
@@ -109,6 +113,8 @@ const whyByRule: Record<string, string> = {
     'Timeouts prevent stuck activities and make workflow progress deterministic under failure conditions.',
   'workflow-require-all-handlers-finished':
     'Signals and updates may still be running when a workflow returns. Waiting ensures in-flight handlers complete safely.',
+  'workflow-require-handler-serialization-safe-types':
+    'Handler inputs and outputs become workflow payloads. Enforcing serialization-safe types prevents runtime payload failures.',
   'workflow-require-setHandler-early':
     'Handlers registered after the first await can miss signals/updates. Registering early ensures deterministic handling.',
   'workflow-require-type-only-activity-imports':

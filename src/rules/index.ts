@@ -24,6 +24,7 @@ import { durationFormat } from './workflow/duration-format.ts';
 import { messageNameLiteral } from './workflow/message-name-literal.ts';
 import { noActivityDefinitionsImport } from './workflow/no-activity-definitions-import.ts';
 import { noAsyncQueryHandler } from './workflow/no-async-query-handler.ts';
+import { noAwaitInHandlerWithoutExitGuard } from './workflow/no-await-in-handler-without-exit-guard.ts';
 import { noBusyWait } from './workflow/no-busy-wait.ts';
 import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
@@ -65,7 +66,9 @@ import { preferWorkflowUuid } from './workflow/prefer-workflow-uuid.ts';
 import { requireActivityRetryPolicy } from './workflow/require-activity-retry-policy.ts';
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
 import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
+import { requireHandlerSerializationSafeTypes } from './workflow/require-handler-serialization-safe-types.ts';
 import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg.ts';
+import { requireMessageDefinitionsAtModuleScope } from './workflow/require-message-definitions-at-module-scope.ts';
 import { requireSetHandlerEarly } from './workflow/require-setHandler-early.ts';
 import { requireTypeOnlyActivityImports } from './workflow/require-type-only-activity-imports.ts';
 import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void.ts';
@@ -84,6 +87,7 @@ export const rules = {
   'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
   'workflow-duration-format': durationFormat,
   'workflow-message-name-literal': messageNameLiteral,
+  'workflow-no-await-in-handler-without-exit-guard': noAwaitInHandlerWithoutExitGuard,
   'workflow-no-activity-definitions-import': noActivityDefinitionsImport,
   'workflow-no-async-query-handler': noAsyncQueryHandler,
   'workflow-no-busy-wait': noBusyWait,
@@ -128,6 +132,10 @@ export const rules = {
   'workflow-require-activity-retry-policy': requireActivityRetryPolicy,
   'workflow-require-activity-timeouts': requireActivityTimeouts,
   'workflow-require-all-handlers-finished': requireAllHandlersFinished,
+  'workflow-require-handler-serialization-safe-types':
+    requireHandlerSerializationSafeTypes,
+  'workflow-require-message-definitions-at-module-scope':
+    requireMessageDefinitionsAtModuleScope,
   'workflow-require-setHandler-early': requireSetHandlerEarly,
   'workflow-require-type-only-activity-imports': requireTypeOnlyActivityImports,
   'workflow-signal-handler-returns-void': signalHandlerReturnsVoid,
