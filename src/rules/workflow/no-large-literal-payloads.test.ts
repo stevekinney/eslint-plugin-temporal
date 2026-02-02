@@ -8,107 +8,31 @@ const ruleTester = createWorkflowRuleTester();
 describe('no-large-literal-payloads', () => {
   ruleTester.run('no-large-literal-payloads', noLargeLiteralPayloads, {
     valid: [
-      // Small array
-      `
-        const activities = proxyActivities();
-        await activities.process([1, 2, 3, 4, 5]);
-      `,
-
-      // Small object
-      `
-        const activities = proxyActivities();
-        await activities.process({ a: 1, b: 2, c: 3 });
-      `,
-
-      // Variable reference (can't statically check)
-      `
-        const activities = proxyActivities();
-        await activities.process(largeData);
-      `,
-
-      // Small string
-      `
-        const activities = proxyActivities();
-        await activities.process('hello world');
-      `,
-
-      // Non-activity calls
-      `someOtherFunction([1, 2, 3, 4, 5]);`,
-
       // Child workflow with small payload
       `
         await startChild(myWorkflow, { args: [{ small: 'data' }] });
       `,
+      `
+        await executeChild(myWorkflow, { args: [{ ok: true }] });
+      `,
+
+      // Variable reference (can't statically check)
+      `
+        await startChild(myWorkflow, largeData);
+      `,
+
+      // Non-child workflow calls
+      `someOtherFunction([1, 2, 3, 4, 5]);`,
 
       // With custom limits - array under limit
       {
         code: `
-          const activities = proxyActivities();
-          await activities.process([1, 2, 3, 4, 5]);
+          await startChild(myWorkflow, [1, 2, 3, 4, 5]);
         `,
         options: [{ maxArrayElements: 10 }],
       },
     ],
     invalid: [
-      // Large array (using small limit for testing)
-      {
-        code: `
-          const activities = proxyActivities();
-          await activities.process([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
-        `,
-        options: [{ maxArrayElements: 10 }],
-        errors: [
-          {
-            messageId: 'largeArrayPayload',
-            data: { count: '11' },
-          },
-        ],
-      },
-
-      // Large object (using small limit for testing)
-      {
-        code: `
-          const activities = proxyActivities();
-          await activities.process({ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 });
-        `,
-        options: [{ maxObjectProperties: 5 }],
-        errors: [
-          {
-            messageId: 'largeObjectPayload',
-            data: { count: '6' },
-          },
-        ],
-      },
-
-      // Large string (using small limit for testing)
-      {
-        code: `
-          const activities = proxyActivities();
-          await activities.process('this is a very long string for testing');
-        `,
-        options: [{ maxStringLength: 20 }],
-        errors: [
-          {
-            messageId: 'largeStringPayload',
-          },
-        ],
-      },
-
-      // Large array with proxyLocalActivities
-      {
-        code: `
-          const localActs = proxyLocalActivities();
-          await localActs.process([1, 2, 3, 4, 5, 6]);
-        `,
-        options: [{ maxArrayElements: 5 }],
-        errors: [
-          {
-            messageId: 'largeArrayPayload',
-            data: { count: '6' },
-          },
-        ],
-      },
-
       // Large payload in startChild
       {
         code: `
@@ -135,21 +59,19 @@ describe('no-large-literal-payloads', () => {
         ],
       },
 
-      // Multiple large payloads
+      // Large string payload
       {
         code: `
-          const activities = proxyActivities();
-          await activities.process([1, 2, 3, 4, 5, 6], { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 });
+          await startChild(myWorkflow, 'this is a very long string for testing');
         `,
-        options: [{ maxArrayElements: 5, maxObjectProperties: 5 }],
-        errors: [{ messageId: 'largeArrayPayload' }, { messageId: 'largeObjectPayload' }],
+        options: [{ maxStringLength: 20 }],
+        errors: [{ messageId: 'largeStringPayload' }],
       },
 
       // Nested object counting
       {
         code: `
-          const activities = proxyActivities();
-          await activities.process({
+          await executeChild(myWorkflow, {
             a: { nested1: 1, nested2: 2 },
             b: { nested3: 3, nested4: 4 },
             c: 5

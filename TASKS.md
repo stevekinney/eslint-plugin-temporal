@@ -50,12 +50,12 @@
 
 ### Activity invocation and retry hygiene
 
-- [ ] activity-timeout-duration-format
-- [ ] no-retry-for-nonidempotent-activities
-- [ ] require-idempotency-key-arg
-- [ ] prefer-single-object-activity-args
-- [ ] prefer-single-object-workflow-args
-- [ ] no-large-literal-activity-payloads
+- [x] activity-timeout-duration-format
+- [x] no-retry-for-nonidempotent-activities
+- [x] require-idempotency-key-arg
+- [x] prefer-single-object-activity-args
+- [x] prefer-single-object-workflow-args
+- [x] no-large-literal-activity-payloads
 
 ### Handlers (signals, queries, updates)
 

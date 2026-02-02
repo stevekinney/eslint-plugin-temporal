@@ -5,6 +5,7 @@ import { heartbeatInLongLoops } from './activity/heartbeat-in-long-loops.ts';
 // Activity rules
 import { preferActivityLog } from './activity/prefer-activity-log.ts';
 import { preferApplicationFailure } from './activity/prefer-applicationfailure.ts';
+import { preferSingleObjectActivityArgs } from './activity/prefer-single-object-args.ts';
 import { useCancellationSignal } from './activity/use-cancellation-signal.ts';
 // Client rules
 import { requireWorkflowId } from './client/require-workflow-id.ts';
@@ -16,6 +17,7 @@ import { ignoremodulesRequiresComment } from './worker/ignoremodules-requires-co
 // Worker rules
 import { noWorkflowOrActivityDefinitions } from './worker/no-workflow-or-activity-definitions.ts';
 // Workflow rules
+import { activityTimeoutDurationFormat } from './workflow/activity-timeout-duration-format.ts';
 import { conditionTimeoutStyle } from './workflow/condition-timeout-style.ts';
 import { deprecatePatchRequiresComment } from './workflow/deprecate-patch-requires-comment.ts';
 import { durationFormat } from './workflow/duration-format.ts';
@@ -35,6 +37,7 @@ import { noFinalizationRegistry } from './workflow/no-finalization-registry.ts';
 import { noFloatingPromises } from './workflow/no-floating-promises.ts';
 import { noFsInWorkflow } from './workflow/no-fs-in-workflow.ts';
 import { noHeavyCpuInWorkflow } from './workflow/no-heavy-cpu-in-workflow.ts';
+import { noLargeLiteralActivityPayloads } from './workflow/no-large-literal-activity-payloads.ts';
 import { noLargeLiteralPayloads } from './workflow/no-large-literal-payloads.ts';
 import { noLoggerLibraryInWorkflow } from './workflow/no-logger-library-in-workflow.ts';
 import { noMixedScopeExports } from './workflow/no-mixed-scope-exports.ts';
@@ -43,6 +46,7 @@ import { noNodeOrDomImports } from './workflow/no-node-or-dom-imports.ts';
 import { noNondeterministicControlFlow } from './workflow/no-nondeterministic-control-flow.ts';
 import { noProcessEnv } from './workflow/no-process-env.ts';
 import { noQueryMutation } from './workflow/no-query-mutation.ts';
+import { noRetryForNonIdempotentActivities } from './workflow/no-retry-for-nonidempotent-activities.ts';
 import { noSetInterval } from './workflow/no-setinterval.ts';
 import { noThrowRawError } from './workflow/no-throw-raw-error.ts';
 import { noTopLevelWorkflowSideEffects } from './workflow/no-top-level-workflow-side-effects.ts';
@@ -55,11 +59,13 @@ import { noWorkerImport } from './workflow/no-worker-import.ts';
 import { noWorkflowApisInQuery } from './workflow/no-workflow-apis-in-query.ts';
 import { patchIdLiteral } from './workflow/patch-id-literal.ts';
 import { preferConditionOverPolling } from './workflow/prefer-condition-over-polling.ts';
+import { preferSingleObjectWorkflowArgs } from './workflow/prefer-single-object-workflow-args.ts';
 import { preferSleep } from './workflow/prefer-sleep.ts';
 import { preferWorkflowUuid } from './workflow/prefer-workflow-uuid.ts';
 import { requireActivityRetryPolicy } from './workflow/require-activity-retry-policy.ts';
 import { requireActivityTimeouts } from './workflow/require-activity-timeouts.ts';
 import { requireAllHandlersFinished } from './workflow/require-all-handlers-finished.ts';
+import { requireIdempotencyKeyArg } from './workflow/require-idempotency-key-arg.ts';
 import { requireSetHandlerEarly } from './workflow/require-setHandler-early.ts';
 import { requireTypeOnlyActivityImports } from './workflow/require-type-only-activity-imports.ts';
 import { signalHandlerReturnsVoid } from './workflow/signal-handler-returns-void.ts';
@@ -73,6 +79,7 @@ import { uuid4RequiresSecurityComment } from './workflow/uuid4-requires-security
  */
 export const rules = {
   // Workflow rules
+  'workflow-activity-timeout-duration-format': activityTimeoutDurationFormat,
   'workflow-condition-timeout-style': conditionTimeoutStyle,
   'workflow-deprecate-patch-requires-comment': deprecatePatchRequiresComment,
   'workflow-duration-format': durationFormat,
@@ -92,6 +99,7 @@ export const rules = {
   'workflow-no-finalization-registry': noFinalizationRegistry,
   'workflow-no-floating-promises': noFloatingPromises,
   'workflow-no-heavy-cpu-in-workflow': noHeavyCpuInWorkflow,
+  'workflow-no-large-literal-activity-payloads': noLargeLiteralActivityPayloads,
   'workflow-no-large-literal-payloads': noLargeLiteralPayloads,
   'workflow-no-logger-library-in-workflow': noLoggerLibraryInWorkflow,
   'workflow-no-mixed-scope-exports': noMixedScopeExports,
@@ -100,6 +108,7 @@ export const rules = {
   'workflow-no-nondeterministic-control-flow': noNondeterministicControlFlow,
   'workflow-no-process-env': noProcessEnv,
   'workflow-no-query-mutation': noQueryMutation,
+  'workflow-no-retry-for-nonidempotent-activities': noRetryForNonIdempotentActivities,
   'workflow-no-setinterval': noSetInterval,
   'workflow-no-top-level-workflow-side-effects': noTopLevelWorkflowSideEffects,
   'workflow-no-throw-raw-error': noThrowRawError,
@@ -113,7 +122,9 @@ export const rules = {
   'workflow-patch-id-literal': patchIdLiteral,
   'workflow-prefer-condition-over-polling': preferConditionOverPolling,
   'workflow-prefer-sleep': preferSleep,
+  'workflow-prefer-single-object-args': preferSingleObjectWorkflowArgs,
   'workflow-prefer-workflow-uuid': preferWorkflowUuid,
+  'workflow-require-idempotency-key-arg': requireIdempotencyKeyArg,
   'workflow-require-activity-retry-policy': requireActivityRetryPolicy,
   'workflow-require-activity-timeouts': requireActivityTimeouts,
   'workflow-require-all-handlers-finished': requireAllHandlersFinished,
@@ -128,6 +139,7 @@ export const rules = {
   // Activity rules
   'activity-prefer-activity-log': preferActivityLog,
   'activity-prefer-applicationfailure': preferApplicationFailure,
+  'activity-prefer-single-object-args': preferSingleObjectActivityArgs,
   'activity-heartbeat-in-long-loops': heartbeatInLongLoops,
   'activity-use-cancellation-signal': useCancellationSignal,
   'activity-context-not-stored': contextNotStored,

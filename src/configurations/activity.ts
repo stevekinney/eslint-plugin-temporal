@@ -6,6 +6,7 @@ import type { TSESLint } from '@typescript-eslint/utils';
 export const activityRules: TSESLint.FlatConfig.Rules = {
   'temporal/activity-prefer-activity-log': 'warn',
   'temporal/activity-prefer-applicationfailure': 'warn',
+  'temporal/activity-prefer-single-object-args': 'warn',
   'temporal/activity-heartbeat-in-long-loops': 'warn',
   'temporal/activity-use-cancellation-signal': 'warn',
   'temporal/activity-context-not-stored': 'error',

@@ -16,22 +16,22 @@ const DEFAULT_MAX_ARRAY_ELEMENTS = 100;
 const DEFAULT_MAX_OBJECT_PROPERTIES = 50;
 const DEFAULT_MAX_STRING_LENGTH = 10000;
 
-export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
-  name: 'workflow-no-large-literal-payloads',
+export const noLargeLiteralActivityPayloads = createWorkflowRule<Options, MessageIds>({
+  name: 'workflow-no-large-literal-activity-payloads',
   meta: {
     type: 'suggestion',
     docs: {
       description:
-        'Warn when passing large literal arrays, objects, or strings as arguments to child workflows. Large payloads bloat workflow history.',
+        'Warn when passing large literal arrays, objects, or strings to activities. Large payloads bloat workflow history.',
     },
     defaultOptions: [{}],
     messages: {
       largeArrayPayload:
-        'Avoid passing large array literals ({{ count }} elements) to child workflows. Large payloads bloat workflow history and slow down replay. Consider passing a reference or identifier instead, or breaking the data into smaller chunks.',
+        'Avoid passing large array literals ({{ count }} elements) to activities. Large payloads bloat workflow history and slow down replay. Consider passing a reference or identifier instead, or breaking the data into smaller chunks.',
       largeObjectPayload:
-        'Avoid passing large object literals ({{ count }} properties) to child workflows. Large payloads bloat workflow history and slow down replay. Consider passing a reference or identifier instead.',
+        'Avoid passing large object literals ({{ count }} properties) to activities. Large payloads bloat workflow history and slow down replay. Consider passing a reference or identifier instead.',
       largeStringPayload:
-        'Avoid passing large string literals ({{ length }} characters) to child workflows. Large payloads bloat workflow history and slow down replay. Consider passing a reference or fetching the data in the activity.',
+        'Avoid passing large string literals ({{ length }} characters) to activities. Large payloads bloat workflow history and slow down replay. Consider passing a reference or fetching the data in the activity.',
     },
     schema: [
       {
@@ -64,17 +64,18 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
       options.maxObjectProperties ?? DEFAULT_MAX_OBJECT_PROPERTIES;
     const maxStringLength = options.maxStringLength ?? DEFAULT_MAX_STRING_LENGTH;
 
+    const activityProxyVariables = new Set<string>();
+    const directActivityFns = new Set<string>();
+
     function countObjectProperties(node: TSESTree.ObjectExpression): number {
       let count = 0;
       for (const prop of node.properties) {
         if (prop.type === AST_NODE_TYPES.Property) {
           count++;
-          // Recursively count nested object properties
           if (prop.value.type === AST_NODE_TYPES.ObjectExpression) {
             count += countObjectProperties(prop.value);
           }
         } else if (prop.type === AST_NODE_TYPES.SpreadElement) {
-          // Can't statically count spread elements
           count++;
         }
       }
@@ -85,13 +86,11 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
       let count = 0;
       for (const element of node.elements) {
         if (element === null) {
-          count++; // Sparse array element
+          count++;
         } else if (element.type === AST_NODE_TYPES.SpreadElement) {
-          // Can't statically count spread elements
           count++;
         } else {
           count++;
-          // Recursively count nested arrays
           if (element.type === AST_NODE_TYPES.ArrayExpression) {
             count += countArrayElements(element);
           }
@@ -101,7 +100,6 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
     }
 
     function checkPayload(node: TSESTree.CallExpressionArgument): void {
-      // Check array literals
       if (node.type === AST_NODE_TYPES.ArrayExpression) {
         const count = countArrayElements(node);
         if (count > maxArrayElements) {
@@ -114,7 +112,6 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
         return;
       }
 
-      // Check object literals
       if (node.type === AST_NODE_TYPES.ObjectExpression) {
         const count = countObjectProperties(node);
         if (count > maxObjectProperties) {
@@ -127,7 +124,6 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
         return;
       }
 
-      // Check string literals
       if (node.type === AST_NODE_TYPES.Literal && typeof node.value === 'string') {
         if (node.value.length > maxStringLength) {
           context.report({
@@ -139,7 +135,6 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
         return;
       }
 
-      // Check template literals
       if (node.type === AST_NODE_TYPES.TemplateLiteral) {
         const totalLength = node.quasis.reduce(
           (sum, quasi) => sum + quasi.value.raw.length,
@@ -152,34 +147,70 @@ export const noLargeLiteralPayloads = createWorkflowRule<Options, MessageIds>({
             data: { length: String(totalLength) },
           });
         }
-        return;
       }
     }
 
-    function isChildWorkflowCall(node: TSESTree.CallExpression): boolean {
-      // Check for startChild(), executeChild()
-      if (node.callee.type === AST_NODE_TYPES.Identifier) {
-        return node.callee.name === 'startChild' || node.callee.name === 'executeChild';
+    function isProxyActivitiesCall(node: TSESTree.CallExpression): boolean {
+      if (
+        node.callee.type === AST_NODE_TYPES.Identifier &&
+        (node.callee.name === 'proxyActivities' ||
+          node.callee.name === 'proxyLocalActivities')
+      ) {
+        return true;
       }
+
       if (
         node.callee.type === AST_NODE_TYPES.MemberExpression &&
-        node.callee.property.type === AST_NODE_TYPES.Identifier
+        node.callee.property.type === AST_NODE_TYPES.Identifier &&
+        (node.callee.property.name === 'proxyActivities' ||
+          node.callee.property.name === 'proxyLocalActivities')
       ) {
-        return (
-          node.callee.property.name === 'startChild' ||
-          node.callee.property.name === 'executeChild'
-        );
+        return true;
       }
+
+      return false;
+    }
+
+    function isActivityCall(node: TSESTree.CallExpression): boolean {
+      if (node.callee.type === AST_NODE_TYPES.MemberExpression) {
+        if (node.callee.object.type === AST_NODE_TYPES.Identifier) {
+          return activityProxyVariables.has(node.callee.object.name);
+        }
+      }
+
+      if (node.callee.type === AST_NODE_TYPES.Identifier) {
+        return directActivityFns.has(node.callee.name);
+      }
+
       return false;
     }
 
     return {
-      CallExpression(node) {
-        // Check child workflow calls
-        if (isChildWorkflowCall(node)) {
-          for (const arg of node.arguments) {
-            checkPayload(arg);
+      VariableDeclarator(node) {
+        if (!node.init || node.init.type !== AST_NODE_TYPES.CallExpression) return;
+        if (!isProxyActivitiesCall(node.init)) return;
+
+        if (node.id.type === AST_NODE_TYPES.Identifier) {
+          activityProxyVariables.add(node.id.name);
+          return;
+        }
+
+        if (node.id.type === AST_NODE_TYPES.ObjectPattern) {
+          for (const property of node.id.properties) {
+            if (
+              property.type === AST_NODE_TYPES.Property &&
+              property.key.type === AST_NODE_TYPES.Identifier
+            ) {
+              directActivityFns.add(property.key.name);
+            }
           }
+        }
+      },
+      CallExpression(node) {
+        if (!isActivityCall(node)) return;
+
+        for (const arg of node.arguments) {
+          checkPayload(arg);
         }
       },
     };

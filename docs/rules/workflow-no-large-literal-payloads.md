@@ -2,11 +2,11 @@
 
 ## What it does
 
-Warn when passing large literal arrays, objects, or strings as arguments to activities or child workflows. Large payloads bloat workflow history.
+Warn when passing large literal arrays, objects, or strings as arguments to child workflows. Large payloads bloat workflow history.
 
 ## Why it matters
 
-Payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.
+Child workflow payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.
 
 ## Options
 
@@ -23,15 +23,13 @@ No.
 ### Incorrect
 
 ```ts
-const activities = proxyActivities();
-await activities.process([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+await startChild(myWorkflow, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 ```
 
 ### Correct
 
 ```ts
-const activities = proxyActivities();
-await activities.process([1, 2, 3, 4, 5]);
+await startChild(myWorkflow, [1, 2, 3, 4, 5]);
 ```
 
 ## When to disable

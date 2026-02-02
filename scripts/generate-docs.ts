@@ -19,6 +19,8 @@ const whyByRule: Record<string, string> = {
     'Patch lifecycles are version-sensitive. A comment documents why a patch can be deprecated so future maintainers do not remove it prematurely and break replay compatibility.',
   'workflow-duration-format':
     'Mixing duration formats makes timers harder to read and audit. A consistent style reduces mistakes when reasoning about timeouts.',
+  'workflow-activity-timeout-duration-format':
+    'Consistent activity timeout formats make proxyActivities options easier to review and prevent unit mix-ups.',
   'workflow-message-name-literal':
     'Signal/query/update names are part of your public API. Literals (or stable constants) prevent accidental renames that break clients.',
   'workflow-no-activity-definitions-import':
@@ -51,8 +53,10 @@ const whyByRule: Record<string, string> = {
     'Unhandled promises can lead to lost work or nondeterministic ordering. Workflows should await or explicitly manage all async work.',
   'workflow-no-heavy-cpu-in-workflow':
     'CPU-heavy work can block the workflow task and slow replays. Move expensive computation to activities.',
+  'workflow-no-large-literal-activity-payloads':
+    'Activity payloads are stored in workflow history. Large literals bloat history, slow replays, and increase storage costs.',
   'workflow-no-large-literal-payloads':
-    'Payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.',
+    'Child workflow payloads are stored in history. Large literals bloat history, slow replays, and increase storage costs.',
   'workflow-no-logger-library-in-workflow':
     'Logger libraries can perform I/O and are not replay-aware. Use the workflow logger instead.',
   'workflow-no-mixed-scope-exports':
@@ -67,6 +71,8 @@ const whyByRule: Record<string, string> = {
     'Environment variables can change between runs and replays. Pass configuration explicitly via workflow inputs.',
   'workflow-no-query-mutation':
     'Queries must be read-only. Mutating state in a query can cause nondeterministic behavior and violates the query contract.',
+  'workflow-no-retry-for-nonidempotent-activities':
+    'Retries can duplicate side effects for non-idempotent activities. Limiting retries avoids accidental double-charges or writes.',
   'workflow-no-setinterval':
     'setInterval is not replay-safe and can ignore cancellation semantics. Use sleep in a loop or condition().',
   'workflow-no-throw-raw-error':
@@ -91,8 +97,12 @@ const whyByRule: Record<string, string> = {
     'Polling with timers creates extra workflow tasks and history. condition() is more efficient and replay-friendly.',
   'workflow-prefer-sleep':
     'sleep() is workflow-aware and cancellation-safe. setTimeout wrappers can behave differently under replay.',
+  'workflow-prefer-single-object-args':
+    'Single object inputs make workflow APIs easier to extend without breaking callers.',
   'workflow-prefer-workflow-uuid':
     'uuid4() is deterministic under Temporal’s replay model. Third-party UUIDs often rely on randomness.',
+  'workflow-require-idempotency-key-arg':
+    'Idempotency keys let you safely retry or dedupe non-idempotent activities that touch external systems.',
   'workflow-require-activity-retry-policy':
     'Retries are part of activity semantics. Explicit policies make behavior reviewable and prevent surprises in production.',
   'workflow-require-activity-timeouts':
@@ -117,6 +127,8 @@ const whyByRule: Record<string, string> = {
     'Activity logs include Temporal context and are structured for observability. console.* loses metadata and consistency.',
   'activity-prefer-applicationfailure':
     'ApplicationFailure captures retryability and failure type. Raw Error can lead to unintended retries or opaque failures.',
+  'activity-prefer-single-object-args':
+    'Single object inputs make activity APIs easier to extend without breaking callers.',
   'activity-heartbeat-in-long-loops':
     'Heartbeats allow cancellation and progress reporting. Long loops without heartbeats can run indefinitely after cancellation.',
   'activity-use-cancellation-signal':
