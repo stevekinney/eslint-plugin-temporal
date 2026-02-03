@@ -40,6 +40,7 @@ import { noClientImport } from './workflow/no-client-import.ts';
 import { noConsole } from './workflow/no-console.ts';
 import { noContinueAsNewInUpdateHandler } from './workflow/no-continue-as-new-in-update-handler.ts';
 import { noContinueAsNewWithoutStateArgument } from './workflow/no-continue-as-new-without-state-argument.ts';
+import { noCryptoRandom } from './workflow/no-crypto-random.ts';
 import { noCryptoRandomUuid } from './workflow/no-crypto-random-uuid.ts';
 import { noDateNowTightLoop } from './workflow/no-date-now-tight-loop.ts';
 import { noDateObjectInPayload } from './workflow/no-date-object-in-payload.ts';
@@ -66,6 +67,7 @@ import { noQueryMutation } from './workflow/no-query-mutation.ts';
 import { noRetryForNonIdempotentActivities } from './workflow/no-retry-for-nonidempotent-activities.ts';
 import { noSetInterval } from './workflow/no-setinterval.ts';
 import { noSetTimeoutInCancellationScope } from './workflow/no-settimeout-in-cancellation-scope.ts';
+import { noSharedArrayBuffer } from './workflow/no-shared-array-buffer.ts';
 import { noSwallowCancellation } from './workflow/no-swallow-cancellation.ts';
 import { noThrowRawError } from './workflow/no-throw-raw-error.ts';
 import { noTopLevelWorkflowSideEffects } from './workflow/no-top-level-workflow-side-effects.ts';
@@ -129,6 +131,7 @@ export const rules = {
   'workflow-no-continue-as-new-without-state-argument':
     noContinueAsNewWithoutStateArgument,
   'workflow-no-bigint-in-payload': noBigintInPayload,
+  'workflow-no-crypto-random': noCryptoRandom,
   'workflow-no-crypto-random-uuid': noCryptoRandomUuid,
   'workflow-no-date-object-in-payload': noDateObjectInPayload,
   'workflow-no-date-now-tight-loop': noDateNowTightLoop,
@@ -154,6 +157,7 @@ export const rules = {
   'workflow-no-query-mutation': noQueryMutation,
   'workflow-no-retry-for-nonidempotent-activities': noRetryForNonIdempotentActivities,
   'workflow-no-settimeout-in-cancellation-scope': noSetTimeoutInCancellationScope,
+  'workflow-no-shared-array-buffer': noSharedArrayBuffer,
   'workflow-no-setinterval': noSetInterval,
   'workflow-no-swallow-cancellation': noSwallowCancellation,
   'workflow-non-cancellable-cleanup-required': nonCancellableCleanupRequired,
