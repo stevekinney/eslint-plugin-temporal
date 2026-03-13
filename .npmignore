@@ -24,8 +24,6 @@ bunfig.toml
 
 # Documentation (internal)
 CLAUDE.md
-BEST_PRACTICES.md
-PLAN.md
 
 # Environment files
 .env
