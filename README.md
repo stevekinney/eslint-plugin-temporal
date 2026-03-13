@@ -16,6 +16,7 @@ bun add --dev eslint-plugin-temporal
 
 **Requirements:**
 
+- Node.js 18.18.0 or higher
 - ESLint 9.0.0 or higher (flat config)
 - TypeScript 5.0.0 or higher
 

@@ -4,7 +4,7 @@ import * as vitest from 'bun:test';
 // Configure RuleTester to use Bun's test framework
 RuleTester.afterAll = vitest.afterAll;
 RuleTester.it = vitest.it;
-RuleTester.itOnly = process.env['CI'] ? vitest.it : vitest.it.only;
+RuleTester.itOnly = (...args) => vitest.it.only(...args);
 RuleTester.describe = vitest.describe;
 
 /**
