@@ -30,6 +30,7 @@ const eslintPluginRulesConfig = eslintPlugin.configs['rules-recommended'];
 const eslintPluginTestsConfig = eslintPlugin.configs['tests-recommended'];
 const nodePluginRecommended = nodePlugin.configs['flat/recommended-module'];
 const nodeMissingImportOptions = {
+  allowModules: ['bun'],
   tryExtensions: ['.js', '.mjs', '.cjs', '.ts', '.tsx', '.d.ts'],
   tsconfigPath: './tsconfig.json',
   ignoreTypeImport: true,
