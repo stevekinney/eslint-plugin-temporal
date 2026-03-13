@@ -31,6 +31,42 @@ describe('no-heavy-cpu-in-workflow', () => {
         code: `bcrypt.hashSync('secret', 10);`,
         errors: [{ messageId: 'heavyCpu' }],
       },
+
+      // Loop with >= operator (reverse loop with large literal on left)
+      {
+        code: `for (let i = 0; 10000 >= i; i += 1) {
+          total += i;
+        }`,
+        errors: [{ messageId: 'heavyCpu' }],
+      },
+
+      // Loop with > operator (literal on left)
+      {
+        code: `for (let i = 0; 20000 > i; i += 1) {
+          total += i;
+        }`,
+        errors: [{ messageId: 'heavyCpu' }],
+      },
+
+      // Chained member expression calling a heavy function
+      {
+        code: `crypto.subtle.pbkdf2Sync(password, salt, 1000, 64, 'sha512');`,
+        errors: [{ messageId: 'heavyCpu' }],
+      },
+
+      // Direct call to heavy identifier function
+      {
+        code: `createHash('sha256');`,
+        errors: [{ messageId: 'heavyCpu' }],
+      },
+
+      // Loop with <= operator at threshold
+      {
+        code: `for (let i = 0; i <= 10000; i += 1) {
+          total += i;
+        }`,
+        errors: [{ messageId: 'heavyCpu' }],
+      },
     ],
   });
 });

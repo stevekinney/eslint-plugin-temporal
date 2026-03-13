@@ -41,6 +41,12 @@ describe('sink-no-await', () => {
         const notSinks = { logger: { info: () => {} } };
         await notSinks.logger.info('message');
       `,
+
+      // Deeply nested member expression where object.object is not Identifier
+      `
+        const sinks = proxySinks();
+        await getSinks().logger.info('message');
+      `,
     ],
     invalid: [
       // Awaiting sink call (one level deep)

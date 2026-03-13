@@ -35,6 +35,37 @@ describe('test-teardown-required', () => {
       `afterAll(() => {
          cleanup();
        });`,
+
+      // Type-only import should not trigger the rule
+      `import type { TestWorkflowEnvironment } from '@temporalio/testing';
+       let env: TestWorkflowEnvironment;`,
+
+      // TSNonNullExpression wrapping create call
+      `import { TestWorkflowEnvironment } from '@temporalio/testing';
+       let testEnv;
+       beforeAll(async () => {
+         testEnv = TestWorkflowEnvironment.createLocal()!;
+       });
+       afterAll(async () => {
+         await testEnv.teardown();
+       });`,
+
+      // TSAsExpression wrapping create call
+      `import { TestWorkflowEnvironment } from '@temporalio/testing';
+       let testEnv;
+       beforeAll(async () => {
+         testEnv = TestWorkflowEnvironment.createLocal() as any;
+       });
+       afterAll(async () => {
+         await testEnv.teardown();
+       });`,
+
+      // Destructured teardown alias recognized in afterEach via member expression callee
+      `import { TestWorkflowEnvironment } from '@temporalio/testing';
+       const { teardown } = await TestWorkflowEnvironment.createLocal();
+       afterAll(async () => {
+         await teardown();
+       });`,
     ],
     invalid: [
       {

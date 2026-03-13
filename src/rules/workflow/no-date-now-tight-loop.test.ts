@@ -40,6 +40,18 @@ describe('no-date-now-tight-loop', () => {
         const second = Date.now();`,
         errors: [{ messageId: 'dateNowTightLoop' }],
       },
+      {
+        code: `const a = Date['now'](); const b = Date['now']();`,
+        errors: [{ messageId: 'dateNowTightLoop' }],
+      },
+      {
+        code: `const fn = function() { const a = Date.now(); const b = Date.now(); }`,
+        errors: [{ messageId: 'dateNowTightLoop' }],
+      },
+      {
+        code: `const fn = () => { const a = Date.now(); const b = Date.now(); }`,
+        errors: [{ messageId: 'dateNowTightLoop' }],
+      },
     ],
   });
 });

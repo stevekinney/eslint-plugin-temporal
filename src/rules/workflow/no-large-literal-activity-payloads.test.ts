@@ -35,6 +35,16 @@ describe('no-large-literal-activity-payloads', () => {
       // Non-activity calls
       `someOtherFunction([1, 2, 3, 4, 5]);`,
 
+      // Member expression proxy activities (covers isProxyActivitiesCall MemberExpression branch, lines 162-169)
+      {
+        code: `
+          import * as wf from '@temporalio/workflow';
+          const activities = wf.proxyActivities();
+          await activities.process([1, 2, 3]);
+        `,
+        options: [{ maxArrayElements: 10 }],
+      },
+
       // With custom limits - array under limit
       {
         code: `
@@ -188,6 +198,83 @@ describe('no-large-literal-activity-payloads', () => {
           {
             messageId: 'largeArrayPayload',
             data: { count: '8' },
+          },
+        ],
+      },
+
+      // Object with spread element (covers countObjectProperties SpreadElement branch, lines 78-79)
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.process({ a: 1, b: 2, ...rest, d: 4, e: 5, f: 6 });
+        `,
+        options: [{ maxObjectProperties: 5 }],
+        errors: [
+          {
+            messageId: 'largeObjectPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Sparse array with null slots (covers countArrayElements null branch, line 89)
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.process([1, , , 4, 5, 6]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Array with spread element (covers countArrayElements SpreadElement branch, line 91)
+      {
+        code: `
+          const activities = proxyActivities();
+          await activities.process([1, 2, ...items, 4, 5, 6]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Member expression proxyActivities with large payload (covers lines 162-169)
+      {
+        code: `
+          import * as wf from '@temporalio/workflow';
+          const activities = wf.proxyActivities();
+          await activities.process([1, 2, 3, 4, 5, 6]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [
+          {
+            messageId: 'largeArrayPayload',
+            data: { count: '6' },
+          },
+        ],
+      },
+
+      // Member expression proxyLocalActivities with large payload (covers lines 162-169)
+      {
+        code: `
+          import * as wf from '@temporalio/workflow';
+          const activities = wf.proxyLocalActivities();
+          await activities.process({ a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 });
+        `,
+        options: [{ maxObjectProperties: 5 }],
+        errors: [
+          {
+            messageId: 'largeObjectPayload',
+            data: { count: '6' },
           },
         ],
       },

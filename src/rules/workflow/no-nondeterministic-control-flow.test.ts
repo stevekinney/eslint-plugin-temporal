@@ -23,6 +23,10 @@ describe('no-nondeterministic-control-flow', () => {
        if (Math.random() > 0.5) {
          doWork();
        }`,
+      // NewExpression that is not Date (line 83 — falls through NewExpression check)
+      `if (new Map()) { doWork(); }`,
+      // CallExpression with computed member callee (line 74 — falls through MemberExpression check)
+      `if (obj['method']()) { doWork(); }`,
     ],
     invalid: [
       {
@@ -47,6 +51,31 @@ describe('no-nondeterministic-control-flow', () => {
       },
       {
         code: `const result = Math.random() > 0.5 ? doA() : doB();`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      {
+        code: `if (uuid4()) { doWork(); }`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      {
+        code: `if (new Date() > x) { doWork(); }`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      {
+        code: `do { doWork(); } while (Math.random() > 0.5)`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      {
+        code: `if (crypto.randomUUID()) { doWork(); }`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      {
+        code: `for (let i = 0; Date.now() < end; i++) { doWork(); }`,
+        errors: [{ messageId: 'nondeterministicControlFlow' }],
+      },
+      // Nondeterminism inside a call argument (array child walk, lines 99-101)
+      {
+        code: `if (fn(Math.random())) { doWork(); }`,
         errors: [{ messageId: 'nondeterministicControlFlow' }],
       },
     ],

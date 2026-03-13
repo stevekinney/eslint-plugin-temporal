@@ -4,7 +4,9 @@ import { ImportTracker } from './import-tracker.ts';
 import {
   detectContext,
   detectContextFromImports,
+  getTemporalContextFromRule,
   isContextMatch,
+  isTestFile,
 } from './temporal-context.ts';
 
 // Helper to create a mock import declaration
@@ -259,5 +261,109 @@ describe('isContextMatch', () => {
 
   it('does not treat workflow as test', () => {
     expect(isContextMatch('workflow', 'test', { treatTestAsWorkflow: true })).toBe(false);
+  });
+});
+
+describe('detectContextFromImports — common with type-only workflow import', () => {
+  it('returns "unknown" when @temporalio/common is value-imported and @temporalio/workflow is type-only imported', () => {
+    const tracker = new ImportTracker();
+
+    // Value import from common
+    tracker.addImport(
+      createMockImportDeclaration('@temporalio/common', [
+        { imported: 'ApplicationFailure', local: 'ApplicationFailure' },
+      ]),
+    );
+
+    // Type-only import from workflow — hasImportFrom still returns true
+    tracker.addImport(
+      createMockImportDeclaration(
+        '@temporalio/workflow',
+        [{ imported: 'WorkflowInfo', local: 'WorkflowInfo' }],
+        true,
+      ),
+    );
+
+    // hasImportFrom('@temporalio/workflow') is true (type imports count),
+    // so hasOtherTemporalImports is true and the result is 'unknown' not 'shared'
+    expect(detectContextFromImports(tracker)).toBe('unknown');
+  });
+});
+
+describe('getTemporalContextFromRule', () => {
+  it('returns the detected context based on imports and filename', () => {
+    const tracker = new ImportTracker();
+    tracker.addImport(
+      createMockImportDeclaration('@temporalio/workflow', [
+        { imported: 'proxyActivities', local: 'proxyActivities' },
+      ]),
+    );
+
+    const ruleContext = {
+      filename: '/project/src/some-file.ts',
+      settings: {},
+    } as any;
+
+    expect(getTemporalContextFromRule(ruleContext, tracker)).toBe('workflow');
+  });
+
+  it('falls back to file-path detection when no temporal imports exist', () => {
+    const tracker = new ImportTracker();
+
+    const ruleContext = {
+      filename: '/project/src/activities/send-email.ts',
+      settings: {},
+    } as any;
+
+    expect(getTemporalContextFromRule(ruleContext, tracker)).toBe('activity');
+  });
+
+  it('uses temporal settings from rule context for custom file patterns', () => {
+    const tracker = new ImportTracker();
+
+    const ruleContext = {
+      filename: '/project/my-flows/handler.ts',
+      settings: {
+        temporal: {
+          filePatterns: {
+            workflow: ['**/my-flows/**'],
+          },
+        },
+      },
+    } as any;
+
+    expect(getTemporalContextFromRule(ruleContext, tracker)).toBe('workflow');
+  });
+
+  it('returns "unknown" when no imports or file patterns match', () => {
+    const tracker = new ImportTracker();
+
+    const ruleContext = {
+      filename: '/project/src/utilities/helpers.ts',
+      settings: {},
+    } as any;
+
+    expect(getTemporalContextFromRule(ruleContext, tracker)).toBe('unknown');
+  });
+});
+
+describe('isTestFile', () => {
+  it('returns true for a path matching default test patterns', () => {
+    expect(isTestFile('/project/src/__tests__/workflow.test.ts')).toBe(true);
+  });
+
+  it('returns false for a non-test path', () => {
+    expect(isTestFile('/project/src/workflows/workflow.ts')).toBe(false);
+  });
+
+  it('uses custom patterns when provided', () => {
+    const customPatterns = {
+      test: ['**/integration/**'],
+    };
+
+    expect(isTestFile('/project/integration/my-test.ts', customPatterns)).toBe(true);
+    expect(isTestFile('/project/src/__tests__/workflow.test.ts', customPatterns)).toBe(
+      false,
+    );
   });
 });

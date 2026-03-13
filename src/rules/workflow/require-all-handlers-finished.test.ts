@@ -45,6 +45,39 @@ describe('require-all-handlers-finished', () => {
        setHandler(mySignal, async () => {
          await doSomething();
        });`,
+
+      // allHandlersFinished nested inside a wrapper function call argument (line 105-106 - array child path)
+      `export async function myWorkflow() {
+         const mySignal = defineSignal('signal');
+         setHandler(mySignal, async (data) => {
+           await processData(data);
+         });
+
+         await condition(wrappedCheck(allHandlersFinished));
+       }`,
+
+      // Arrow function referencing allHandlersFinished without condition() wrapper
+      // Tests containsAllHandlersFinishedCheck finding allHandlersFinished in an arrow body
+      // (lines 39, 60-61, 66)
+      `export async function myWorkflow() {
+         const mySignal = defineSignal('signal');
+         setHandler(mySignal, async (data) => {
+           await processData(data);
+         });
+         const check = () => allHandlersFinished;
+       }`,
+
+      // Handler callback passed as identifier reference - should be skipped
+      `export async function myWorkflow() {
+         const mySignal = defineSignal('signal');
+         setHandler(mySignal, myHandler);
+       }`,
+
+      // setHandler with no callback argument
+      `export async function myWorkflow() {
+         const mySignal = defineSignal('signal');
+         setHandler(mySignal);
+       }`,
     ],
     invalid: [
       // Async handler without allHandlersFinished check

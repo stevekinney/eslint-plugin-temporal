@@ -39,8 +39,48 @@ describe('require-call-during-replay-explicit', () => {
           },
         };
         Worker.create({ sinks });`,
+      // Sinks property with no object expression value (identifier reference)
+      `Worker.create({
+          sinks: existingSinks,
+        });`,
+      // Sinks key as a string literal instead of identifier
+      `Worker.create({
+          'sinks': {
+            logger: {
+              info: { fn() {}, callDuringReplay: true },
+            },
+          },
+        });`,
     ],
     invalid: [
+      // Multiple sink functions without callDuringReplay
+      {
+        code: `Worker.create({
+            sinks: {
+              logger: {
+                info: { fn: () => {} },
+                error: { fn: () => {} },
+              },
+            },
+          });`,
+        errors: [
+          { messageId: 'callDuringReplayExplicit' },
+          { messageId: 'callDuringReplayExplicit' },
+        ],
+      },
+      // Deeply nested sink function missing callDuringReplay (no fn prop found, report sinkObject)
+      {
+        code: `Worker.create({
+            sinks: {
+              metrics: {
+                counter: {
+                  fn() { return; },
+                },
+              },
+            },
+          });`,
+        errors: [{ messageId: 'callDuringReplayExplicit' }],
+      },
       {
         code: `Worker.create({
             sinks: {

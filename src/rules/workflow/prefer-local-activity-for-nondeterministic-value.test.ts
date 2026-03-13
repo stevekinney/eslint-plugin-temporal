@@ -42,6 +42,57 @@ describe('prefer-local-activity-for-nondeterministic-value', () => {
           const { sendEmail } = proxyActivities({ startToCloseTimeout: '1m' });
           await sendEmail({ messageId: uuid4() });
         `,
+        // Member expression: wf.proxyLocalActivities - uuid4 used in activity call is safe
+        `
+          import * as wf from '@temporalio/workflow';
+          const local = wf.proxyLocalActivities({ startToCloseTimeout: '1m' });
+          await local.generateToken({ requestId: wf.uuid4() });
+        `,
+        // Property with string literal key that is not ID-like
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          const data = { 'description': uuid4() };
+        `,
+        // uuid4 in object property within a member-expression persisted call (bracket notation)
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          import * as wf from '@temporalio/workflow';
+          wf['executeChild']('myWorkflow', { workflowId: uuid4() });
+        `,
+        // Renamed uuid4 import used in non-ID-like variable
+        `
+          import { uuid4 as generateId } from '@temporalio/workflow';
+          const value = generateId();
+        `,
+        // VariableDeclarator with non-Identifier id (destructuring) — skipped
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          const { x } = { x: uuid4() };
+        `,
+        // Renamed import causes uuid4LocalNames to have entry; bare uuid4() is NOT recognized
+        // (uuid4LocalNames.has('uuid4') returns false when only 'myUuid' is tracked)
+        `
+          import { uuid4 as myUuid } from '@temporalio/workflow';
+          const orderId = uuid4();
+        `,
+        // Assignment to non-Identifier (member expression) — skipped by AssignmentExpression handler
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          obj.userId = uuid4();
+        `,
+        // Property with number literal key — getPropertyKeyName returns null
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          const data = { 42: uuid4() };
+        `,
+        // uuid4 without workflow import — uuid4LocalNames.size === 0,
+        // but variable name is not ID-like, so no report
+        `const value = uuid4();`,
+        // Property node whose parent is not ObjectExpression — should be skipped
+        `
+          import { uuid4 } from '@temporalio/workflow';
+          const { workflowId = uuid4() } = {};
+        `,
       ],
       invalid: [
         // uuid4 in ID-like variable name
@@ -108,6 +159,61 @@ describe('prefer-local-activity-for-nondeterministic-value', () => {
           code: `
             import { uuid4 } from '@temporalio/workflow';
             const requestId = 'prefix-' + uuid4();
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // Object property with string literal key that is ID-like
+        {
+          code: `
+            import { uuid4 } from '@temporalio/workflow';
+            const data = { 'workflowId': uuid4() };
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // Renamed uuid4 import used in ID-like variable — uuid4LocalNames has entries, callee matches
+        {
+          code: `
+            import { uuid4 as generateId } from '@temporalio/workflow';
+            const orderId = generateId();
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // Renamed uuid4 import used in ID-like variable — uuid4LocalNames has entries, callee matches renamed import
+        {
+          code: `
+            import { uuid4 as myUuid } from '@temporalio/workflow';
+            const orderId = myUuid();
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // uuid4 without importing from @temporalio/workflow (uuid4LocalNames.size === 0)
+        // Falls through to callee.name === 'uuid4' check
+        {
+          code: `const orderId = uuid4();`,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // uuid4 inside a function call expression assigned to ID-like variable
+        // (findPrngCall traverses CallExpression arguments array — covers array branch)
+        {
+          code: `
+            import { uuid4 } from '@temporalio/workflow';
+            const orderId = wrap(uuid4());
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // uuid4 inside an array expression assigned to ID-like variable
+        {
+          code: `
+            import { uuid4 } from '@temporalio/workflow';
+            const orderId = [uuid4()];
+          `,
+          errors: [{ messageId: 'preferLocalActivity' }],
+        },
+        // uuid4 inside a template literal assigned to ID-like variable
+        {
+          code: `
+            import { uuid4 } from '@temporalio/workflow';
+            const orderId = \`prefix-\${uuid4()}\`;
           `,
           errors: [{ messageId: 'preferLocalActivity' }],
         },

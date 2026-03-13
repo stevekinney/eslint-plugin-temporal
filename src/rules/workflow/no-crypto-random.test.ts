@@ -47,6 +47,18 @@ describe('no-crypto-random', () => {
         code: `function generate() { return crypto.getRandomValues(new Uint8Array(32)); }`,
         errors: [{ messageId: 'noCryptoRandom' }],
       },
+
+      // crypto.randomFillSync inside async workflow
+      {
+        code: `export async function myWorkflow() { crypto.randomFillSync(new Uint8Array(16)); }`,
+        errors: [{ messageId: 'noCryptoRandom' }],
+      },
+
+      // crypto.randomBytes result used in conditional
+      {
+        code: `const key = condition ? crypto.randomBytes(32) : defaultKey;`,
+        errors: [{ messageId: 'noCryptoRandom' }],
+      },
     ],
   });
 });

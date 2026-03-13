@@ -40,6 +40,25 @@ describe('prefer-single-object-workflow-args', () => {
               }`,
         errors: [{ messageId: 'preferSingleObject' }],
       },
+
+      // Exported function expression
+      {
+        code: `export const fn = function(a: string, b: number) {};`,
+        errors: [{ messageId: 'preferSingleObject' }],
+      },
+
+      // Export default anonymous function with multiple params
+      {
+        code: `export default function(a: string, b: number) {}`,
+        errors: [{ messageId: 'preferSingleObject' }],
+      },
+
+      // Arrow function exported via export default identifier
+      {
+        code: `const fn = (a: string, b: number) => {};
+               export default fn;`,
+        errors: [{ messageId: 'preferSingleObject' }],
+      },
     ],
   });
 });

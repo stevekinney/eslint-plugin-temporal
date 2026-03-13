@@ -48,6 +48,14 @@ describe('require-activity-retry-policy', () => {
 
       // Other function calls
       `const result = someOtherFunction({ noRetry: true });`,
+
+      // Retry key as string literal (covers prop.key.type === Literal branch)
+      `
+        const activities = proxyActivities({
+          startToCloseTimeout: '1m',
+          'retry': { maximumAttempts: 3 }
+        });
+      `,
     ],
     invalid: [
       // Missing retry in proxyActivities
@@ -135,6 +143,32 @@ describe('require-activity-retry-policy', () => {
                 output: `
           const activities = proxyActivities({ retry: { maximumAttempts: 3 },
             taskQueue: 'my-queue',
+            startToCloseTimeout: '1m'
+          });
+        `,
+              },
+            ],
+          },
+        ],
+      },
+
+      // Spread element in options without retry (covers prop.type !== Property branch, line 52)
+      {
+        code: `
+          const activities = proxyActivities({
+            ...defaults,
+            startToCloseTimeout: '1m'
+          });
+        `,
+        errors: [
+          {
+            messageId: 'missingRetryPolicy',
+            suggestions: [
+              {
+                messageId: 'addRetryPolicy',
+                output: `
+          const activities = proxyActivities({ retry: { maximumAttempts: 3 },
+            ...defaults,
             startToCloseTimeout: '1m'
           });
         `,

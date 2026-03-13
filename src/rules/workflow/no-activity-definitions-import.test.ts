@@ -25,6 +25,12 @@ describe('no-activity-definitions-import', () => {
 
       // Type import with value import from non-activity source
       `import { type Foo, bar } from '../utils';`,
+
+      // All named specifiers are type-only (value import syntax, but no value specifiers)
+      `import { type MyActivity, type MyOtherActivity } from '../activities';`,
+
+      // Default import from non-activity source
+      `import myHelper from '../helpers';`,
     ],
     invalid: [
       {
