@@ -118,6 +118,32 @@ describe('prefer-condition-over-polling', () => {
         `,
         errors: [{ messageId: 'preferCondition' }],
       },
+
+      // Sleep inside a nested block statement within a while loop
+      {
+        code: `
+          while (running) {
+            {
+              await sleep(1000);
+            }
+          }
+        `,
+        errors: [{ messageId: 'preferCondition' }],
+      },
+
+      // Sleep inside the else branch of an if statement within a while loop
+      {
+        code: `
+          while (running) {
+            if (fast) {
+              doQuick();
+            } else {
+              await sleep(1000);
+            }
+          }
+        `,
+        errors: [{ messageId: 'preferCondition' }],
+      },
     ],
   });
 });

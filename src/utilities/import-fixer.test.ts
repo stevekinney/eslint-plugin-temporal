@@ -359,6 +359,65 @@ import { proxyActivities, log } from '@temporalio/workflow';`;
   });
 });
 
+describe('addSpecifierToImport - no space before closing brace', () => {
+  it('inserts before closing brace when there is no whitespace', () => {
+    // Note: this code has no space between specifier and closing brace
+    const code = `import {proxyActivities} from '@temporalio/workflow';`;
+    const sourceCode = createMockSourceCode(code);
+    const fixer = new MockFixer();
+    const importNode = findExistingImport(sourceCode, '@temporalio/workflow')!;
+
+    addSpecifierToImport(fixer, importNode, 'sleep', sourceCode);
+
+    expect(fixer.fixes).toHaveLength(1);
+    expect(fixer.fixes[0]?.text).toContain('sleep');
+    // Should use insertTextBefore when no space before brace
+    expect(fixer.fixes[0]?.type).toBe('insertTextBefore');
+  });
+});
+
+describe('ensureImport - aliased specifier detection', () => {
+  it('does not add specifier when it already exists with an alias', () => {
+    const code = `import { proxyActivities as pa } from '@temporalio/workflow';`;
+    const sourceCode = createMockSourceCode(code);
+    const fixer = new MockFixer();
+
+    const fixes = [
+      ...ensureImport(fixer, sourceCode, '@temporalio/workflow', 'proxyActivities'),
+    ];
+
+    // proxyActivities is already imported (with alias), so no fix needed
+    expect(fixes).toHaveLength(0);
+  });
+
+  it('adds specifier when a different specifier has an alias', () => {
+    const code = `import { proxyActivities as pa } from '@temporalio/workflow';`;
+    const sourceCode = createMockSourceCode(code);
+    const fixer = new MockFixer();
+
+    const fixes = [...ensureImport(fixer, sourceCode, '@temporalio/workflow', 'sleep')];
+
+    expect(fixes).toHaveLength(1);
+    expect(fixer.fixes[0]?.text).toContain('sleep');
+  });
+});
+
+describe('ensureImport - type-only import handling', () => {
+  it('creates a new value import when only a type import exists for the source', () => {
+    const code = `import type { WorkflowInfo } from '@temporalio/workflow';`;
+    const sourceCode = createMockSourceCode(code);
+    const fixer = new MockFixer();
+
+    const fixes = [...ensureImport(fixer, sourceCode, '@temporalio/workflow', 'uuid4')];
+
+    expect(fixes).toHaveLength(1);
+    // Should create a new import since we cannot add to a type-only import
+    expect(fixer.fixes[0]?.text).toContain(
+      "import { uuid4 } from '@temporalio/workflow'",
+    );
+  });
+});
+
 // Integration tests using real rule tester
 describe('import-fixer integration', () => {
   it('handles real-world import scenarios', () => {

@@ -484,6 +484,22 @@ describe('ImportTracker', () => {
       expect(tracker.detectTemporalFileType()).toBe('worker');
     });
 
+    it('falls through to client when @temporalio/worker is imported without Worker', () => {
+      const tracker = new ImportTracker();
+      tracker.addImport(
+        createMockImportDeclaration('@temporalio/worker', [
+          { imported: 'NativeConnection', local: 'NativeConnection' },
+        ]),
+      );
+      tracker.addImport(
+        createMockImportDeclaration('@temporalio/client', [
+          { imported: 'Client', local: 'Client' },
+        ]),
+      );
+
+      expect(tracker.detectTemporalFileType()).toBe('client');
+    });
+
     it('detects client from @temporalio/client', () => {
       const tracker = new ImportTracker();
       tracker.addImport(

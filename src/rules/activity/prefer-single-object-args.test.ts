@@ -40,6 +40,21 @@ describe('prefer-single-object-args', () => {
               }`,
         errors: [{ messageId: 'preferSingleObject' }],
       },
+
+      // Exported function expression
+      {
+        code: `export const fn = function(a: string, b: number) {};`,
+        errors: [{ messageId: 'preferSingleObject' }],
+      },
+
+      // Default export of a previously-defined function with multiple params
+      {
+        code: `function charge(amount: number, currency: string) {
+                 return amount;
+               }
+               export default charge;`,
+        errors: [{ messageId: 'preferSingleObject' }],
+      },
     ],
   });
 });

@@ -4,7 +4,6 @@ export {
   createActivityRuleTester,
   createBasicRuleTester,
   createClientRuleTester,
-  createRuleTester,
   createWorkerRuleTester,
   createWorkflowRuleTester,
   workerFile,

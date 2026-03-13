@@ -85,6 +85,34 @@ import { v4 } from 'uuid';
 const id = uuid4();`,
         errors: [{ messageId: 'preferWorkflowUuid' }],
       },
+
+      // Default import from uuid
+      {
+        code: `import uuid from 'uuid';
+const id = uuid();`,
+        output: `import uuid from 'uuid';
+import { uuid4 } from '@temporalio/workflow';
+const id = uuid4();`,
+        errors: [{ messageId: 'preferWorkflowUuid' }],
+      },
+
+      // Default import from nanoid
+      {
+        code: `import nanoid from 'nanoid';
+const id = nanoid();`,
+        output: `import nanoid from 'nanoid';
+import { uuid4 } from '@temporalio/workflow';
+const id = uuid4();`,
+        errors: [{ messageId: 'preferWorkflowUuid' }],
+      },
+
+      // Direct crypto.randomUUID() call (without import)
+      {
+        code: `const id = crypto.randomUUID();`,
+        output: `import { uuid4 } from '@temporalio/workflow';
+const id = uuid4();`,
+        errors: [{ messageId: 'preferWorkflowUuid' }],
+      },
     ],
   });
 });

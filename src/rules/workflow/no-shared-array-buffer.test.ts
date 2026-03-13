@@ -77,6 +77,30 @@ describe('no-shared-array-buffer', () => {
         code: `const types = [SharedArrayBuffer, ArrayBuffer];`,
         errors: [{ messageId: 'noSharedArrayBuffer' }],
       },
+
+      // typeof SharedArrayBuffer
+      {
+        code: `const t = typeof SharedArrayBuffer;`,
+        errors: [{ messageId: 'noSharedArrayBuffer' }],
+      },
+
+      // Atomics passed as function argument
+      {
+        code: `doSomething(Atomics);`,
+        errors: [{ messageId: 'noAtomics' }],
+      },
+
+      // SharedArrayBuffer in conditional expression
+      {
+        code: `const Buf = available ? SharedArrayBuffer : ArrayBuffer;`,
+        errors: [{ messageId: 'noSharedArrayBuffer' }],
+      },
+
+      // Atomics.compareExchange (another method)
+      {
+        code: `Atomics.compareExchange(buffer, 0, 0, 1);`,
+        errors: [{ messageId: 'noAtomics' }],
+      },
     ],
   });
 });

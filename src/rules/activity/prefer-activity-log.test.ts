@@ -50,6 +50,14 @@ console.log('message');`,
 log.info('message');`,
         errors: [{ messageId: 'preferActivityLog' }],
       },
+
+      // Bracket notation access: console['warn']
+      {
+        code: `console['warn']('message');`,
+        output: `import { log } from '@temporalio/activity';
+log.warn('message');`,
+        errors: [{ messageId: 'preferActivityLog' }],
+      },
     ],
   });
 });

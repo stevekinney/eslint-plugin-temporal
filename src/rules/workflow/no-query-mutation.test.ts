@@ -98,6 +98,26 @@ describe('no-query-mutation', () => {
                });`,
         errors: [{ messageId: 'noQueryMutation' }],
       },
+
+      // UpdateExpression on member expression (covers checkMutations lines 273-275)
+      {
+        code: `const query = defineQuery('counter');
+               setHandler(query, () => {
+                 state.count++;
+                 return state.count;
+               });`,
+        errors: [{ messageId: 'noQueryMutation' }],
+      },
+
+      // Decrement on member expression
+      {
+        code: `const query = defineQuery('counter');
+               setHandler(query, () => {
+                 state.count--;
+                 return state.count;
+               });`,
+        errors: [{ messageId: 'noQueryMutation' }],
+      },
     ],
   });
 });

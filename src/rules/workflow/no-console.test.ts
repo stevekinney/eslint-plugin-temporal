@@ -123,6 +123,26 @@ log.trace('stack');`,
           { messageId: 'noConsole', data: { method: 'trace', logMethod: 'trace' } },
         ],
       },
+
+      // Unknown console method (console.dir) - reported without fix
+      {
+        code: `console.dir({ key: 'value' });`,
+        errors: [{ messageId: 'noConsole', data: { method: 'dir', logMethod: 'info' } }],
+      },
+
+      // Unknown console method (console.table) - reported without fix
+      {
+        code: `console.table([1, 2, 3]);`,
+        errors: [
+          { messageId: 'noConsole', data: { method: 'table', logMethod: 'info' } },
+        ],
+      },
+
+      // Bracket notation with unknown method
+      {
+        code: `console['dir']({ key: 'value' });`,
+        errors: [{ messageId: 'noConsole', data: { method: 'dir', logMethod: 'info' } }],
+      },
     ],
   });
 });

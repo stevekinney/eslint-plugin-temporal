@@ -22,6 +22,15 @@ describe('no-node-or-dom-imports', () => {
       // Regular function calls (not DOM globals)
       `const myFetch = () => {}; myFetch();`,
       `myDocument.title;`,
+
+      // require() calls are not checked by this rule (import declarations only)
+      `const fs = require('fs');`,
+
+      // Shadowed DOM global (local variable named 'document')
+      `function run() { const document = {}; document.title; }`,
+
+      // Shadowed DOM global (local variable named 'fetch')
+      `function run() { const fetch = () => {}; fetch('/api'); }`,
     ],
     invalid: [
       // Node.js built-in imports
@@ -85,6 +94,24 @@ describe('no-node-or-dom-imports', () => {
       },
       {
         code: `navigator.userAgent;`,
+        errors: [{ messageId: 'noDomApi' }],
+      },
+
+      // DOM global used as a direct call expression
+      {
+        code: `fetch('/api/data');`,
+        errors: [{ messageId: 'noDomApi' }],
+      },
+
+      // DOM global used with new expression
+      {
+        code: `new WebSocket('ws://localhost');`,
+        errors: [{ messageId: 'noDomApi' }],
+      },
+
+      // DOM global: alert as a call
+      {
+        code: `alert('hello');`,
         errors: [{ messageId: 'noDomApi' }],
       },
     ],

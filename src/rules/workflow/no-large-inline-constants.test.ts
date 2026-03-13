@@ -54,6 +54,21 @@ const smallString = 'short';`,
         code: 'const str = `short`;',
         options,
       },
+      // Export default with non-literal/non-object/non-array (e.g., function — lines 203-204)
+      {
+        code: `export default function() { return [1, 2, 3, 4]; };`,
+        options,
+      },
+      // Export default with identifier reference (lines 203-204)
+      {
+        code: `export default someVariable;`,
+        options,
+      },
+      // Optional chaining value (ChainExpression unwrap, lines 68-69)
+      {
+        code: `const data = config?.getValue();`,
+        options,
+      },
     ],
     invalid: [
       // Large array
@@ -115,6 +130,41 @@ const smallString = 'short';`,
         code: `const data = { a: 1, b: 2, c: 3, d: 4 } as const;`,
         options,
         errors: [{ messageId: 'largeObjectConstant' }],
+      },
+
+      // Object with spread elements (covers countObjectProperties SpreadElement branch, lines 27-28)
+      {
+        code: `const data = { a: 1, b: 2, ...rest, d: 4 };`,
+        options,
+        errors: [{ messageId: 'largeObjectConstant' }],
+      },
+
+      // Nested object property counting (covers countObjectProperties nested call, line 25)
+      {
+        code: `const data = { a: { x: 1, y: 2 }, b: 3 };`,
+        options,
+        errors: [{ messageId: 'largeObjectConstant' }],
+      },
+
+      // TSNonNullExpression unwrapping (covers unwrapExpression TSNonNullExpression, lines 63-64)
+      {
+        code: `const data = [1, 2, 3, 4]!;`,
+        options,
+        errors: [{ messageId: 'largeArrayConstant' }],
+      },
+
+      // Export default large string
+      {
+        code: `export default '12345678901';`,
+        options,
+        errors: [{ messageId: 'largeStringConstant' }],
+      },
+
+      // Export default large template literal
+      {
+        code: 'export default `12345678901`;',
+        options,
+        errors: [{ messageId: 'largeStringConstant' }],
       },
     ],
   });
