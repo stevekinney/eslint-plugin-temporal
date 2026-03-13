@@ -28,6 +28,10 @@ describe('prefer-cancellation-scope-with-timeout', () => {
                  ]);`,
           errors: [{ messageId: 'preferCancellationScopeWithTimeout' }],
         },
+        {
+          code: `await Promise.race([wf.sleep('1m'), activities.doWork()]);`,
+          errors: [{ messageId: 'preferCancellationScopeWithTimeout' }],
+        },
       ],
     },
   );

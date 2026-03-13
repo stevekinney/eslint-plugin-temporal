@@ -40,6 +40,20 @@ describe('no-frequent-search-attribute-upserts', () => {
           }`,
           errors: [{ messageId: 'avoidFrequentUpserts' }],
         },
+        // Member expression with identifier property: obj.upsertSearchAttributes(...)
+        {
+          code: `for (const item of items) {
+            workflow.upsertSearchAttributes({ Item: [item] });
+          }`,
+          errors: [{ messageId: 'avoidFrequentUpserts' }],
+        },
+        // Member expression with computed string literal property: obj['upsertSearchAttributes'](...)
+        {
+          code: `for (const item of items) {
+            workflow['upsertSearchAttributes']({ Item: [item] });
+          }`,
+          errors: [{ messageId: 'avoidFrequentUpserts' }],
+        },
       ],
     },
   );

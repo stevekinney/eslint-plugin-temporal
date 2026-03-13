@@ -31,6 +31,19 @@ describe('no-large-literal-payloads', () => {
         `,
         options: [{ maxArrayElements: 10 }],
       },
+
+      // Spread elements in object (can't be statically counted, stays under limit)
+      {
+        code: `
+          await startChild(myWorkflow, { args: [{ ...baseConfig, key: 'value' }] });
+        `,
+        options: [{ maxObjectProperties: 5 }],
+      },
+
+      // Template literal under limit
+      `
+        await startChild(myWorkflow, { args: [\`short template\`] });
+      `,
     ],
     invalid: [
       // Large payload in startChild
@@ -84,6 +97,51 @@ describe('no-large-literal-payloads', () => {
             data: { count: '7' }, // 3 top-level + 4 nested
           },
         ],
+      },
+
+      // Nested arrays exceeding limit
+      {
+        code: `
+          await startChild(myWorkflow, [1, 2, 3, [4, 5, 6]]);
+        `,
+        options: [{ maxArrayElements: 5 }],
+        errors: [{ messageId: 'largeArrayPayload' }],
+      },
+
+      // Template literal over limit
+      {
+        code: `
+          await startChild(myWorkflow, \`this is a very long template literal string\`);
+        `,
+        options: [{ maxStringLength: 10 }],
+        errors: [{ messageId: 'largeStringPayload' }],
+      },
+
+      // Object with SpreadElement exceeding limit (lines 76, 78)
+      {
+        code: `
+          await startChild(myWorkflow, { a: 1, b: 2, ...extra });
+        `,
+        options: [{ maxObjectProperties: 2 }],
+        errors: [{ messageId: 'largeObjectPayload' }],
+      },
+
+      // Array with sparse element exceeding limit (line 88)
+      {
+        code: `
+          await startChild(myWorkflow, [1, , 3]);
+        `,
+        options: [{ maxArrayElements: 2 }],
+        errors: [{ messageId: 'largeArrayPayload' }],
+      },
+
+      // Array with SpreadElement exceeding limit (line 91)
+      {
+        code: `
+          await startChild(myWorkflow, [1, 2, ...rest]);
+        `,
+        options: [{ maxArrayElements: 2 }],
+        errors: [{ messageId: 'largeArrayPayload' }],
       },
     ],
   });

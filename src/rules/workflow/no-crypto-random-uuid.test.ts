@@ -75,6 +75,24 @@ const id2 = uuid4();`,
 saveId(uuid4());`,
         errors: [{ messageId: 'noCryptoRandomUuid' }],
       },
+
+      // With type-only import from same source (should create new value import)
+      {
+        code: `import type { WorkflowInfo } from '@temporalio/workflow';
+const id = crypto.randomUUID();`,
+        output: `import type { WorkflowInfo } from '@temporalio/workflow';
+import { uuid4 } from '@temporalio/workflow';
+const id = uuid4();`,
+        errors: [{ messageId: 'noCryptoRandomUuid' }],
+      },
+
+      // In template literal expression
+      {
+        code: `const key = \`prefix-\${crypto.randomUUID()}\`;`,
+        output: `import { uuid4 } from '@temporalio/workflow';
+const key = \`prefix-\${uuid4()}\`;`,
+        errors: [{ messageId: 'noCryptoRandomUuid' }],
+      },
     ],
   });
 });

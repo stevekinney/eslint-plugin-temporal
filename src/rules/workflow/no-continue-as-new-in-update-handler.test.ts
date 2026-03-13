@@ -128,6 +128,20 @@ describe('no-continue-as-new-in-update-handler', () => {
           { messageId: 'noContinueAsNewInUpdateHandler' },
         ],
       },
+
+      // continueAsNew in a nested function within an update handler (function expression)
+      {
+        code: `
+          const myUpdate = defineUpdate('myUpdate');
+          setHandler(myUpdate, async function handler(value) {
+            if (value > 100) {
+              continueAsNew(value);
+            }
+            return value;
+          });
+        `,
+        errors: [{ messageId: 'noContinueAsNewInUpdateHandler' }],
+      },
     ],
   });
 });

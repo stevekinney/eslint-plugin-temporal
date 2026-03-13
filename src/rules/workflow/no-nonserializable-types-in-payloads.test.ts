@@ -40,6 +40,32 @@ describe('no-nonserializable-types-in-payloads', () => {
             { messageId: 'nonSerializableType' },
           ],
         },
+        // Function type in payload argument
+        {
+          code: `export async function myWorkflow(callback: () => void): Promise<void> {}`,
+          errors: [{ messageId: 'nonSerializableType' }],
+        },
+        // Symbol type in payload argument
+        {
+          code: `export async function myWorkflow(id: symbol): Promise<void> {}`,
+          errors: [{ messageId: 'nonSerializableType' }],
+        },
+        // WeakMap in return type
+        {
+          code: `export async function myWorkflow(): Promise<WeakMap<object, string>> { return new WeakMap(); }`,
+          errors: [{ messageId: 'nonSerializableType' }],
+        },
+        // WeakSet in signal definition
+        {
+          code: `const sig = defineSignal<[WeakSet<object>]>('sig');`,
+          errors: [{ messageId: 'nonSerializableType' }],
+        },
+        // Constructor type in handler callback
+        {
+          code: `const update = defineUpdate<string, [string]>('update');
+                 setHandler(update, (input: string): new () => object => { return Object; });`,
+          errors: [{ messageId: 'nonSerializableType' }],
+        },
       ],
     },
   );

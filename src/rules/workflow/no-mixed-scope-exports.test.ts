@@ -12,6 +12,9 @@ describe('no-mixed-scope-exports', () => {
        export const mySignal = defineSignal('mySignal');
        export async function myWorkflow() {}`,
       `export const helper = 123;`,
+      // Member expression callee — isForbiddenCallee returns false
+      `import { Client } from '@temporalio/client';
+       export const result = Client.create();`,
       `import type { Client } from '@temporalio/client';
        export type { Client };`,
     ],
@@ -35,6 +38,26 @@ export default Worker;`,
 export const client = new Client();`,
         errors: [{ messageId: 'mixedScopeExport' }],
       },
+      // export default with a forbidden identifier (non-direct import)
+      {
+        code: `import { Client } from '@temporalio/client';
+const myClient = Client;
+export default Client;`,
+        errors: [{ messageId: 'mixedScopeExport' }],
+      },
+      // export default with a forbidden call expression
+      {
+        code: `import { Client } from '@temporalio/client';
+export default Client();`,
+        errors: [{ messageId: 'mixedScopeExport' }],
+      },
+      // Re-export from @temporalio/activity
+      {
+        code: `export { someActivity } from '@temporalio/activity';`,
+        errors: [{ messageId: 'mixedScopeExport' }],
+      },
+      // Type-only re-export should be valid (not flagged)
+      // This is already tested in the valid section
     ],
   });
 });

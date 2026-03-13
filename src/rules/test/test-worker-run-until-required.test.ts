@@ -36,6 +36,25 @@ describe('test-worker-run-until-required', () => {
        const env = await TestWorkflowEnvironment.createLocal();
        await Worker.create({ workflowsPath: '/tmp/workflows' }).runUntil(async () => {});
       `,
+      // Type-only import of Worker should not trigger rule
+      `import type { Worker } from '@temporalio/worker';
+       const something = {};
+      `,
+      // Worker assigned via TSNonNullExpression wrapping create call
+      `import { Worker } from '@temporalio/worker';
+       const worker = Worker.create({ workflowsPath: '/tmp/workflows' })!;
+       await worker.runUntil(async () => {});
+      `,
+      // Worker assigned via TSAsExpression wrapping create call
+      `import { Worker } from '@temporalio/worker';
+       const worker = Worker.create({ workflowsPath: '/tmp/workflows' }) as any;
+       await worker.runUntil(async () => {});
+      `,
+      // Optional chaining on runUntil
+      `import { Worker } from '@temporalio/worker';
+       const worker = await Worker.create({ workflowsPath: '/tmp/workflows' });
+       await worker?.runUntil(async () => {});
+      `,
     ],
     invalid: [
       // Worker.create without runUntil

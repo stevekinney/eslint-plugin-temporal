@@ -34,6 +34,20 @@ describe('require-idempotency-key-arg', () => {
       // Non-object argument (can't statically analyze)
       `const activities = proxyActivities();
        await activities.chargeCard(payload);`,
+
+      // Member expression: wf.proxyActivities with idempotency key
+      `import * as wf from '@temporalio/workflow';
+       const activities = wf.proxyActivities<Activities>({ startToCloseTimeout: '1m' });
+       await activities.chargeCard({ idempotencyKey: 'abc', amount: 42 });`,
+
+      // Member expression: wf.proxyLocalActivities with idempotency key (line 98)
+      `import * as wf from '@temporalio/workflow';
+       const activities = wf.proxyLocalActivities<Activities>({ startToCloseTimeout: '1m' });
+       await activities.chargeCard({ idempotencyKey: 'abc', amount: 42 });`,
+
+      // Bracket notation activity call with idempotency key (getActivityName Literal branch, lines 118-125)
+      `const activities = proxyActivities();
+       await activities['chargeCard']({ idempotencyKey: 'abc', amount: 42 });`,
     ],
     invalid: [
       {
@@ -86,6 +100,24 @@ describe('require-idempotency-key-arg', () => {
         ],
       },
       {
+        code: `import * as wf from '@temporalio/workflow';
+               const activities = wf.proxyActivities<Activities>({ startToCloseTimeout: '1m' });
+               await activities.chargeCard({ amount: 42 });`,
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `import * as wf from '@temporalio/workflow';
+               const activities = wf.proxyActivities<Activities>({ startToCloseTimeout: '1m' });
+               await activities.chargeCard({ idempotencyKey: workflowInfo().workflowId, amount: 42 });`,
+              },
+            ],
+          },
+        ],
+      },
+      {
         code: `const activities = proxyActivities();
                await activities.processPayment({ amount: 10 });`,
         settings: {
@@ -103,6 +135,42 @@ describe('require-idempotency-key-arg', () => {
                 messageId: 'addIdempotencyKey',
                 output: `const activities = proxyActivities();
                await activities.processPayment({ idempotencyKey: workflowInfo().workflowId, amount: 10 });`,
+              },
+            ],
+          },
+        ],
+      },
+
+      // Bracket notation activity call without idempotency key (getActivityName Literal branch, lines 118-125)
+      {
+        code: `const activities = proxyActivities();
+               await activities['chargeCard']({ amount: 42 });`,
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const activities = proxyActivities();
+               await activities['chargeCard']({ idempotencyKey: workflowInfo().workflowId, amount: 42 });`,
+              },
+            ],
+          },
+        ],
+      },
+
+      // Empty object argument — suggestion replaces entire object (lines 199-202)
+      {
+        code: `const activities = proxyActivities();
+               await activities.chargeCard({});`,
+        errors: [
+          {
+            messageId: 'missingIdempotencyKey',
+            suggestions: [
+              {
+                messageId: 'addIdempotencyKey',
+                output: `const activities = proxyActivities();
+               await activities.chargeCard({ idempotencyKey: workflowInfo().workflowId });`,
               },
             ],
           },

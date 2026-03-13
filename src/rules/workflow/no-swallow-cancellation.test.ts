@@ -28,6 +28,27 @@ describe('no-swallow-cancellation', () => {
        } catch (err) {
          logError(err);
        }`,
+      `try {
+         await doWork();
+       } catch (e) {
+         if (isCancellationError(e)) {
+           throw e;
+         }
+       }`,
+      `try {
+         await doWork();
+       } catch (e) {
+         if (e instanceof CancelledFailure) {
+           throw e;
+         }
+       }`,
+      `try {
+         await doWork();
+       } catch (err) {
+         if (err.name === 'CancelledFailure') {
+           throw err;
+         }
+       }`,
     ],
     invalid: [
       {
@@ -45,6 +66,26 @@ describe('no-swallow-cancellation', () => {
                  await doWork();
                } catch (err) {
                  if (isCancellationError(err)) {
+                   log.info('cancelled');
+                 }
+               }`,
+        errors: [{ messageId: 'noSwallowCancellation' }],
+      },
+      {
+        code: `try {
+                 await doWork();
+               } catch (e) {
+                 if (isCancellationError(e)) {
+                   return;
+                 }
+               }`,
+        errors: [{ messageId: 'noSwallowCancellation' }],
+      },
+      {
+        code: `try {
+                 await doWork();
+               } catch (e) {
+                 if (e instanceof CancelledFailure) {
                    log.info('cancelled');
                  }
                }`,

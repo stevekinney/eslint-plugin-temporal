@@ -18,6 +18,29 @@ describe('replay-history-smoke-test-hook', () => {
           },
         ],
       },
+      // Arrow function export pattern should also be valid
+      {
+        code: `const ok = true;`,
+        options: [
+          {
+            hookFile: 'src/__fixtures__/replay-histories-arrow-export.ts',
+            exportName: 'runReplayHistorySmokeTest',
+            reportOnce: false,
+          },
+        ],
+      },
+      // requireRunReplayHistories disabled should pass even without call
+      {
+        code: `const ok = true;`,
+        options: [
+          {
+            hookFile: 'src/__fixtures__/replay-histories-no-replay-call.ts',
+            exportName: 'runReplayHistorySmokeTest',
+            requireRunReplayHistories: false,
+            reportOnce: false,
+          },
+        ],
+      },
     ],
     invalid: [
       {
@@ -41,6 +64,18 @@ describe('replay-history-smoke-test-hook', () => {
           },
         ],
         errors: [{ messageId: 'missingHookExport' }],
+      },
+      // File exists and has export but is missing runReplayHistories() call
+      {
+        code: `const ok = true;`,
+        options: [
+          {
+            hookFile: 'src/__fixtures__/replay-histories-no-replay-call.ts',
+            exportName: 'runReplayHistorySmokeTest',
+            reportOnce: false,
+          },
+        ],
+        errors: [{ messageId: 'missingReplayCall' }],
       },
     ],
   });
